@@ -69,9 +69,3 @@ loo = LeaveOneOut()
 scoresLOO = cross_val_score(classifier, X1, y1, cv=loo)
 
 print("Accuracy LOO: %0.2f (+/- %0.2f)" % (scoresLOO.mean(), scoresLOO.std() * 2))
-
-
-# In[ ]:
-
-
-
