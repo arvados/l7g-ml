@@ -54,7 +54,7 @@ df['Number'] = df.index
 dataBloodType.human_id = dataBloodType.human_id.str.lower()
 df2 =  df.merge(dataBloodType,left_on = 'Sample', right_on='human_id', how='inner')
 del dataBloodType
-df2['blood_type'].value_counts().plot(kind='bar')
+#df2['blood_type'].value_counts().plot(kind='bar')
 df2['blood_type'].value_counts()
 del df
 
@@ -87,7 +87,7 @@ y = df2.B.values
 del df2
 
 # Train the SVM
-Cval = 0.01  # SVM penalty parameter
+Cval = 1  # SVM penalty parameter
 classifier = svm.LinearSVC(penalty='l1', dual=False, C=Cval)
 svc = classifier.fit(Xtrain, y)
 
@@ -140,7 +140,7 @@ for i in range(cnf_matrix.shape[0]):
                  color= "orangered")
 
 plt.gcf().subplots_adjust(left=0.25, bottom =0.35)
-plt.savefig('Images/B_Confusion1.png',format='png',dpi=300)
+plt.savefig('Images/B_ConfusionFull.png',format='png',dpi=300)
 
 coefPaths = justVarPathsNew[idxNZ[1]]
 
