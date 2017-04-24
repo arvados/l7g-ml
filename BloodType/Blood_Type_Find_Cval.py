@@ -16,8 +16,8 @@ from sklearn.metrics import confusion_matrix
 #Xtrain = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot")
 ohinfo = np.load("/data-sdd/tiling/hiq.214/names-214.npy")
 #ohPaths = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot-info")
-Xtrain = np.load("/data-sdd/tiling/hiq.214/hiq-pgp")
-justVarPaths = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-info")
+Xtrain = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-1hot")
+justVarPaths = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-1hot-info")
 
 
 # Loading in phenotype data from PGP database
@@ -79,14 +79,14 @@ justVarPathsNew = justVarPaths[skipTile]
 
 # Scaling the Training Data
 
-Xtrain = preprocessing.scale(Xtrain.astype('double'))
+#Xtrain = preprocessing.scale(Xtrain.astype('double'))
 
 
 y = df2.B.values
 
 del df2
 
-Citr = np.logspace(-3, 1, 10)
+Citr = np.linspace(10, 30, 15)
 Citr = Citr.tolist()
 scores = []
 
@@ -111,10 +111,10 @@ for idC, Cval in enumerate(Citr):
     scores.append(cvscores.mean())
     print("%1.3f Accuracy 10-fold: %0.2f (+/- %0.2f)" % (Cval, cvscores.mean(), cvscores.std() * 2))
 
-
-plt.subplot(1, 1)
-plt.xlabel('C')
-plt.ylabel('CV Score')
-plt.semilogx(Ccal, scores, label="fraction %.2f")
-plt.legend(loc="best")
-plt.savefig('Images/CvalsB.png',format='png',dpi=300)
+#
+#plt.subplot(1, 1)
+#plt.xlabel('C')
+#plt.ylabel('CV Score')
+#plt.semilogx(Ccal, scores, label="fraction %.2f")
+#plt.legend(loc="best")
+#plt.savefig('Images/CvalsB.png',format='png',dpi=300)
