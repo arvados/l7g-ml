@@ -87,7 +87,7 @@ y = df2.B.values
 del df2
 
 # Train the SVM
-Cval = 1  # SVM penalty parameter
+Cval = 0.025  # SVM penalty parameter
 classifier = svm.LinearSVC(penalty='l1', dual=False, C=Cval)
 svc = classifier.fit(Xtrain, y)
 
@@ -141,16 +141,5 @@ for i in range(cnf_matrix.shape[0]):
 
 plt.gcf().subplots_adjust(left=0.25, bottom =0.35)
 plt.savefig('Images/B_ConfusionFull.png',format='png',dpi=300)
-
-coefPaths = justVarPathsNew[idxNZ[1]]
-
-
-tile_path = np.trunc(coefPaths/(16**5))
-tile_step = np.trunc((coefPaths - tile_path*16**5)/2)
-tile_phase = np.trunc((coefPaths- tile_path*16**5 - 2*tile_step))
-
-
-vtile_path = vhex(tile_path.astype('int'))
-vitle_step = vhex(tile_step.astype('int'))
 
 
