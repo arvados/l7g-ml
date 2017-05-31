@@ -1,0 +1,16 @@
+refdir:
+   class: Directory 
+   path: keep:0df9d12fa767d10df2d5730149d6a5e9+2488
+
+mapdir:
+   class: Directory
+   path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
+
+jar_file:
+   class: File
+   path: ../Beagle/beagle.21Jan17.6cc.jar
+
+target:
+   class: File
+   path: keep:8e064ad3b93ef82b8e7696e638d053f5+1261/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf
+
