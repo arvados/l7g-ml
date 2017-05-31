@@ -1,0 +1,7 @@
+no display found. Using non-interactive Agg backend
+Maximum Coefficent (0.126):
+Number of Nonzeros Coefficents (57)
+Accuracy 10-fold: 0.77 (+/- 0.17)
+Accuracy LOO: 0.74 (+/- 0.88)
+[[69  0]
+ [ 0 16]]

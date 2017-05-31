@@ -88,7 +88,7 @@ del df2
 
 # Train the SVM
 Cval = 0.01  # SVM penalty parameter
-classifier = svm.LinearSVC(penalty='l1', dual=False, C=Cval)
+classifier = svm.LinearSVC(penalty='l1', class_weight='balanced',dual=False, C=Cval)
 svc = classifier.fit(Xtrain, y)
 
 # Examine model coefficents
@@ -140,7 +140,7 @@ for i in range(cnf_matrix.shape[0]):
                  color= "orangered")
 
 plt.gcf().subplots_adjust(left=0.25, bottom =0.35)
-plt.savefig('Images/A_Confusion1.png',format='png',dpi=300)
+plt.savefig('Images/A_ConfusionWeighed.png',format='png',dpi=300)
 
 coefPaths = justVarPathsNew[idxNZ[1]]
 

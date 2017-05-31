@@ -16,8 +16,8 @@ from sklearn.metrics import confusion_matrix
 #Xtrain = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot")
 ohinfo = np.load("/data-sdd/tiling/hiq.214/names-214.npy")
 #ohPaths = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot-info")
-Xtrain = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-1hot")
-justVarPaths = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-1hot-info")
+Xtrain = np.load("/data-sdd/tiling/hiq.214/hiq-pgp")
+justVarPaths = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-info")
 
 
 # Loading in phenotype data from PGP database
@@ -79,23 +79,23 @@ justVarPathsNew = justVarPaths[skipTile]
 
 # Scaling the Training Data
 
-#Xtrain = preprocessing.scale(Xtrain.astype('double'))
+Xtrain = preprocessing.scale(Xtrain.astype('double'))
 
 
-y = df2.B.values
+y = df2.A.values
 
 del df2
 
-Citr = np.linspace(10, 30, 15)
+Citr = np.logspace(-3,1,20)
 Citr = Citr.tolist()
 scores = []
-
+stds = []
 
 for idC, Cval in enumerate(Citr):
 # Train the SVM
 #Cval = 0.01  # SVM penalty parameter
 
-    classifier = svm.LinearSVC(penalty='l1', dual=False, C=Cval)
+    classifier = svm.LinearSVC(penalty='l1', class_weight='balanced',dual=False, C=Cval)
 #svc = classifier.fit(Xtrain, y)
 
 # Examine model coefficents
@@ -109,12 +109,13 @@ for idC, Cval in enumerate(Citr):
     n = 10
     cvscores = cross_val_score(classifier, Xtrain, y, cv=n)
     scores.append(cvscores.mean())
+    stds.append(cvscores.std()*2)
     print("%1.3f Accuracy 10-fold: %0.2f (+/- %0.2f)" % (Cval, cvscores.mean(), cvscores.std() * 2))
 
 #
-#plt.subplot(1, 1)
-#plt.xlabel('C')
-#plt.ylabel('CV Score')
-#plt.semilogx(Ccal, scores, label="fraction %.2f")
-#plt.legend(loc="best")
-#plt.savefig('Images/CvalsB.png',format='png',dpi=300)
+fig,ax1 = plt.subplot(1, 1)
+plt.xlabel('C')
+plt.ylabel('CV Score')
+ax1.errorbar(np.asrray(Citr), scores, yerr=stds, fmt='o')
+ax1.set_xscale('log')
+plt.savefig('Images/CvalsA.png',format='png',dpi=300)

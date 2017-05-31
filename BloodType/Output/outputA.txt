@@ -1,0 +1,5 @@
+no display found. Using non-interactive Agg backend
+[[45  0]
+ [ 5 25]]
+Accuracy 10-fold: 0.93 (+/- 0.14)
+Accuracy LOO: 0.93 (+/- 0.50)
