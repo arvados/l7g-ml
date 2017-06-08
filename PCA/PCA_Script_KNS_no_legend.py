@@ -177,22 +177,23 @@ labels = [v[0] for v in vals]
 
 leghandle = []
 
-for ix,cc in enumerate(legcolors):
-    leghandle.append(mpatches.Rectangle((0,0),0.2,0.2, facecolor=cc,
-                            edgecolor=cc, linewidth=3,label='test'))
+#for ix,cc in enumerate(legcolors):
+#    leghandle.append(mpatches.Rectangle((0,0),0.2,0.2, facecolor=cc,
+#                            edgecolor=cc, linewidth=3,label='test'))
 
 
-plt.legend(handles=leghandle, bbox_to_anchor=(0, 2.), loc=2, borderaxespad=0,ncol = 3)
+#plt.legend(handles=leghandle, bbox_to_anchor=(0, 2.), loc=2, borderaxespad=0,ncol = 3)
 
-leg = plt.gca().get_legend()
-ltext  = leg.get_texts()  
-llines = leg.get_lines()  
-frame  = leg.get_frame()  
+#leg = plt.gca().get_legend()
+#print(type(leg))
+#ltext  = leg.get_texts()  
+#llines = leg.get_lines()  
+#frame  = leg.get_frame()  
 
-plt.setp(ltext, fontsize='x-small')    # the legend text fontsize
-plt.setp(llines, linewidth=1.5)  
+#plt.setp(ltext, fontsize='x-small')    # the legend text fontsize
+#plt.setp(llines, linewidth=1.5)  
 
-plt.gcf().subplots_adjust(right=0.7, top=0.8)
+#plt.gcf().subplots_adjust(right=0.7, top=0.8)
 plt.savefig(plot_save_dir + '/PCA12-Pop.png',format='png',dpi=300)
 
 
