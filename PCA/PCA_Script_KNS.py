@@ -1,3 +1,7 @@
+import os
+os.environ.get('DISPLAY','')
+import matplotlib as mpl
+mpl.use('Agg')      # This line must come before importing pyplot
 import matplotlib.pyplot as plt
 from matplotlib.legend_handler import HandlerPatch
 import matplotlib.patches as mpatches
