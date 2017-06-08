@@ -6,10 +6,23 @@ import numpy as np
 from sklearn.decomposition import PCA
 
 
+# Assume we are on lightning-dev1. We beging by mounting keep
+# And as long as we're saving the output to keeprw, better mount that as well
+    # Todo
+
+# Here we ask user for inputs of files
+# (In the future, encapsulate this in class)
+data_dir_1hot = input("Please provide directory of 1hot data:\n")
+data_dir_ethn = input("Please provide direcotry of ethnicity data:\n")
+
+# As for directory which to save plot
+plot_save_dir = input("Please provide directory into which to save plots:\n")
+
+
 # Loading in one-hot-encoded data and names of subjects for each row
 
-oh = np.load("/Users/Keldins/curoverse/data_from_Sarah/hiq-1hot-simple.npy")
-ohinfo = np.load("/Users/Keldins/curoverse/data_from_Sarah/names.npy")
+oh = np.load(data_dir_1hot + "/hiq-1hot-simple.npy")
+ohinfo = np.load(data_dir_1hot + "/names.npy")
 #var1 = np.load("/home/swz/PGP-work/Lightning_Work/PGP1000Genomes/hiq/hiq-collect.npy")
 # ^ hiq-collect.npy not in the dataset that Sarah gave me, but fortunately it
 # is unused in this script, so we can just comment it out.
@@ -108,8 +121,8 @@ super_pop_human_readable = {
 
 # Loading subject phenotype information
 
-filePGP = '/Users/Keldins/curoverse/data_from_Sarah/PGP_assigned_ethnicities.csv'
-file1000G = '/Users/Keldins/curoverse/data_from_Sarah/1000G_ethnicities_20130606_sample_info.csv'
+filePGP = data_dir_ethn + '/PGP_assigned_ethnicities.csv'
+file1000G = data_dir_ethn + '/1000G_ethnicities_20130606_sample_info.csv'
 #file3 = '/home/swz/Downloads/1000G_ethnicities_69_hashed_together.csv'
 
 PGPeth = pd.read_csv(filePGP) 
@@ -172,6 +185,6 @@ plt.setp(ltext, fontsize='x-small')    # the legend text fontsize
 plt.setp(llines, linewidth=1.5)  
 
 plt.gcf().subplots_adjust(right=0.7, top=0.8)
-plt.savefig('Images/PCA12-Pop.png',format='png',dpi=300)
+plt.savefig(plot_save_dir + '/PCA12-Pop.png',format='png',dpi=300)
 
 
