@@ -1,0 +1,24 @@
+
+export filename=$1
+export pastafile=$2
+export refstreamfile=$3
+export reffile=$4
+
+filenameNP1=$(basename "$filename")
+export filenameNP2=${filenameNP1//.}
+export outputfile=$filenameNP2'_FinalAll.vcf.gz'
+
+array=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X Y M)
+cnt=${#array[@]}
+prefix='chr'
+
+for ((i=0;i<cnt;i++)); do
+    array[i]="$prefix${array[i]}"
+    export c=${array[i]}
+    export outputfile2=$c'_Final.vcf'
+    zgrep $c $filename | $pastafile --refstream <($refstreamfile $reffile $c) --action gff-rotini | $pastafile --action rotini-gvcf | awk '!/NOCALL/' | awk '!/0\/0/' > $outputfile2
+done
+
+find -name "*_Final.vcf*" |sort --version-sort > vcfnames.txt 
+vcf-concat -f vcfnames.txt |gzip  > $outputfile
+
