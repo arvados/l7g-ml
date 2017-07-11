@@ -8,14 +8,36 @@ import matplotlib.patches as mpatches
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
+<<<<<<< HEAD
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("data_dir_1hot", default='/home/keldin/keep/by_id/su92l-4zz18-zkrq9qdscuhpqj4')
+parser.add_argument("data_dir_ethn", default='/home/keldin/keep/by_id/su92l-4zz18-mcg5xarbwji8t58')
+args = parser.parse_args()
+data_dir_1hot = args.data_dir_1hot
+data_dir_ethn = args.data_dir_ethn
+
+
+# Assume we are on lightning-dev1. We begin by mounting keep
+=======
 
 
 # Assume we are on lightning-dev1. We beging by mounting keep
+>>>>>>> 64dee6a847e025175a23a1c3a1bbf8899a3f1d73
 # And as long as we're saving the output to keeprw, better mount that as well
     # Todo
 
 # Here we ask user for inputs of files
 # (In the future, encapsulate this in class)
+<<<<<<< HEAD
+#data_dir_1hot = '/home/keldin/keep/by_id/su92l-4zz18-zkrq9qdscuhpqj4'
+#input("Please provide directory of 1hot data:\n")
+#data_dir_ethn = '/home/keldin/keep/by_id/su92l-4zz18-mcg5xarbwji8t58'
+#input("Please provide direcotry of ethnicity data:\n")
+
+# As for directory which to save plot
+#plot_save_dir = '/home/keldin/keeprw/by_id/su92l-4zz18-hhyjc7arp04d20t'
+=======
 data_dir_1hot = '/home/keldin/keep/by_id/su92l-4zz18-zkrq9qdscuhpqj4'
 #input("Please provide directory of 1hot data:\n")
 data_dir_ethn = '/home/keldin/keep/by_id/su92l-4zz18-mcg5xarbwji8t58'
@@ -23,6 +45,7 @@ data_dir_ethn = '/home/keldin/keep/by_id/su92l-4zz18-mcg5xarbwji8t58'
 
 # As for directory which to save plot
 plot_save_dir = '/home/keldin/keeprw/by_id/su92l-4zz18-hhyjc7arp04d20t'
+>>>>>>> 64dee6a847e025175a23a1c3a1bbf8899a3f1d73
 #input("Please provide directory into which to save plots:\n")
 
 
@@ -194,6 +217,10 @@ leghandle = []
 #plt.setp(llines, linewidth=1.5)  
 
 #plt.gcf().subplots_adjust(right=0.7, top=0.8)
+<<<<<<< HEAD
+plt.savefig('PCA12-Pop_cwl.png',format='png',dpi=300)
+=======
 plt.savefig(plot_save_dir + '/PCA12-Pop.png',format='png',dpi=300)
+>>>>>>> 64dee6a847e025175a23a1c3a1bbf8899a3f1d73
 
 

@@ -1,0 +1,9 @@
+script_path: 
+    class: File
+    path: /home/keldin/l7g-ml/PCA/PCA_Script_KNS_no_legend.py
+data_dir_1hot:
+    class: Directory
+    path: keep:b8c14095ece61bad2f36c1e55a6c3a8c+685
+data_dir_ethn:
+    class: Directory
+    path: keep:477e9475423f283f0b578a0741d7f206+262
