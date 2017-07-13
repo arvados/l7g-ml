@@ -14,16 +14,25 @@ from sklearn.metrics import confusion_matrix
 
 # All sets with "magic tile" in /data-sdd/tiling/hiq.214
 #Xtrain = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot")
-ohinfo = np.load("/data-sdd/tiling/hiq.214/names-214.npy")
+#ohinfo = np.load("/data-sdd/tiling/hiq.214/names-214.npy")
+ohinfo = np.load("/Users/Keldins/curoverse/hiq/names-214.npy")
 #ohPaths = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot-info")
-Xtrain = np.load("/data-sdd/tiling/hiq.214/hiq-pgp")
-justVarPaths = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-info")
+
+#Xtrain = np.load("/data-sdd/tiling/hiq.214/hiq-pgp")
+Xtrain = np.load("/Users/Keldins/curoverse/hiq/hiq-pgp")
+
+
+#justVarPaths = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-info")
+justVarPaths = np.load("/Users/Keldins/curoverse/hiq/hiq-pgp-info")
 
 
 # Loading in phenotype data from PGP database
 
-conn = sqlite3.connect('/home/sarah/l7g-ml/BloodType/Database/untap.db')
-# She's running this locally, so it's not connecting to a remote database here
+#conn = sqlite3.connect('/home/sarah/l7g-ml/BloodType/Database/untap.db')
+## She's running this locally, so it's not connecting to a remote database here
+
+conn = sqlite3.connect("/Users/Keldins/curoverse/hiq/hu-pgp.sqlite3")
+
 c = conn.cursor()
 c.execute('SELECT * FROM demographics')
 rows = c.fetchall()
@@ -143,7 +152,7 @@ for i in range(cnf_matrix.shape[0]):
                  color= "orangered")
 
 plt.gcf().subplots_adjust(left=0.25, bottom =0.35)
-plt.savefig('Images/A_Confusion1.png',format='png',dpi=300)
+plt.savefig('/Users/Keldins/curoverse/Images/A_Confusion1.png',format='png',dpi=300)
 
 coefPaths = justVarPathsNew[idxNZ[1]]
 
