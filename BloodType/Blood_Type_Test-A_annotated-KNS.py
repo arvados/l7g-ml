@@ -12,26 +12,44 @@ from sklearn.model_selection import cross_val_score, LeaveOneOut
 from sklearn import preprocessing
 from sklearn.metrics import confusion_matrix
 
+# Plot output directory
+plot_output_dir = "/home/keldin/keeprw/by_id/su92l-4zz18-hhyjc7arp04d20t/"
+#plot_output_dir = "/Users/Keldins/curoverse/Images/"
+
 # All sets with "magic tile" in /data-sdd/tiling/hiq.214
-#Xtrain = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot")
-#ohinfo = np.load("/data-sdd/tiling/hiq.214/names-214.npy")
-ohinfo = np.load("/Users/Keldins/curoverse/hiq/names-214.npy")
-#ohPaths = np.load("/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot-info")
 
-#Xtrain = np.load("/data-sdd/tiling/hiq.214/hiq-pgp")
-Xtrain = np.load("/Users/Keldins/curoverse/hiq/hiq-pgp")
+# Xtrain file paths:
+hiq_pgp_1hot_path = "/data-sdd/tiling/hiq.214/hiq-pgp-1hot"
+#hiq_pgp_1hot_path = "/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot"
+#hiq_pgp_1hot_path = "/Users/Keldins/curoverse/hiq/hiq-pgp-1hot"
+Xtrain = np.load(hiq_pgp_1hot_path)
 
 
-#justVarPaths = np.load("/data-sdd/tiling/hiq.214/hiq-pgp-info")
-justVarPaths = np.load("/Users/Keldins/curoverse/hiq/hiq-pgp-info")
+# ohinfo file paths:
+names_path = "/data-sdd/tiling/hiq.214/names-214.npy"
+#names_path = "/Users/Keldins/curoverse/hiq/names-214.npy"
+ohinfo = np.load(names_path)
+
+
+# ohPaths file paths:
+#hiq_pgp_1hot_info_path = "/home/swz/PGP-work/Lightning_Work/PGPFiles/hiq-pgp-1hot-info"
+#ohPaths = np.load(hiq_pgp_1hot_info_path)
+# ^ this appears to not be used
+
+
+# justVarPaths file paths:
+hiq_pgp_info_path = "/data-sdd/tiling/hiq.214/hiq-pgp-info"
+#hiq_pgp_info_path = "/Users/Keldins/curoverse/hiq/hiq-pgp-info"
+justVarPaths = np.load(hiq_pgp_info_path)
 
 
 # Loading in phenotype data from PGP database
-
-#conn = sqlite3.connect('/home/sarah/l7g-ml/BloodType/Database/untap.db')
-## She's running this locally, so it's not connecting to a remote database here
-
-conn = sqlite3.connect("/Users/Keldins/curoverse/hiq/hu-pgp.sqlite3")
+# Untap path (Harvard PGP phenotype database scrappings)
+# These are local "snapshots" of the database.
+untap_path = "/data-sdd/data/untap/hu-pgp.sqlite3"
+#untap_path = "/home/sarah/l7g-ml/BloodType/Database/untap.db"
+#untap_path = "/Users/Keldins/curoverse/hiq/hu-pgp.sqlite3"
+conn = sqlite3.connect(untap_path)
 
 c = conn.cursor()
 c.execute('SELECT * FROM demographics')
@@ -152,7 +170,7 @@ for i in range(cnf_matrix.shape[0]):
                  color= "orangered")
 
 plt.gcf().subplots_adjust(left=0.25, bottom =0.35)
-plt.savefig('/Users/Keldins/curoverse/Images/A_Confusion1.png',format='png',dpi=300)
+plt.savefig(plot_output_dir + "A_Confusion1.png", format='png',dpi=300)
 
 coefPaths = justVarPathsNew[idxNZ[1]]
 
