@@ -75,6 +75,9 @@ Xtrain = np.load(hiq_pgp_path)
 
 
 # ohinfo file paths:
+# Recall that names-214.npy is an array of essentially huids. In particular, 
+# it contains the huids of the participants that have genotypical data in
+# hiq-pgp.
 #names_path = "/data-sdd/tiling/hiq.214/names-214.npy"
 #names_path = "/Users/Keldins/curoverse/hiq/names-214.npy"
 names_path = hiq_dir + "/names-214.npy"
@@ -174,38 +177,40 @@ dataBloodType['Rh'] = dataBloodType['blood_type'].str.contains('\+',na=False).as
 # Given a byte string, this anon func will return string up to "-" character 
 # b'hu040C0A-GS01175-DNA_F05' is what rows of ohinfo look like, so this will
 # give us first part of the string, which is the huid.
-g2 = lambda byte_string: byte_string[0:byte_string.find(b"-")]
+extract_str_huid = lambda byte_string: byte_string[0:byte_string.find(b"-")]
 
 # Take huid in byte string to utf and lower case
-huids = [g2(patient_row).decode("utf-8").lower() for patient_row in ohinfo]
+huids = [extract_str_huid(patient_row).decode("utf-8").lower() for patient_row in ohinfo]
 
-df = pd.DataFrame(huids,columns={'Sample'})
-df['Number'] = df.index
+huids_df = pd.DataFrame(huids,columns={'Sample'})
+huids_df['Number'] = huids_df.index
 # Now we have a DataFrame for the huids, with a Number column that matches the
-# DataFrame index
+# DataFrame index. The dataframe index will change later after other operations, so we
+# need to store it now as Number. Later we can use the Number column to index Xtrain.
 
 # Take huid in bloodtype DataFrame to lower case
 dataBloodType.human_id = dataBloodType.human_id.str.lower()
 
-# We wish to create a unified DataFrame for the data in dataBloodType and df
+# We wish to create a unified DataFrame for the data in dataBloodType and huids_df
 # So we use the merge() method.
 # By using option how='inner', we take the intersection of the data in both
 # This accomplishes the important task of making sure we're only looking at
 # huids (patients) for which we have both phenotypical data (their blood type)
 # and genotypical data (their tiled genome).
 
-df2 =  df.merge(dataBloodType,left_on = 'Sample', right_on='human_id', how='inner')
+unified_df =  huids_df.merge(dataBloodType,left_on = 'Sample', right_on='human_id', how='inner')
 del dataBloodType
 # As a bit of an aside, we plot the totals for the blood types
-df2['blood_type'].value_counts().plot(kind='bar')
-df2['blood_type'].value_counts()
-del df
+unified_df['blood_type'].value_counts().plot(kind='bar')
+unified_df['blood_type'].value_counts()
+del huids_df
 
 
 # Get genotypes (tiled genome) for participants that had a blood type listed
-# in phenotypical data
+# in phenotypical data. We can use the Number column, as only entries with blood type
+# data remain.
 
-idx = df2['Number'].values
+idx = unified_df['Number'].values
 Xtrain = Xtrain[idx,:] 
 
 
@@ -236,9 +241,9 @@ justVarPathsNew = justVarPaths[skipTile]
 Xtrain = preprocessing.scale(Xtrain.astype('double'))
 
 
-y = df2.A.values
+y = unified_df.A.values
 
-del df2
+del unified_df
 
 # Train the SVM
 Cval = 0.01  # SVM penalty parameter
