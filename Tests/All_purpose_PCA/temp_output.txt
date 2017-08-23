@@ -1,0 +1,23 @@
+2017-08-22 22:04:00 cwltool INFO: /usr/bin/arvados-cwl-runner ad77601bb4c911f4f02797ade7daafce8fcf16e3 1.0.20170705132428, arvados-python-client 0.1.20170629201632, cwltool 1.0.20170525215327
+2017-08-22 22:04:00 cwltool INFO: Resolved 'All_purpose_PCA.cwl' to 'file:///home/keldin/l7g-ml/Tests/All_purpose_PCA/All_purpose_PCA.cwl'
+2017-08-22 22:04:02 arvados.arv-run INFO: Upload local files: "All_purpose_PCA.py"
+2017-08-22 22:04:03 arvados.arv-run INFO: Uploaded to ae4ceb66de4c9c1622d78f261a39fc01+66 (su92l-4zz18-esz3y5623ednrz8)
+2017-08-22 22:04:03 arvados.cwl-runner INFO: Uploaded to su92l-4zz18-lm0t7l3u8vbo5x3
+2017-08-22 22:04:10 arvados.cwl-runner INFO: Created pipeline su92l-d1hrv-y7428d9mvxdrhx1
+2017-08-22 22:06:05 arvados.cwl-runner INFO: [job All_purpose_PCA.cwl] su92l-8i9sb-6gxkdqp4iuozbin is Running
+2017-08-22 22:13:12 arvados.cwl-runner INFO: [job All_purpose_PCA.cwl] su92l-8i9sb-6gxkdqp4iuozbin is Complete
+2017-08-22 22:13:13 arvados.cwl-runner INFO: Overall process status is success
+2017-08-22 22:13:13 arvados.cwl-runner INFO: Final output collection e1ff109d945c7e9a5fcf9057e4a70737+190
+{
+    "text_output": {
+        "size": 14, 
+        "class": "File", 
+        "location": "keep:e1ff109d945c7e9a5fcf9057e4a70737+190/71dc413f-683a-4a10-a8d9-7805f45d632b"
+    }, 
+    "plot_output": {
+        "size": 204826, 
+        "class": "File", 
+        "location": "keep:e1ff109d945c7e9a5fcf9057e4a70737+190/All_purpose_PCA_output_plot.png"
+    }
+}
+2017-08-22 22:13:13 cwltool INFO: Final process status is success
