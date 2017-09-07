@@ -35,8 +35,8 @@ from sklearn import preprocessing
 from sklearn.metrics import confusion_matrix
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("data_dir_harvard_pgp_hiq_214", default='/home/keldin/keep/by_id/su92l-4zz18-mp6wrk95q8li17t')
-parser.add_argument("data_dir_untap", default='/home/keldin/keep/by_id/su92l-4zz18-ubrp7z77ogbv4r7')
+parser.add_argument("data_dir_harvard_pgp_hiq_214")
+parser.add_argument("data_dir_untap")
 args = parser.parse_args()
 hiq_dir = args.data_dir_harvard_pgp_hiq_214
 untap_dir = args.data_dir_untap
@@ -67,7 +67,7 @@ untap_dir = args.data_dir_untap
 
 # Xtrain file paths, NOT 1hot:
 #hiq_pgp_path = "/data-sdd/tiling/hiq.214/hiq-pgp"
-hiq_pgp_path = hiq_dir + "/hiq-pgp"
+hiq_pgp_path = hiq_dir + "/npy-hiq/hiq"
 Xtrain = np.load(hiq_pgp_path)
 
 
@@ -80,7 +80,7 @@ Xtrain = np.load(hiq_pgp_path)
 # hiq-pgp.
 #names_path = "/data-sdd/tiling/hiq.214/names-214.npy"
 #names_path = "/Users/Keldins/curoverse/hiq/names-214.npy"
-names_path = hiq_dir + "/names-214.npy"
+names_path = hiq_dir + "/npy/names"
 ohinfo = np.load(names_path)
 
 
@@ -101,7 +101,7 @@ ohinfo = np.load(names_path)
 # justVarPaths file paths, NOT 1hot:
 #hiq_pgp_info_path = "/data-sdd/tiling/hiq.214/hiq-pgp-info"
 #hiq_pgp_info_path = "/Users/Keldins/curoverse/hiq/hiq-pgp-info"
-hiq_pgp_info_path = hiq_dir + "/hiq-pgp-info"
+hiq_pgp_info_path = hiq_dir + "/npy-hiq/hiq-info"
 justVarPaths = np.load(hiq_pgp_info_path)
 
 
@@ -177,10 +177,12 @@ dataBloodType['Rh'] = dataBloodType['blood_type'].str.contains('\+',na=False).as
 # Given a byte string, this anon func will return string up to "-" character 
 # b'hu040C0A-GS01175-DNA_F05' is what rows of ohinfo look like, so this will
 # give us first part of the string, which is the huid.
-extract_str_huid = lambda byte_string: byte_string[0:byte_string.find(b"-")]
+after_plus = lambda bstr: bstr[bstr.find(b"+"):-1]
+after_slash = lambda bstr: bstr[bstr.find(b"/")+1:-1]
+before_dash = lambda bstr: bstr[0:bstr.find(b"-")]
 
 # Take huid in byte string to utf and lower case
-huids = [extract_str_huid(patient_row).decode("utf-8").lower() for patient_row in ohinfo]
+huids = [before_dash(after_slash(after_plus(patient))).decode("utf-8").lower() for patient in ohinfo]
 
 huids_df = pd.DataFrame(huids,columns={'Sample'})
 huids_df['Number'] = huids_df.index
