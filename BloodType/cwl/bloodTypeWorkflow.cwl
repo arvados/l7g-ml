@@ -22,7 +22,17 @@ inputs:
             position: 4
 
 outputs:
-    plot_output:
+    plot_blood_type_totals:
         type: File
         outputBinding:
-            glob: A_Confusion1.png
+            glob: Blood_type_totals.png
+    plot_confusion_A:
+        type: File
+        outputBinding:
+            glob: A_Confusion.png
+    plot_confusion_B:
+        type: File
+        outputBinding:
+            glob: B_Confusion.png
+    text_output:
+        type: stdout

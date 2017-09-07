@@ -1,6 +1,6 @@
 script_path: 
     class: File
-    path: /home/keldin/l7g-ml/BloodType/Blood_Type_Test-A_annotated-KNS.py
+    path: /home/keldin/l7g-ml/BloodType/Blood_Type_Test-unified.py
 data_dir_harvard_pgp_hiq_214:
     class: Directory
     path: keep:040dd79e1445bb980760636832a3b13d+46637
