@@ -35,10 +35,10 @@ from sklearn import preprocessing
 from sklearn.metrics import confusion_matrix
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("data_dir_harvard_pgp_hiq_214")
+parser.add_argument("data_dir_hiq")
 parser.add_argument("data_dir_untap")
 args = parser.parse_args()
-hiq_dir = args.data_dir_harvard_pgp_hiq_214
+hiq_dir = args.data_dir_hiq
 untap_dir = args.data_dir_untap
 
 
@@ -246,17 +246,22 @@ justVarPathsNew = justVarPaths[skipTile]
 
 Xtrain = preprocessing.scale(Xtrain.astype('double'))
 
+# Cvals = {'A':0.01, 'B':0.078}
+model_params = {'A':{'penalty':'l1', 'dual':False, 'C':0.01, 'random_state':0},
+	'B':{'penalty':'l1', 'dual':False, 'C':0.078, 'random_state':0, 
+		'class_weight':'balanced'}}
+
 for bloodtype in ['A', 'B']:
 	y = unified_df[bloodtype].values
 	
 	
 	
 	# Train the SVM
-	Cval = 0.01  # SVM penalty parameter
-	classifier = svm.LinearSVC(penalty='l1', dual=False, C=Cval, random_state=0)
+	# Cval = Cvals[bloodtype]  # SVM penalty parameter
+	classifier = svm.LinearSVC(**model_params[bloodtype])
 	svc = classifier.fit(Xtrain, y)
-	#classifier_B = svm.LinearSVC(penalty='l1', dual=False, C=Cval, random_state=0)
-	#svc_B = classifier_B.fit(Xtrain, y_B)
+	# classifier_B = svm.LinearSVC(penalty='l1', dual=False, C=Cval, random_state=0)
+	# svc_B = classifier_B.fit(Xtrain, y_B)
 	
 	
 	# Examine model coefficents

@@ -12,7 +12,7 @@ inputs:
         type: File
         inputBinding:
             position: 0
-    data_dir_harvard_pgp_hiq_214:
+    data_dir_hiq:
         type: Directory
         inputBinding:
             position: 2
