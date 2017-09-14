@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Get Tile Info</string>
+    <string name="call_api">Find tile</string>
+    <string name="tile_searcher">Tile Searcher</string>
+    <string name="to_search_list">Searching for: %s</string>
+    <string name="base_pair_information">Base Pair Information:</string>
+    <string name="tile_path_s">Tile path: %s</string>
+    <string name="tile_step_s">Tile step: %s</string>
+    <string name="tile_phase_s">Tile phase: %s</string>
+    <string name="tile_to_search">Tile to search</string>
+</resources>
