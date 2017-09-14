@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/kevin-fang/lightning-eye-classifier.git
+	branch = master
+	commit = 9b8ddfe24870ac48cd30a060dbad612635396e94
+	parent = 9065f1ccf7ddf1cca4627dee75ef14a967b971cf
+	cmdver = 0.3.1
