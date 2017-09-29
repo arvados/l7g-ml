@@ -1,0 +1,12 @@
+genetic_map:
+    class: File
+    path: keep:c9983b4c347f51c533f199d5e514dcb0+948/tables/genetic_map_hg19_withX.txt.gz
+reference_panel:
+    class: File
+    path: keep:c9983b4c347f51c533f199d5e514dcb0+948/chr19.1kg.phase3.v5a.vcf.gz
+target:
+    class: File
+    path: keep:c9983b4c347f51c533f199d5e514dcb0+948/var-GS12877-1100-37-ASMgffgz_FinalAll.vcf.gz
+output_format: z
+output_prefix: output
+impute_missing: true
