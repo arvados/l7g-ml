@@ -12,6 +12,8 @@ USER root
 # use disk space.
 
 RUN apt-get update
+RUN apt-get install apt-utils -y
+RUN apt-get install build-essential -y
 RUN apt-get install python3-pip -y
 RUN apt-get install python3-numpy -y
 RUN apt-get install python3-scipy -y
@@ -27,6 +29,35 @@ RUN apt-get clean
 
 RUN pip3 install sklearn
 
+# Install random bioinformatics tools
+RUN apt-get update
+RUN apt-get install vcftools -y
+RUN apt-get install zlib1g-dev -y
+RUN apt-get install libncurses5-dev -y
+RUN apt-get install libbz2-dev -y
+RUN apt-get install liblzma-dev -y
+RUN apt-get clean
+
+# Get SAMtools
+RUN wget https://github.com/samtools/samtools/releases/download/1.5/samtools-1.5.tar.bz2
+RUN bzip2 -d samtools-1.5.tar.bz2
+RUN tar xf samtools-1.5.tar
+RUN cd samtools-1.5 && ./configure && make && make install
+
+# Get BCFtools
+RUN wget https://github.com/samtools/bcftools/releases/download/1.5/bcftools-1.5.tar.bz2
+RUN bzip2 -d bcftools-1.5.tar.bz2
+RUN tar xf bcftools-1.5.tar
+RUN cd bcftools-1.5 && ./configure && make && make install
+
+# Get Eagle
 RUN wget https://data.broadinstitute.org/alkesgroup/Eagle/downloads/Eagle_v2.3.4.tar.gz
 RUN gunzip Eagle_v2.3.4.tar.gz
 RUN tar -x -f Eagle_v2.3.4.tar
+
+# Delete tar archives
+RUN cd /
+RUN rm samtools-1.5.tar
+RUN rm bcftools-1.5.tar
+RUN rm Eagle_v2.3.4.tar
+
