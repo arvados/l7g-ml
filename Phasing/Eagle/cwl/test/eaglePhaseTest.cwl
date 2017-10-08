@@ -3,7 +3,7 @@ class: CommandLineTool
 baseCommand: /Eagle_v2.3.4/eagle
 hints:
     DockerRequirement:
-        dockerPull: l7g-ml/eagle:v1.0
+        dockerPull: l7g-ml/eagle:v2.0
 
 inputs:
     genetic_map:
@@ -16,11 +16,15 @@ inputs:
         inputBinding:
             position: 2
             prefix: --vcfRef
+        secondaryFiles:
+            - .tbi
     target:
         type: File
         inputBinding:
             position: 3
             prefix: --vcfTarget
+        secondaryFiles:
+            - .tbi
     output_format:
         type: string
         inputBinding:
@@ -41,3 +45,7 @@ inputs:
 outputs:
     text_output:
         type: stdout
+    phased_file:
+        type: File
+        outputBinding:
+            glob: GS12877_phased_chr19.vcf.gz
