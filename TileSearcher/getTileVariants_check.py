@@ -84,15 +84,12 @@ def tileSearch(arg):
         return "Assembly index file not found or `cat` command not available. Continuing..."
 
 # get the location of a tile
-def getTileLocation(arg,raw_tile_data):
+def getTileLocation(raw_tile_data):
     split_raw = raw_tile_data.split('\t')
     begin = int(split_raw[2])
     sequence = int(split_raw[1])
-  # hexVal = split_raw[0].split(':')[2]
-    vecstep = str(vectorizedStep[int(arg)])
-    vecstep = vecstep[2:].zfill(4)
-    
-    cmdToRun = "bgzip -c -b %d -s %d -d %s | grep -B1 \"%s\s\"" % (begin, sequence, args.assembly_gz, vecstep)
+    hexVal = split_raw[0].split(':')[2]
+    cmdToRun = "bgzip -c -b %d -s %d -d %s | grep -B1 \"%s\s\"" % (begin, sequence, args.assembly_gz, hexVal)
     try:
         subprocess.call("bgzip -r " + args.assembly_gz, shell=True)
         output = subprocess.check_output(cmdToRun, shell=True)
@@ -116,7 +113,7 @@ if (args.get_location):
 if (args.get_base_pairs):
     print "Base pair location:"
     tile = tileSearch(args.index)
-    print getTileLocation(args.index,tile).rstrip() + '\n'
+    print getTileLocation(tile).rstrip() + '\n'
 
 # format tilePath by removing 0x value and padding with spaces so length = 4 
 tilePath = tilePath[2:].zfill(4)
