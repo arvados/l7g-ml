@@ -2,6 +2,18 @@ FROM arvados/jobs:latest
 
 USER root
 
+# Install some essentials
+RUN apt-get update
+RUN apt-get install apt-utils -y
+RUN apt-get install build-essential -y
+RUN apt-get install less -y
+RUN apt-get install wget -y
+RUN apt-get install vim -y
+RUN apt-get clean
+
+# Personalize vim
+RUN echo -e "inoremap jk <Esc>\ninoremap kj <Esc>" > .vimrc
+
 # Installing python packages
 # scipy fails to install with pip3 but succeeds when we use apt-get.
 # For consistency, we therefore use apt-get to install all the
@@ -12,15 +24,11 @@ USER root
 # use disk space.
 
 RUN apt-get update
-RUN apt-get install apt-utils -y
-RUN apt-get install build-essential -y
 RUN apt-get install python3-pip -y
 RUN apt-get install python3-numpy -y
 RUN apt-get install python3-scipy -y
 RUN apt-get install python3-matplotlib -y
 RUN apt-get install python3-pandas -y
-RUN apt-get install less -y
-RUN apt-get install wget -y
 RUN apt-get clean
 
 # Surprisingly, apt-get install python3-sklearn fails because sklearn cannot
@@ -29,7 +37,7 @@ RUN apt-get clean
 
 RUN pip3 install sklearn
 
-# Install random bioinformatics tools
+# Install bioinformatics tools
 RUN apt-get update
 RUN apt-get install vcftools -y
 RUN apt-get install zlib1g-dev -y
@@ -54,6 +62,8 @@ RUN cd bcftools-1.5 && ./configure && make && make install
 RUN wget https://data.broadinstitute.org/alkesgroup/Eagle/downloads/Eagle_v2.3.4.tar.gz
 RUN gunzip Eagle_v2.3.4.tar.gz
 RUN tar -x -f Eagle_v2.3.4.tar
+# Move eagle executable into path
+RUN cp Eagle_v2.3.4/eagle /usr/local/bin/
 
 # Delete tar archives
 RUN cd /
