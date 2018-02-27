@@ -1,0 +1,9 @@
+eagle_script:
+    class: File
+    path: /home/keldin/eagle/data/scripts/run_eagle_loop.sh
+directory_of_reference_panel:
+    class: Directory
+    path: keep:ba7cd392bc4aa229c3c771b496e79628+9990
+target_vcf:
+    class: File
+    path: keep:74e87bded6216c65cc76d84864d40a03+8948/var-GS12877-1100-37-ASMgffgz_FinalAll.vcf.gz
