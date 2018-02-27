@@ -1,0 +1,23 @@
+#!/bin/bash
+
+fn=$1
+r=$2
+
+if [ "$r" == "" ]
+then
+  r=$fn
+  #fn="/scratch/ref/hg19.fa/hg19.fa"
+  #fn="$HOME/keep/by_id/aa39590be6f1812f0a792dd4c86678e8+1348/hg19.fa.gz"
+  #fn="$HOME/keep/by_id/ef70506d71ee761b1ec28d67290216a0+1252/hg19.fa.gz"
+  fn="/data-sdd/data/ref/hg19.fa"
+fi
+
+if [[ "$r" =~ \+ ]]
+then
+  s=`echo "$r" | cut -f1 -d'+' | cut -f2 -d':'`
+  e=`echo "$r" | cut -f2 -d'+'`
+  z=`expr "$s" + "$e" - 1`
+  r=`echo "$r" | cut -f1 -d'+'`'-'$z
+fi
+
+samtools faidx $fn $r | egrep -v '^>' | tr '[:upper:]' '[:lower:]'
