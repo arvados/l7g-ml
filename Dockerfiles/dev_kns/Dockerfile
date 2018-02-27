@@ -1,3 +1,6 @@
+# The image, and thus container created with this are intended
+# to be used by Keldin for day-to-day development work.
+# Cleaner, simpler images will be used for pipelines.
 FROM arvados/jobs:latest
 
 USER root
@@ -76,6 +79,14 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 RUN apt-get update
 RUN apt-get install -y oracle-java8-installer
 RUN apt-get clean
+
+# Get Beagle
+RUN mkdir /Beagle
+RUN cd /Beagle
+RUN wget http://faculty.washington.edu/browning/beagle/beagle.08Jun17.d8b.jar
+RUN wget http://faculty.washington.edu/browning/beagle/bref.08Jun17.d8b.jar
+RUN wget http://faculty.washington.edu/browning/beagle/test.08Jun17.d8b.vcf.gz
+RUN wget http://faculty.washington.edu/browning/beagle/run.beagle.08Jun17.d8b.example
 
 # Delete tar archives
 RUN cd /
