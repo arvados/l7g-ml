@@ -1,0 +1,133 @@
+beagle.08Jun17.d8b.jar (version 4.1)
+Copyright (C) 2014-2015 Brian L. Browning
+Enter "java -jar beagle.08Jun17.d8b.jar" for a summary of command line arguments.
+Start time: 12:39 AM UTC on 13 Dec 2017
+
+Command line: java -Xmx25068m -jar beagle.jar
+  gt=test.08Jun17.d8b.vcf.gz
+  out=out.gt
+
+No genetic map is specified: using 1 cM = 1 Mb
+
+reference samples:       0
+target samples:        191
+
+Window 1 [ 22:20000086-20099941 ]
+target markers:       1356
+
+Starting burn-in iterations
+
+Window=1 Iteration=1
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 13     max edges/level: 25
+mean edges/node:  1.146  mean count/edge: 29
+
+Window=1 Iteration=2
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 19     max edges/level: 36
+mean edges/node:  1.095  mean count/edge: 20
+
+Window=1 Iteration=3
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 29     max edges/level: 49
+mean edges/node:  1.029  mean count/edge: 13
+
+Window=1 Iteration=4
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 32     max edges/level: 56
+mean edges/node:  1.022  mean count/edge: 12
+
+Window=1 Iteration=5
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 37     max edges/level: 61
+mean edges/node:  1.016  mean count/edge: 10
+
+Window=1 Iteration=6
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 39     max edges/level: 60
+mean edges/node:  1.015  mean count/edge: 10
+
+Window=1 Iteration=7
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 38     max edges/level: 57
+mean edges/node:  1.015  mean count/edge: 10
+
+Window=1 Iteration=8
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 39     max edges/level: 63
+mean edges/node:  1.014  mean count/edge: 10
+
+Window=1 Iteration=9
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 38     max edges/level: 57
+mean edges/node:  1.014  mean count/edge: 10
+
+Window=1 Iteration=10
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 37     max edges/level: 59
+mean edges/node:  1.015  mean count/edge: 10
+
+Starting phasing iterations
+
+Window=1 Iteration=11
+Time for building model:         0 seconds
+Time for sampling (singles):     1 second
+DAG statistics
+mean edges/level: 43     max edges/level: 63
+mean edges/node:  1.011  mean count/edge: 9
+
+Window=1 Iteration=12
+Time for building model:         0 seconds
+Time for sampling (singles):     1 second
+DAG statistics
+mean edges/level: 44     max edges/level: 62
+mean edges/node:  1.011  mean count/edge: 9
+
+Window=1 Iteration=13
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 43     max edges/level: 61
+mean edges/node:  1.011  mean count/edge: 9
+
+Window=1 Iteration=14
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 42     max edges/level: 60
+mean edges/node:  1.011  mean count/edge: 9
+
+Window=1 Iteration=15
+Time for building model:         0 seconds
+Time for sampling (singles):     0 seconds
+DAG statistics
+mean edges/level: 43     max edges/level: 62
+mean edges/node:  1.010  mean count/edge: 9
+
+Number of markers:                1356
+Total time for building model: 5 seconds
+Total time for sampling:       4 seconds
+Total run time:                9 seconds
+
+End time: 12:39 AM UTC on 13 Dec 2017
+beagle.08Jun17.d8b.jar (version 4.1) finished
