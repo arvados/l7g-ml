@@ -1,0 +1,7 @@
+sample: "GS12877"
+refsdir:
+  class: Directory
+  path: keep:ba7cd392bc4aa229c3c771b496e79628+9990
+target:
+  class: File
+  path: keep:107c0bc5c501353861af326dd4cd64a6+124/GS12877_unphased.vcf.gz
