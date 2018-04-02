@@ -35,4 +35,4 @@ arguments:
   - prefix: "-p"
     valueFrom: "vcf"
   - "-f"
-  - $(inputs.sample)_phased.vcf.gz
+  - $(inputs.sample)_imputed.vcf.gz
