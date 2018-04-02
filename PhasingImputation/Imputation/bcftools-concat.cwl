@@ -28,7 +28,7 @@ arguments:
   - "-c"
   - shellQuote: false
     valueFrom: ">"
-  - $(inputs.sample)_phased.vcf.gz
+  - $(inputs.sample)_imputed.vcf.gz
   - shellQuote: false
     valueFrom: "&&"
   - "tabix"
