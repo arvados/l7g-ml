@@ -1,0 +1,13 @@
+sample: "GS12877"
+phasingrefsdir:
+  class: Directory
+  path: keep:ba7cd392bc4aa229c3c771b496e79628+9990
+imputationrefsdir:
+  class: Directory
+  path: keep:0df9d12fa767d10df2d5730149d6a5e9+2488
+mapsdir:
+  class: Directory
+  path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
+target:
+  class: File
+  path: keep:107c0bc5c501353861af326dd4cd64a6+124/GS12877_unphased.vcf.gz
