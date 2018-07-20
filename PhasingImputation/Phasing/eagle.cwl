@@ -4,6 +4,7 @@ requirements:
   ShellCommandRequirement: {}
 hints:
   ResourceRequirement:
+    coresMin: 2
     ramMin: 6000
 inputs:
   sample: string
@@ -32,7 +33,8 @@ arguments:
     valueFrom: "z"
   - prefix: "--outPrefix"
     valueFrom: $(inputs.sample)_phased_$(inputs.chr)
-  - "--noImpMissing"
+  - prefix: "--numThreads"
+    valueFrom: $(runtime.cores)
   - shellQuote: false
     valueFrom: "&&"
   - "tabix"

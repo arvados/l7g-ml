@@ -1,0 +1,7 @@
+sample: "NA12878"
+refsdir:
+  class: Directory
+  path: keep:ba7cd392bc4aa229c3c771b496e79628+9990
+target:
+  class: File
+  path: keep:fb3933ec280f40ccfbbca7d83d96566f+554/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf.gz
