@@ -4,7 +4,7 @@ requirements:
   ShellCommandRequirement: {}
 hints:
   ResourceRequirement:
-    coresMin: 3
+    coresMin: 2
     ramMin: 1000
     tmpdirMin: 10000
 inputs:
