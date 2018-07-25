@@ -12,6 +12,7 @@ inputs:
   ref:
     type: File
     secondaryFiles: [.tbi]
+  map: File
   target:
     type: File
     secondaryFiles: [.tbi]
@@ -24,7 +25,7 @@ outputs:
 baseCommand: eagle
 arguments:
   - prefix: "--geneticMapFile"
-    valueFrom: "/Eagle_v2.4/tables/genetic_map_hg19_withX.txt.gz"
+    valueFrom: $(inputs.map)
   - prefix: "--vcfRef"
     valueFrom: $(inputs.ref)
   - prefix: "--vcfTarget"

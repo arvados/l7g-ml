@@ -1,0 +1,16 @@
+sample: "hu007B82_1YB27IM-portable"
+phasingrefsdir:
+  class: Directory
+  path: keep:ee771541673d31b2ecce9500860875c8+9138
+phasingmap:
+  class: File
+  path: keep:fb7dd247741c3494d287ca09ed8f938a+85/genetic_map_hg19_withX.txt.gz
+imputationrefsdir:
+  class: Directory
+  path: keep:a0879d2c5562e37bf6ce2ab57f068250+6291
+imputationmapsdir:
+  class: Directory
+  path: keep:4bbaee15b35fc9321ed1cae6dee69eb8+1070
+target:
+  class: File
+  path: keep:ccd1752901ad1c7ce099ae5c4c0dd7ee+43270/hu007B82_1YB27IM-portable.vcf.gz

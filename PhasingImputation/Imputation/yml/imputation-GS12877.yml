@@ -1,7 +1,7 @@
 sample: "GS12877"
 refsdir:
   class: Directory
-  path: keep:0df9d12fa767d10df2d5730149d6a5e9+2488
+  path: keep:8c3d69d0e4b4c352674476f0ef5c5469+6291
 mapsdir:
   class: Directory
   path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008

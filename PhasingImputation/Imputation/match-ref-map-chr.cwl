@@ -19,7 +19,7 @@ expression: |
     for (var i = 0; i < inputs.chrs.length; i++) {
       for (var j = 0; j < inputs.refsdir.listing.length; j++) {
         var file = inputs.refsdir.listing[j];
-        if (file.nameext == ".bref" && file.basename.indexOf(inputs.chrs[i]+".") != -1) {
+        if (file.nameext == ".bref3" && file.basename.indexOf(inputs.chrs[i]+".") != -1) {
           refs.push(file);
         }
       }

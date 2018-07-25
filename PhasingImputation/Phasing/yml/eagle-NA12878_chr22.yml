@@ -1,16 +1,11 @@
 sample: "NA12878"
-phasingrefsdir:
-  class: Directory
-  path: keep:ba7cd392bc4aa229c3c771b496e79628+9990
-phasingmap:
+chr: "chr22"
+ref:
+  class: File
+  path: keep:ba7cd392bc4aa229c3c771b496e79628+9990/chr22.1kg.phase3.v5a.vcf.gz
+map:
   class: File
   path: keep:fb7dd247741c3494d287ca09ed8f938a+85/genetic_map_hg19_withX.txt.gz
-imputationrefsdir:
-  class: Directory
-  path: keep:8c3d69d0e4b4c352674476f0ef5c5469+6291
-imputationmapsdir:
-  class: Directory
-  path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
 target:
   class: File
   path: keep:fb3933ec280f40ccfbbca7d83d96566f+554/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf.gz

@@ -5,8 +5,9 @@ requirements:
 inputs:
   sample: string
   phasingrefsdir: Directory
+  phasingmap: File
   imputationrefsdir: Directory
-  mapsdir: Directory
+  imputationmapsdir: Directory
   target:
     type: File
     secondaryFiles: [.tbi]
@@ -22,6 +23,7 @@ steps:
     in:
       sample: sample
       refsdir: phasingrefsdir
+      map: phasingmap
       target: target
     out: [phasedvcfgz]
   imputation-wf:
@@ -29,7 +31,7 @@ steps:
     in:
       sample: sample
       refsdir: imputationrefsdir
-      mapsdir: mapsdir
+      mapsdir: imputationmapsdir
       target: phasing-wf/phasedvcfgz
     out: [imputedvcfgz]
       

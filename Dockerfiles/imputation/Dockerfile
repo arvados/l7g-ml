@@ -22,7 +22,7 @@ RUN apt-get clean
 WORKDIR /
 
 # Getting beagle
-RUN wget http://faculty.washington.edu/browning/beagle/beagle.27Jan18.7e1.jar
+RUN wget https://faculty.washington.edu/browning/beagle/beagle.03Jul18.40b.jar
 
 WORKDIR /
 

@@ -2,10 +2,13 @@ sample: "GS12877"
 phasingrefsdir:
   class: Directory
   path: keep:ba7cd392bc4aa229c3c771b496e79628+9990
+phasingmap:
+  class: File
+  path: keep:fb7dd247741c3494d287ca09ed8f938a+85/genetic_map_hg19_withX.txt.gz
 imputationrefsdir:
   class: Directory
-  path: keep:0df9d12fa767d10df2d5730149d6a5e9+2488
-mapsdir:
+  path: keep:8c3d69d0e4b4c352674476f0ef5c5469+6291
+imputationmapsdir:
   class: Directory
   path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
 target:

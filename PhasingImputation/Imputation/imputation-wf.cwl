@@ -9,7 +9,7 @@ hints:
   DockerRequirement:
     dockerPull: l7g-ml/imputation
   ResourceRequirement:
-    ramMin: 6000
+    ramMin: 10000
 inputs:
   sample: string
   chrs:

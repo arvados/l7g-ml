@@ -2,6 +2,9 @@ sample: "GS12877"
 refsdir:
   class: Directory
   path: keep:ba7cd392bc4aa229c3c771b496e79628+9990
+map:
+  class: File
+  path: keep:fb7dd247741c3494d287ca09ed8f938a+85/genetic_map_hg19_withX.txt.gz
 target:
   class: File
   path: keep:107c0bc5c501353861af326dd4cd64a6+124/GS12877_unphased.vcf.gz

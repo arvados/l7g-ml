@@ -4,6 +4,7 @@ requirements:
   ShellCommandRequirement: {}
 hints:
   ResourceRequirement:
+    coresMin: 2
     ramMin: 6000
 inputs:
   sample: string
@@ -22,7 +23,7 @@ outputs:
 baseCommand: java
 arguments:
   - prefix: "-jar"
-    valueFrom: "/beagle.27Jan18.7e1.jar"
+    valueFrom: "/beagle.03Jul18.40b.jar"
   - prefix: "ref="
     separate: false
     valueFrom: $(inputs.ref)
@@ -35,7 +36,9 @@ arguments:
   - prefix: "out="
     separate: false
     valueFrom: $(inputs.sample)_imputed_$(inputs.chr)
-  - "nthreads=1"
+  - prefix: "nthreads="
+    separate: false
+    valueFrom: $(runtime.cores)
   - shellQuote: false
     valueFrom: "&&"
   - "tabix"
