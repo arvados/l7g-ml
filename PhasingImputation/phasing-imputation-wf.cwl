@@ -16,6 +16,9 @@ outputs:
   imputedvcfgz:
     type: File
     outputSource: imputation-wf/imputedvcfgz
+  phasedvcfgz:
+    type: File
+    outputSource: phasing-wf/phasedvcfgz
 
 steps:
   phasing-wf:
