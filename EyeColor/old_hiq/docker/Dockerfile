@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-MAINTAINER Kevin Fang <kfang@curii.com>
+MAINTAINER Kevin Fang <kevinzfang@gmail.com>
 USER root
 
 # install necessary dependencies
@@ -31,8 +31,8 @@ RUN apt-get update -y && \
     rm -rf htslib-1.5
 
 # install python specific packages
-RUN pip install --upgrade pip==9.0.3 && \ 
-    pip install scikit-learn==0.19.1 \
+RUN pip install --upgrade pip && \ 
+    pip install sklearn \
         matplotlib \
         pandas \
         scipy \
