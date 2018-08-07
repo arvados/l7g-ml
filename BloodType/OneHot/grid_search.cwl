@@ -12,7 +12,7 @@ requirements:
     coresMin: 12
     outdirMin: 50000
     tmpdirMin: 50000
-stdout: $("encode_output.txt")
+stdout: $("grid_search_output.txt")
 hints:
   arv:RuntimeConstraints:
     keep_cache: 1500
