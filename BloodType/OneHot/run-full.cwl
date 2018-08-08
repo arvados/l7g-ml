@@ -20,6 +20,22 @@ inputs:
     type: File
     inputBinding:
       position: 0
+  all_tiles:
+    type: File
+    inputBinding:
+      position: 1
+  names:
+    type: File
+    inputBinding:
+      position: 2
+  all_info:
+    type: File
+    inputBinding:
+      position: 3
+  untap:
+    type: File
+    inputBinding:
+      position: 4
 outputs:
   enc_out:
     type: stdout

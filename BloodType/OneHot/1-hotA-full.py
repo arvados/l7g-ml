@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 import numpy as np
 import sqlite3
@@ -7,13 +5,13 @@ from sklearn import svm
 from sklearn.model_selection import cross_val_score, LeaveOneOut, train_test_split
 from sklearn import preprocessing
 from sklearn.metrics import confusion_matrix, accuracy_score
-import seaborn as sns
+from sklearn.svm import LinearSVC
 import os
-sns.set()
 
+from sys import argv
 # load data from untap
 print("Loading untap data...")
-conn = sqlite3.connect('/home/kfang/one_hot_blood_type/untap.db')
+conn = sqlite3.connect(argv[4])
 c = conn.cursor()
 c.execute('SELECT * FROM demographics')
 rows = c.fetchall()
@@ -31,21 +29,13 @@ dataBloodType['A'] = dataBloodType['blood_type'].str.contains('A',na=False).asty
 dataBloodType['B'] = dataBloodType['blood_type'].str.contains('B',na=False).astype(int)
 dataBloodType['Rh'] = dataBloodType['blood_type'].str.contains('\+',na=False).astype(int)
 
-# function to retrieve a tile file from keep
-tiled_data_dir = "/home/kfang/keep/by_id/su92l-4zz18-b8rs5x7t6gry16k/"
-def get_file(name, np_file = True):
-    if np_file: 
-        return np.load(os.path.join(tiled_data_dir, name))
-    else:
-        return open(os.path.join(tiled_data_dir, name), 'r')
-
 print("Loading tile data from keep. This may take a while...")
-Xtrain = get_file('./all.npy')
-path_data = get_file('./all-info.npy')
+Xtrain = np.load(argv[1])
+path_data = np.load(argv[3])
 
 Xtrain += 2
 
-names_file = get_file("names.npy", np_file = False)
+names_file = open(argv[2], 'r')
 names = []
 for line in names_file:
     names.append(line[45:54][:-1])
@@ -151,7 +141,7 @@ varvals = varvals[idxTK]
 pathdataOH = pathdataOH[idxTK]
 oldpath = oldpath[idxTK]
 print("Processing finished. Starting machine learning...")
-X_train, X_test, y_train, y_test = train_test_split(encoded, blood_types, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(encoded, y, test_size=0.2)
 
 # C = 0.02  # SVM regularization parameter
 classifier = LinearSVC(penalty='l1', class_weight='balanced', dual=False, C=.02)
@@ -159,3 +149,14 @@ svc = classifier.fit(X_train, y_train)
 
 y_pred = classifier.predict(X_test)
 print(accuracy_score(y_test, y_pred))
+def printCoefs(classifier):
+    # retrieve all the nonzero coefficients and zip them with their respective indices
+    nonzeroes = np.nonzero(classifier.coef_[0])[0]
+    coefs = zip(nonzeroes, classifier.coef_[0][nonzeroes])
+
+    # sort the coefficients by their value, instead of index
+    coefs.sort(key = lambda x: x[1], reverse=True)
+
+    for coef in coefs[:50]:
+        print coef
+printCoefs(svc)
