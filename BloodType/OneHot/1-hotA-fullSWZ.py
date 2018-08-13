@@ -80,7 +80,7 @@ max_indicator = np.amax(Xtrain, axis=0)
 sameTile = min_indicator == max_indicator
 skipTile = ~sameTile
 
-ixdOP = np.arrange(Xtrain.shape[1])
+idxOP = np.arange(Xtrain.shape[1])
 Xtrain = Xtrain[:,skipTile]
 
 newPaths = path_data[skipTile]

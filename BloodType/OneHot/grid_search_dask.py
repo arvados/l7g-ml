@@ -1,4 +1,4 @@
-from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 import numpy as np
 import sys
 from sklearn.linear_model import SGDClassifier
@@ -8,11 +8,10 @@ encoded = np.load(sys.argv[1])
 blood_types = np.load(sys.argv[2])
 print("Numpy loaded")
 from dask_ml.model_selection import GridSearchCV
-crange = np.logspace(-4, 1.5, 10).tolist()
-param_space = {"alpha": crange}
+crange = np.logspace(-4, 3, 15).tolist()
+param_space = {"C": crange}
 
-model = SGDClassifier(penalty='l1', class_weight='balanced', learning_rate='optimal', verbose=1, max_iter=10)
-#model = LinearSVC(penalty="l2", dual=False, verbose=1, max_iter=1000)
+model = SVC(class_weight='balanced', kernel='linear', verbose=1)
 
 #search = GridSearchCV(model, param_space, cv=5, n_jobs=4, pre_disptch="2*n_jobs")
 search = GridSearchCV(model, param_space, cv=5, n_jobs=5)
