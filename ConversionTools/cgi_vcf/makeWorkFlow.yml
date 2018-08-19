@@ -1,0 +1,7 @@
+refdirectory:
+   class: Directory
+   path: keep:ced0a93fec0a345c11f136cecefc6a1b+10279
+
+reference:
+   class: File
+   path: keep:ae32bcfe6a9201d67f78fbf7f5d77768+530/build37.crr

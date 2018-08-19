@@ -1,0 +1,8 @@
+originalfile:
+   class: File
+   path: keep:cdf83515503bc941178d2d9d4487c8d9+2988/GS02995-DNA_C02/ASM/masterVarBeta-GS000036655-ASM.tsv.bz2
+
+reference:
+   class: File
+   path: keep:ae32bcfe6a9201d67f78fbf7f5d77768+530/build37.crr
+ 
