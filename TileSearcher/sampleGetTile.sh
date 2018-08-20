@@ -1,6 +1,9 @@
 #!/bin/sh
-
-./getTileVariants.py -i 1792420 -l -b -vdi -pvd --assembly-gz='./tiling-files/assembly.00.hg19.fw.gz' --assembly-fwi='./tiling-files/assembly.00.hg19.fw.fwi' --keep='./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3' --hiq-info='./tiling-files/hiq-pgp-info'
+if [ $# -ne 1 ]; then 
+	echo "Usage: ./sampleGetTile.sh <index>"
+else
+	./getTileVariants.py -i $1 -l -b -vdi -pvd --assembly-gz='./tiling-files/assembly.00.hg19.fw.gz' --assembly-fwi='./tiling-files/assembly.00.hg19.fw.fwi' --keep='./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3' --hiq-info='./tiling-files/hiq-pgp-info'
+fi
 
 # What each command means 
 # -i [Index]: index of the array

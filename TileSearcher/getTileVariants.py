@@ -4,15 +4,16 @@
 
 import subprocess, argparse
 import numpy as np
-from subprocess import CalledProcessError
+from subprocess import CalledProcessError, Popen, PIPE, STDOUT
 import sys
+import clustalo
 
 class color:
     RED = '\033[91m'
     END = '\033[0m'
 
 # set up argument parsing
-parser = argparse.ArgumentParser(description="From an index of a tile, return the tile name, variants, and/or base pair locations")
+parser = argparse.ArgumentParser(description="From an index of a tile, return the tile name, variants, and/or Base Pair Locations")
 parser.add_argument('-i', '--index', type=int, help="An index of the tile", required=True)
 parser.add_argument('--hiq-info', type=str, help="Location of tile names (for PGP, it is called hiq-pgp-info)", required=True)
 parser.add_argument('-l', '--get-location', type=int, nargs='?', default=False, help="Whether to get tile location (requires cat, grep, and assembly.00.hg19.fw.fwi)")
@@ -78,6 +79,8 @@ def tileSearch(arg):
     vecpath = str(vectorizedPath[int(arg)])
     vecpath = vecpath[2:].zfill(4)
     try:
+        #proc = Popen(['cat', args.assembly_fwi, "|", "grep", ":", vecpath], stdout=PIPE, stderr=STDOUT)
+        #print proc.communicate()
         proc = subprocess.check_output("cat " + args.assembly_fwi + " | grep :" + vecpath, shell=True)
         return proc
     except CalledProcessError as e:
@@ -125,6 +128,8 @@ tileStep = tileStep[2:].zfill(4)
 # get tile variants using zgrep command on keep collection
 if (args.get_variants):
     try:
+        #proc = Popen(['zgrep', "{}.00.{} {}/{}.sglf.gz".format(tilePath, tileStep, args.keep, tilePath)], stdout=PIPE, stderr=STDOUT)
+        #variants = proc.communicate()
         variants = subprocess.check_output("zgrep %s.00.%s %s/%s.sglf.gz" % (tilePath, tileStep, args.keep, tilePath), shell=True)
     except CalledProcessError:
         print "Collection not found or `zgrep` command not available. Finishing..."
@@ -132,61 +137,45 @@ if (args.get_variants):
     print "Variant Information:"
     print variants
 
-def getDifferentIndices(sequences):
-    differentIndices = []
-    maxList = max(enumerate(sequences), key= lambda tup: len(tup[1]))[1]
-    for i, letter in enumerate(maxList):
-        diff = False
-        for sequence in sequences:
-            if diff == False and (i >= len(sequence) or sequence[i] != letter):
-                differentIndices.append(i)
-                diff = True
-    return differentIndices
+def getDifferentIndices(variants):
+    fasta = clustalo.convert_list_to_fasta(variants)
+    return clustalo.get_diff_indices(fasta)
 
 if args.get_variant_diff_indices:
     try:
+        #proc = Popen(['zgrep', "{}.00.{} {}/{}.sglf.gz".format(tilePath, tileStep, args.keep, tilePath)], stdout=PIPE, stderr=STDOUT)
+        #variants = proc.communicate()
         variants = subprocess.check_output("zgrep %s.00.%s %s/%s.sglf.gz" % (tilePath, tileStep, args.keep, tilePath), shell=True)
+
     except CalledProcessError:
         print "Collection not found or `zgrep` command not available. Finishing..."
         sys.exit()
 
+    # split commandline output into each variant
     variants = variants.split('\n')[:-1]
 
+    differentIndices = getDifferentIndices(variants) 
+    # split tile hash and name from the actual sequence for clustalo
     for i, variant in enumerate(variants):
-        variants[i] = variant.split(',')
+       splits = variant.split(',')
+       variants[i] = ["".join([splits[0], splits[1]]), splits[2]]
+    # add 1, as counting differences are offset by 1
+    print "Index of variant differences:", differentIndices 
 
-    sequences = []
+def print_red_diffs(variants):
 
-    for _, _, sequence in variants:
-        sequences.append(sequence)
-    print "Variant Diff Indices:", getDifferentIndices(sequences) 
-
-# get differences in variants using zgrep and difference checking
-if args.print_variant_diffs:
-    try:
-        variants = subprocess.check_output("zgrep %s.00.%s %s/%s.sglf.gz" % (tilePath, tileStep, args.keep, tilePath), shell=True) 
-    except CalledProcessError:
-        print "Collection not found or `zgrep` command not available. Finishing..."
-	sys.exit()
-    
-    print "Annotated Variant Diffs (" + color.RED + "red" + color.END + " denotes a different base pair):"
-    # split into each variant
-    variants = variants.split('\n')[:-1]
+    # split tile hash and name from the actual sequence for clustalo
     for i, variant in enumerate(variants):
-	variants[i] = variant.split(',')
-    sequences = []
-    for _, _, sequence in variants:
-        sequences.append(sequence)
-    
-    differentIndices = getDifferentIndices(sequences) 
-    # print out results 
+       splits = variant.split(',')
+       variants[i] = ["".join([splits[0], splits[1]]), splits[2]]
+
     for variant in variants:
         # print out tile name and hash value
         print ",".join(variant[:-1]) + ",",
         
         diffStatus = False
         # write to stdout (so there won't be spaces after each letter) in color.RED if there are differences and normal color if there aren't 
-        for i, letter in enumerate(variant[2]):
+        for i, letter in enumerate(variant[1]):
             if i + 1 in differentIndices and not diffStatus:
                 sys.stdout.write(letter)
                 sys.stdout.write(color.RED)
@@ -201,3 +190,23 @@ if args.print_variant_diffs:
                 sys.stdout.write(letter)
         print color.END
 
+def print_clustalo_diffs(variants):
+    fasta = clustalo.convert_list_to_fasta(variants)
+    for item in clustalo.get_clustalo(fasta)[0]:
+        print "\n".join(item)
+    #print "".join(clustalo.get_clustalo(fasta)[0])
+
+# print variants using different color to mark differences using zgrep and difference checking
+if args.print_variant_diffs:
+    try:
+        variants = subprocess.check_output("zgrep %s.00.%s %s/%s.sglf.gz" % (tilePath, tileStep, args.keep, tilePath), shell=True) 
+    except CalledProcessError:
+        print "Collection not found or `zgrep` command not available. Finishing..."
+    
+    print "Annotated Variant Diffs (" + color.RED + "red" + color.END + " denotes a different base pair):"
+    # split commandline output into each variant
+    variants = variants.split('\n')[:-1]
+
+    differentIndices = getDifferentIndices(variants) 
+
+    print_clustalo_diffs(variants)
