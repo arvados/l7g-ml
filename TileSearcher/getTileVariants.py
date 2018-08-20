@@ -139,6 +139,6 @@ def tile_iteration(tile):
 	if app.functionality['get_diff_indices']: # get the indices of the variant differences
 		print("Index of variant differences: {}\n".format(tile.clustalo_diffs))
 
-
+#map(app.tiles, tile_iteration)
 for tile in app.tiles:
 	tile_iteration(tile)

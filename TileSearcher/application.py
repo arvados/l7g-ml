@@ -30,7 +30,7 @@ class TileApplication:
 
 	def set_functionality(self, args):
 		# parse functionality from input and save to dictionary
-		for idx in args.index:
+		for idx in args.indices:
 			self.tiles.append(Tile(idx))
 		if args.get_location == None:
 			if args.assembly_fwi == None:

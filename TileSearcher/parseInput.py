@@ -19,7 +19,6 @@ def setup_parsing(app):
 def parse_input(app):
 	# parse arguments
 	args = app.parser.parse_args()
-	print(args.index)
 	# quit if no arguments were specified
 	if args.get_location == args.print_variant_diffs == args.get_diff_indices == args.get_base_pair_locations == False: 
 		raise Exception("Nothing to find.")
