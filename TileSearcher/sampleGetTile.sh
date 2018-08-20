@@ -1,12 +1,11 @@
 #!/bin/sh
-if [ $# -ne 1 ]; then 
-	echo "Usage: ./sampleGetTile.sh <index>"
-else
-	./getTileVariants.py -i $1 -l -b -vdi -pvd --assembly-gz='./tiling-files/assembly.00.hg19.fw.gz' --assembly-fwi='./tiling-files/assembly.00.hg19.fw.fwi' --keep='./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3' --hiq-info='./tiling-files/hiq-pgp-info'
-fi
+
+python getTilesNew.py -i $1 --hiq-info ./tiling-files/hiq-pgp-info --get-location --assembly-fwi='./tiling-files/assembly.00.hg19.fw.fwi' --get-diff-indices --keep=./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3 --print-variant-diffs --get-base-pair-locations --assembly-gz='./tiling-files/assembly.00.hg19.fw.gz'
+
+# A sample call can look like ./sampleGetTile.sh "563 7824 738466 23495" to get the tile information for these four tile indices.
 
 # What each command means 
-# -i [Index]: index of the array
+# -i [Index]: index(es) of the array
 # -l [Location]: provides the name of the tile, along with phase, step, and path
 # -vdi [Variant Different Indices]: provides the Variant Difference Indices, in other words the locations where the base pairs are different
 # -pvd [Print Variant Differences]: denotes the different base pairs in red
