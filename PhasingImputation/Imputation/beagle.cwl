@@ -35,10 +35,26 @@ arguments:
     valueFrom: $(inputs.target)
   - prefix: "out="
     separate: false
-    valueFrom: $(inputs.sample)_imputed_$(inputs.chr)
+    valueFrom: $(runtime.tmpdir)/$(inputs.sample)_imputed_$(inputs.chr)
   - prefix: "nthreads="
     separate: false
     valueFrom: $(runtime.cores)
+  - shellQuote: false
+    valueFrom: "&&"
+  - "zcat"
+  - $(runtime.tmpdir)/$(inputs.sample)_imputed_$(inputs.chr).vcf.gz
+  - shellQuote: false
+    valueFrom: "|"
+  - "grep"
+  - prefix: "-v"
+    valueFrom: "0|0"
+  - shellQuote: false
+    valueFrom: "|"
+  - "bgzip"
+  - "-c"
+  - shellQuote: false
+    valueFrom: ">"
+  - $(inputs.sample)_imputed_$(inputs.chr).vcf.gz
   - shellQuote: false
     valueFrom: "&&"
   - "tabix"
