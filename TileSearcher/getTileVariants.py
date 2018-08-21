@@ -76,9 +76,11 @@ def fill_clustalo_entries(tile_item):
 	# split a single long variant string into a list of variants, separated by newline
 	variants = tile_item.variants.split('\n')[:-1]
 
+        if len(variants) == 1:
+            filled_tile.clustalo_output = ([[variants[0]]], "")
+            return filled_tile
 	# convert list to fasta for clustalo
-	fasta = clustalo.convert_list_to_fasta(variants)
-	# clustalo output goes (entries, diffs) - calculates both
+	fasta = clustalo.convert_list_to_fasta(variants) # clustalo output goes (entries, diffs) - calculates both
 	filled_tile.clustalo_output = clustalo.get_clustalo(fasta)
 	return filled_tile
 

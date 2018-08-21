@@ -8,7 +8,8 @@ assembly_fwi: ./tiling-files/assembly.00.hg19.fw.fwi
 keep: ./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3
 
 # location of tile info array
-tile_info: ./tiling-files/hiq-pgp-info
+tile_info: ./all-info.npy
+#tile_info: ./tiling-files/hiq-pgp-info
 
 # which features to search for
 features:
