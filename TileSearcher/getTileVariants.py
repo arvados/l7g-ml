@@ -2,6 +2,7 @@
 # Created by Kevin Fang, 2018 at Curoverse.
 # Searches for tile name, base pairs, and variants
 
+from __future__ import print_function
 import subprocess, sys, numpy as np
 from subprocess import CalledProcessError, Popen, PIPE, STDOUT
 import clustalo, parseInput
@@ -21,7 +22,7 @@ parseInput.parse_input(app)
 app.test_command_availability()
 
 # set up information needed for tile search
-coefPaths = np.load(app.data['hiq_info'])
+coefPaths = np.load(app.data['tile_info'])
 tile_path = np.trunc(coefPaths / (16 ** 5))
 tile_step = np.trunc((coefPaths - tile_path * 16 ** 5) / 2)
 tile_phase = np.trunc((coefPaths - tile_path * 16 ** 5 - 2 * tile_step))
@@ -117,28 +118,39 @@ def fill_bp_loc(tile_item):
 	except CalledProcessError as e:
 		raise Exception("assembly file not found.")
 
-def tile_iteration(tile):
+# out is a function that tells the program what to do with output - send to a file or print?
+def tile_iteration(tile, out):
 # get the location of tiles and store it because it will be important later
-	if app.functionality['get_location']: # get tile location, path, step phase
-		tile = fill_tile_info(tile)
-		print(str(tile).rstrip() + '\n')
+	tile = fill_tile_info(tile)
+	if app.functionality['location']: # get tile location, path, step phase	
+		out(str(tile).rstrip() + '\n')
 
-	if app.functionality['get_base_pair_locations']: # get base pair location
+	if app.functionality['base_pair_locations']: # get base pair location
 		tile = fill_bp_loc(tile)
-		print(tile.bp_output.rstrip() + '\n')
+		out(tile.bp_output.rstrip() + '\n')
 
-	if app.functionality['print_variant_diffs']: # get variant differences using ClustalW
+	if app.functionality['variant_diffs']: # get variant differences using ClustalW
 		# fill the variant info for the file, in case needed later
 		tile = fill_variants_info(tile)
 		tile = fill_clustalo_entries(tile)
 		tile = fill_clustalo_diffs(tile)
 
 		for item in tile.clustalo_entries:
-			print "\n".join(item)
+			out("\n".join(item))
+			out('\n')
 		
-	if app.functionality['get_diff_indices']: # get the indices of the variant differences
-		print("Index of variant differences: {}\n".format(tile.clustalo_diffs))
+	if app.functionality['diff_indices']: # get the indices of the variant differences
+		out("Index of variant differences: {}\n".format(tile.clustalo_diffs))
 
-#map(app.tiles, tile_iteration)
+	print("Finished search for tile {}\n".format(tile.index))
+
+
 for tile in app.tiles:
-	tile_iteration(tile)
+	if app.write_to_file:
+		import os
+		if not os.path.exists('output'):
+			os.mkdir('output')
+		with open("output/{}.txt".format(tile.index), 'w') as f:
+			tile_iteration(tile, f.write)
+	else:
+		tile_iteration(tile, print)

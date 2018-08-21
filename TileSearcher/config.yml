@@ -1,0 +1,18 @@
+# location of assembly .fw.gz file
+assembly_gz: ./tiling-files/assembly.00.hg19.fw.gz
+
+# location of assembly .fw.fwi file
+assembly_fwi: ./tiling-files/assembly.00.hg19.fw.fwi
+
+# location of keep collection with sglf.gz files
+keep: ./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3
+
+# location of tile info array
+tile_info: ./tiling-files/hiq-pgp-info
+
+# which features to search for
+features:
+  - diff_indices
+  - location
+  - base_pair_locations
+  - variant_diffs
