@@ -120,6 +120,21 @@ def fill_bp_loc(tile_item):
 	except CalledProcessError as e:
 		raise Exception("assembly file not found.")
 
+def fill_snp_locations(tile_item):
+	filled_tile = deepcopy(tile_item)
+	
+def calc_var_diffs(tile_item):
+	filled_tile = deepcopy(tile_item)
+	return fill_clustalo_diffs(fill_clustalo_entries(fill_variants_info(filled_tile)))
+
+from operator import itemgetter
+from itertools import groupby
+def group_continuous_diffs(clustalo_diffs):
+	groups = []
+	for _, j in groupby(enumerate(clustalo_diffs), lambda (k, x): k - x):
+		groups.append(map(itemgetter(1), j))
+	return groups
+
 # out is a function that tells the program what to do with output - send to a file or print?
 def tile_iteration(tile, out):
 # get the location of tiles and store it because it will be important later
@@ -133,16 +148,44 @@ def tile_iteration(tile, out):
 
 	if app.functionality['variant_diffs']: # get variant differences using ClustalW
 		# fill the variant info for the file, in case needed later
-		tile = fill_variants_info(tile)
-		tile = fill_clustalo_entries(tile)
-		tile = fill_clustalo_diffs(tile)
+		tile = calc_var_diffs(tile)
+		tile.diffs_calculated = True
 
 		for item in tile.clustalo_entries:
 			out("\n".join(item))
 			out('\n')
 		
 	if app.functionality['diff_indices']: # get the indices of the variant differences
-		out("Index of variant differences: {}\n".format(tile.clustalo_diffs))
+		if not tile.diffs_calculated:
+			tile = calc_var_diffs(tile)			
+		#out("Index of variant differences: {}\n".format(tile.clustalo_diffs))
+		
+		import re
+		base_pairs = re.split(r'\s+', tile.bp_output)	
+
+		grouped_diffs = group_continuous_diffs(tile.clustalo_diffs)		
+
+		exact_locs = []
+		output_diffs = []
+		convert = lambda x: x - 24 + int(base_pairs[1])
+		for diff in grouped_diffs:
+			if len(diff) == 1:
+				exact_locs.append(convert(diff[0]))
+				output_diffs.append(diff[0]) 
+			else:
+				exact_locs.append((convert(diff[0]), convert(diff[-1])))
+				output_diffs.append((diff[0], diff[-1]))
+
+		index_pos_map = list(zip(output_diffs, exact_locs))
+
+		out("Variant diffs:\n")
+		if len(index_pos_map) == 0:
+			out("Only one variant found.\n")
+		for position, index in index_pos_map:
+			if type(position) is int:
+				out("Position on chromosome: {}, index of diff: {}\n".format(position, index))
+			else:
+				out("Position range on chromosome: {}-{}, index range: {}-{}\n".format(position[0], position[1], index[0], index[1]))
 
 	print("Finished search for tile {}\n".format(tile.index))
 
