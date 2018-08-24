@@ -160,13 +160,19 @@ def tile_iteration(tile, out):
 			tile = calc_var_diffs(tile)			
 		#out("Index of variant differences: {}\n".format(tile.clustalo_diffs))
 		
+		# read base pair location from tile
+		if not tile.bp_output:
+			tile = fill_bp_loc(tile)
+
 		import re
 		base_pairs = re.split(r'\s+', tile.bp_output)	
 
+		# group the diffs so it doesn't print out a huge list of ints
 		grouped_diffs = group_continuous_diffs(tile.clustalo_diffs)		
 
 		exact_locs = []
 		output_diffs = []
+		# find the base pair location
 		convert = lambda x: x - 24 + int(base_pairs[1])
 		for diff in grouped_diffs:
 			if len(diff) == 1:
@@ -176,6 +182,7 @@ def tile_iteration(tile, out):
 				exact_locs.append((convert(diff[0]), convert(diff[-1])))
 				output_diffs.append((diff[0], diff[-1]))
 
+		# print results
 		index_pos_map = list(zip(output_diffs, exact_locs))
 
 		out("Variant diffs:\n")
@@ -189,7 +196,7 @@ def tile_iteration(tile, out):
 
 	print("Finished search for tile {}\n".format(tile.index))
 
-
+# iterate through input array of tiles
 for tile in app.tiles:
 	if app.write_to_file:
 		import os
