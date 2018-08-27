@@ -1,0 +1,17 @@
+sample: "NA12878"
+original: 
+  class: File
+  path: keep:fb3933ec280f40ccfbbca7d83d96566f+554/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf.gz
+phased:
+  class: File
+  path: keep:1a21541e38d3840e26488732894dfc70+360/NA12878_phased.vcf.gz 
+imputed:
+  class: File
+  path: keep:1a21541e38d3840e26488732894dfc70+360/NA12878_imputed.vcf.gz 
+bedfile:
+  class: File
+  path: keep:fb3933ec280f40ccfbbca7d83d96566f+554/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_nosomaticdel.bed
+refdir:
+  class: Directory
+  path: keep:cd0ace4987f72d1e4d8f3ef5281cef17+63099/genomes/GRCh37/rtg/GRCh37.sdf
+

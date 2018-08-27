@@ -15,9 +15,11 @@ inputs:
 outputs:
   imputedvcfgz:
     type: File
+    secondaryFiles: [.tbi]
     outputSource: imputation-wf/imputedvcfgz
   phasedvcfgz:
     type: File
+    secondaryFiles: [.tbi]
     outputSource: phasing-wf/phasedvcfgz
 
 steps:

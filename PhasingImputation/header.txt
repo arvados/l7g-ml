@@ -1,0 +1,1 @@
+#sample 	 total_original 	 phased 	 imputed 	 imputed_excluded

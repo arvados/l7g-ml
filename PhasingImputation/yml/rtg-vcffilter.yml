@@ -1,0 +1,7 @@
+sample: "hu101457_masterVarBeta-GS000039116-ASM"
+imputed: 
+  class: File
+  path: keep:35d9cd16054e75764c2aca6b1d818ede+336/hu101457_masterVarBeta-GS000039116-ASM_imputed.vcf.gz
+bedfile:
+  class: File
+  path: keep:c25842e3c8a118a3b537426ecf099178+12405/hu101457_masterVarBeta-GS000039116-ASM.bed

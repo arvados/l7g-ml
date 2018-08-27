@@ -1,0 +1,17 @@
+sample: "hu011C57"
+original: 
+  class: File
+  path: keep:9ba20b3268829c7c48cac10d706f937e+73293/hu011C57_var-GS000015172-ASM.vcf.gz 
+phased:
+  class: File
+  path: keep:5c1df9b902f9a3f9ac0493900e215fbe+608/hu011C57_var-GS000015172-ASM_phased.vcf.gz  
+imputed:
+  class: File
+  path: keep:5c1df9b902f9a3f9ac0493900e215fbe+608/hu011C57_var-GS000015172-ASM_imputed.vcf.gz 
+bedfile:
+  class: File
+  path: keep:9ba20b3268829c7c48cac10d706f937e+73293/hu011C57_var-GS000015172-ASM.bed
+refdir:
+  class: Directory
+  path: keep:6cf48f302f6615f44002c6df07852778+1240
+
