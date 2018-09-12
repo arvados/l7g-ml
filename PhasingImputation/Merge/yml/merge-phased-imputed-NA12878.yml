@@ -1,0 +1,13 @@
+sample: "NA12878"
+originalvcfgz:
+  class: File
+  location: keep:fb3933ec280f40ccfbbca7d83d96566f+554/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf.gz
+originalbed:
+  class: File
+  location: keep:fb3933ec280f40ccfbbca7d83d96566f+554/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_nosomaticdel.bed
+phasedvcfgz:
+  class: File
+  location: keep:0edbe3e2f171bf8279e3a6e883de2039+619/NA12878_phased.vcf.gz
+rawimputedvcfgz:
+  class: File
+  location: keep:0edbe3e2f171bf8279e3a6e883de2039+619/NA12878_rawimputed.vcf.gz

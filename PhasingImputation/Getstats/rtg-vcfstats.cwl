@@ -4,13 +4,14 @@ requirements:
   DockerRequirement:
     dockerPull: l7g-ml/vcfutil
 baseCommand: [rtg, vcfstats]
-arguments:
-  - $(inputs.phased)
 inputs:
   sample: string
-  phased: 
+  suffix: string
+  vcfgz: 
     type: File
     secondaryFiles: [.tbi]
 outputs:
-  phasedstats: stdout
-stdout: $(inputs.sample)_phasedstats.txt
+  statstxt: stdout
+arguments:
+  - $(inputs.vcfgz)
+stdout: $(inputs.sample)_$(inputs.suffix)_stats.txt

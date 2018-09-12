@@ -4,37 +4,35 @@ requirements:
   ShellCommandRequirement: {}
 hints:
   DockerRequirement:
-    dockerPull: l7g-ml/imputation
-  ResourceRequirement:
-    coresMin: 3
-    ramMin: 1000
-    tmpdirMin: 10000
+    dockerPull: l7g-ml/vcfutil
 inputs:
   sample: string
-  vcfgzs:
-    type: File[]
-    secondaryFiles: [.tbi]
+  rawimputedvcfgz: File
 outputs:
-  vcfgz:
+  imputedvcfgz:
     type: File
     outputBinding:
-      glob: "*vcf.gz"
+      glob: "*.vcf.gz"
     secondaryFiles: [.tbi]
-baseCommand: [bcftools, concat]
+baseCommand: zcat
 arguments:
-  - $(inputs.vcfgzs)
+  - $(inputs.rawimputedvcfgz)
+  - shellQuote: false
+    valueFrom: "|"
+  - "grep"
+  - prefix: "-v"
+    valueFrom: "0|0"
   - shellQuote: false
     valueFrom: "|"
   - "bgzip"
-  - "-f"
   - "-c"
   - shellQuote: false
     valueFrom: ">"
-  - $(inputs.sample)_rawimputed.vcf.gz
+  - $(inputs.sample)_imputed.vcf.gz
   - shellQuote: false
     valueFrom: "&&"
   - "tabix"
   - prefix: "-p"
     valueFrom: "vcf"
   - "-f"
-  - $(inputs.sample)_rawimputed.vcf.gz
+  - $(inputs.sample)_imputed.vcf.gz

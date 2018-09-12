@@ -3,6 +3,8 @@ class: CommandLineTool
 requirements:
   ShellCommandRequirement: {}
 hints:
+  DockerRequirement:
+    dockerPull: l7g-ml/phasing
   ResourceRequirement:
     coresMin: 2
     ramMin: 6000

@@ -24,6 +24,7 @@ inputs:
 outputs:
   phasedvcfgz:
     type: File
+    secondaryFiles: [.tbi]
     outputSource: bcftools-concat/vcfgz
 
 steps:

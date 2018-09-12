@@ -1,10 +1,10 @@
 sample: "hu007B82_1YB27IM-portable"
 refsdir:
   class: Directory
-  path: keep:ee771541673d31b2ecce9500860875c8+9138
+  location: keep:ee771541673d31b2ecce9500860875c8+9138
 map:
   class: File
-  path: keep:fb7dd247741c3494d287ca09ed8f938a+85/genetic_map_hg19_withX.txt.gz
+  location: keep:fb7dd247741c3494d287ca09ed8f938a+85/genetic_map_hg19_withX.txt.gz
 target:
   class: File
-  path: keep:ccd1752901ad1c7ce099ae5c4c0dd7ee+43270/hu007B82_1YB27IM-portable.vcf.gz
+  location: keep:ccd1752901ad1c7ce099ae5c4c0dd7ee+43270/hu007B82_1YB27IM-portable.vcf.gz

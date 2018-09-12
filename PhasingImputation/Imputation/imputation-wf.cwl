@@ -22,8 +22,9 @@ inputs:
     secondaryFiles: [.tbi]
 
 outputs:
-  imputedvcfgz:
+  rawimputedvcfgz:
     type: File
+    secondaryFiles: [.tbi]
     outputSource: bcftools-concat/vcfgz
 
 steps:
@@ -44,10 +45,10 @@ steps:
       ref: match-ref-map-chr/refs
       map: match-ref-map-chr/maps
       target: target
-    out: [imputed]
+    out: [rawimputed]
   bcftools-concat:
     run: bcftools-concat.cwl
     in:
       sample: sample
-      vcfgzs: beagle/imputed
+      vcfgzs: beagle/rawimputed
     out: [vcfgz]

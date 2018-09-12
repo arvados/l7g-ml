@@ -2,10 +2,10 @@ sample: "GS12877"
 chr: "chr19"
 ref:
   class: File
-  path: keep:8c3d69d0e4b4c352674476f0ef5c5469+6291/chr19.1kg.phase3.v5a.bref
+  location: keep:8c3d69d0e4b4c352674476f0ef5c5469+6291/chr19.1kg.phase3.v5a.bref
 map:
   class: File
-  path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008/plink.chr19.GRCh37.map
+  location: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008/plink.chr19.GRCh37.map
 target:
   class: File
-  path: keep:7e7960201345e4521f0559eab1255bd4+120/GS12877_phased.vcf.gz
+  location: keep:7e7960201345e4521f0559eab1255bd4+120/GS12877_phased.vcf.gz

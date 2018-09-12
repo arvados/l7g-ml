@@ -1,10 +1,10 @@
 sample: "GS12877"
 refsdir:
   class: Directory
-  path: keep:8c3d69d0e4b4c352674476f0ef5c5469+6291
+  location: keep:8c3d69d0e4b4c352674476f0ef5c5469+6291
 mapsdir:
   class: Directory
-  path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
+  location: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
 target:
   class: File
-  path: keep:7e7960201345e4521f0559eab1255bd4+120/GS12877_phased.vcf.gz
+  location: keep:7e7960201345e4521f0559eab1255bd4+120/GS12877_phased.vcf.gz

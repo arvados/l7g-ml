@@ -1,0 +1,4 @@
+sample: "NA12878"
+rawimputedvcfgz:
+  class: File
+  location: keep:0edbe3e2f171bf8279e3a6e883de2039+619/NA12878_rawimputed.vcf.gz

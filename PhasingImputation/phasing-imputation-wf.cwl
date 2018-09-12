@@ -13,14 +13,14 @@ inputs:
     secondaryFiles: [.tbi]
 
 outputs:
-  imputedvcfgz:
-    type: File
-    secondaryFiles: [.tbi]
-    outputSource: imputation-wf/imputedvcfgz
   phasedvcfgz:
     type: File
     secondaryFiles: [.tbi]
     outputSource: phasing-wf/phasedvcfgz
+  rawimputedvcfgz:
+    type: File
+    secondaryFiles: [.tbi]
+    outputSource: imputation-wf/rawimputedvcfgz
 
 steps:
   phasing-wf:
@@ -38,5 +38,4 @@ steps:
       refsdir: imputationrefsdir
       mapsdir: imputationmapsdir
       target: phasing-wf/phasedvcfgz
-    out: [imputedvcfgz]
-      
+    out: [rawimputedvcfgz]
