@@ -1,4 +1,3 @@
-sample: "GS12877"
 phasingrefsdir:
   class: Directory
   location: keep:ba7cd392bc4aa229c3c771b496e79628+9990
@@ -11,6 +10,9 @@ imputationrefsdir:
 imputationmapsdir:
   class: Directory
   location: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
-target:
-  class: File
-  location: keep:107c0bc5c501353861af326dd4cd64a6+124/GS12877_unphased.vcf.gz
+vcfsdir:
+  class: Directory
+  location: keep:f8c06ac95df533ddcb95d9df9aca8848+921
+sdf:
+  class: Directory
+  location: keep:cd0ace4987f72d1e4d8f3ef5281cef17+63099/genomes/GRCh37/rtg/GRCh37.sdf

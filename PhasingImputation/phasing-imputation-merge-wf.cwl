@@ -8,10 +8,15 @@ inputs:
   phasingmap: File
   imputationrefsdir: Directory
   imputationmapsdir: Directory
-  originalvcfgz:
+  vcfgz:
     type: File
     secondaryFiles: [.tbi]
-  originalbed: File
+  bed: File
+  recordstatsscript:
+    type: File
+    default:
+      class: File
+      location: Getstats/recordstats.sh
   sdf: Directory
 
 outputs:
@@ -41,7 +46,7 @@ steps:
       sample: sample
       refsdir: phasingrefsdir
       map: phasingmap
-      target: originalvcfgz
+      target: vcfgz
     out: [phasedvcfgz]
   imputation-wf:
     run: Imputation/imputation-wf.cwl
@@ -55,8 +60,8 @@ steps:
     run: Merge/merge-phased-imputed-wf.cwl
     in:
       sample: sample
-      originalvcfgz: originalvcfgz
-      originalbed: originalbed
+      originalvcfgz: vcfgz
+      originalbed: bed
       phasedvcfgz: phasing-wf/phasedvcfgz
       rawimputedvcfgz: imputation-wf/rawimputedvcfgz
     out: [mergedvcfgz, mergedbed, imputedvcfgz, imputedoutsidevcfgz]
@@ -64,9 +69,10 @@ steps:
     run: Getstats/getstats-wf.cwl
     in:
       sample: sample
-      originalvcfgz: originalvcfgz
+      originalvcfgz: vcfgz
       phasedvcfgz: phasing-wf/phasedvcfgz
       imputedvcfgz: merge-phased-imputed-wf/imputedvcfgz
       imputedoutsidevcfgz: merge-phased-imputed-wf/imputedoutsidevcfgz
       sdf: sdf
+      recordstatsscript: recordstatsscript
     out: [statstsv]

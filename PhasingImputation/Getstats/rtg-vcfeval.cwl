@@ -1,6 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
-requirements:
+hints:
   DockerRequirement:
     dockerPull: l7g-ml/vcfutil
   ResourceRequirement:

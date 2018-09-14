@@ -1,11 +1,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 inputs:
-  script:
-    type: File
-    default:
-      class: File
-      location: recordstats.sh
+  script: File
   sample: string
   originalstats: File
   phasedstats: File

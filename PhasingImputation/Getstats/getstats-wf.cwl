@@ -25,6 +25,7 @@ inputs:
     type: File
     secondaryFiles: [.tbi]
   sdf: Directory
+  recordstatsscript: File
 outputs:
   statstsv:
     type: File
@@ -69,6 +70,7 @@ steps:
   recordstats:
     run: recordstats.cwl
     in:
+      script: recordstatsscript
       sample: sample
       originalstats: rtg-vcfstats_original/statstxt
       phasedstats: rtg-vcfstats_phased/statstxt
