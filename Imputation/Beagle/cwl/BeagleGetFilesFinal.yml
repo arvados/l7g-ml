@@ -1,8 +1,0 @@
-refdirectory:
-   class: Directory 
-   path: keep:4e8325ea05912b096b434e8cb964faea+7950
-
-mapdirectory:
-   class: Directory
-   path: keep:b1b4015340fb9ef47ad5bdc6ee7bd1f4+2008
-

@@ -1,9 +1,0 @@
-#arv-mount keep 
-#find /home/sarah/imputation/outputProcessing/keep/by_id/su92l-4zz18-g9zn0ydu8lfu7fw -name "chr*.vcf*" |sort --version-sort > vcf_files.txt
-#vcf-concat -f vcf_files.txt |gzip  > output.vcf.gz
-#vcf-sort -c output.vcf.gz |gzip > outsorted.vcf.gz
-#rm output.vcf.gz
-vcftools --gzvcf output.vcf.gz --recode --recode-INFO-all --positions testVars.txt --stdout> outfiltered_testvars.vcf
-#rm outsorted.vcf
-vcftools --vcf testVarsSorted.vcf --diff outfiltered_testvars.vcf --diff-site-discordance --diff-discordance-matrix 
-#fusermount -u keep

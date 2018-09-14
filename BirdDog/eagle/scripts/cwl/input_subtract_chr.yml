@@ -1,4 +1,0 @@
-awk_string: '{sub(/chr/, ""); print}'
-vcf_file:
-    class: File
-    path: keep:a623a446f27c84c57c6d3522474f0976+1134/GS12877_unphased_all_chr.vcf.gz
