@@ -47,11 +47,12 @@ for data, labels in filenames:
 #    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     dataset_name = data[:-6]
-
     directory_name = "trials/" + TYPE
   
     if not os.path.exists(directory_name):
        os.makedirs(directory_name)
+
+    # Loading in path data
 
     f = open("trials/" + TYPE + "/" + dataset_name + "_" + TYPE + ".txt", "w+")
     f.write("Details: LinearSVC with L1 Regularization\n")
@@ -59,6 +60,9 @@ for data, labels in filenames:
 
     crange = np.logspace(-2, 0, 10).tolist()
     print("Training...")
+
+    allscores = []
+    allstds = []
 
     for C in crange:
         svc_test = LinearSVC(penalty='l1', class_weight='balanced', C=C, dual=False)
@@ -68,9 +72,7 @@ for data, labels in filenames:
 #        f.write("accuracy: %f\n" % score)
         f.write("C: %f\n" % C)
         d = np.nonzero(svc_test.coef_)[1].shape[0]
-        print(d)
         num_coefficients = svc_test.coef_.shape[0]
-        print(num_coefficients)
         percentage_zero = float(d) / float(num_coefficients)
 
         f.write("Number of zero coefficients: %f\n" % d)
@@ -78,8 +80,27 @@ for data, labels in filenames:
      
         n = 10
         scores = cross_val_score(svc_test, X, y, cv=n)
+        allscores.append(scores.mean())
+        allstds.append(scores.std())
         f.write("Accuracy 10-fold: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std()))
         f.write("==========================================================\n")
+
+    # Finding "best" C value
+
+    cMax = crange[-1]
+    accMax = allscores[-1] - allstds[-1]
+
+    for x in range(len(crange)-1,1,-1):
+       accNew = allscores[x-1]
+       if accNew >= accMax:
+          accMax = accNew - allstds[x-1]
+          cMax = crange[x-1]
+          idx = x
+
+    print(idx)
+    print(cMax)
+    print(allscores[idx])
+    print(allstds[idx])
 
     print("Training completed for this dataset!")
     f.close()
