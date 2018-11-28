@@ -54,6 +54,10 @@ for data, labels in filenames:
 
     # Loading in path data
 
+    oldpath = np.load(dataset_name+"_oldpath.npy")
+    pathdataOH = np.load(dataset_name+"_pathdataOH.npy")
+    varvals = np.load(dataset_name+"_varvals.npy")
+
     f = open("trials/" + TYPE + "/" + dataset_name + "_" + TYPE + ".txt", "w+")
     f.write("Details: LinearSVC with L1 Regularization\n")
     f.write("==========================================================\n")
@@ -103,9 +107,42 @@ for data, labels in filenames:
     print(allstds[idx])
 
     print("Training completed for this dataset!")
-    f.close()
 
+    svc = LinearSVC(penalty='l1', class_weight='balanced', C=cMax, dual=False)
+    svc.fit(X, y)
+  
+    # Examine model coefficents
+
+    maxCoef = np.absolute(svc.coef_).max()
+
+    idxM = np.argmax(np.absolute(svc.coef_))
+    numnz = np.nonzero(svc.coef_)[1].shape
+    idxNZus = np.nonzero(svc.coef_)[1]
+    coefs = svc.coef_[0,:]
+
+    nnzcoefs = coefs[idxNZus]
+
+    idxSort = np.argsort(np.absolute(nnzcoefs))
+    idxSort = np.flipud(idxSort)
+    idxNZ = idxNZus[idxSort]
+
+    coefPaths = pathdataOH[idxNZ]
+
+    tile_path = np.trunc(coefPaths/(16**5))
+    tile_step = np.trunc((coefPaths - tile_path*16**5)/2)
+    tile_phase = np.trunc((coefPaths- tile_path*16**5 - 2*tile_step))
+    print("Maximum Coefficent (%4.3f):" % maxCoef)
+    print("Number of Nonzeros Coefficents (%d)" % numnz)
+
+    tile_loc = np.column_stack((tile_path, tile_step))
+    print(tile_loc)
+    print(nnzcoefs[idxSort])
+    print(oldpath[idxNZ])
+    print(varvals[idxNZ])
+
+    f.close()
 print("Operations have completed and results have been written to disk!")
+
 
 exit()
 
