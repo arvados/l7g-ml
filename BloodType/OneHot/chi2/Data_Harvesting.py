@@ -230,7 +230,21 @@ for X_filename, y_filename, blood_type, filter_type, augmentation_type in filena
     pathdataOH = pathdataOH[idkTK]
     oldpath = oldpath[idkTK]
     varvals = varvals[idkTK]
+
+    print(Xtrain.shape)
+    print(y.shape)
+    print(pathdataOH.shape)
+    print(oldpath.shape)
+    print(varvals.shape)
+
+    filenameheader = filename[:-5]
+    
+
     np.save(y_filename, y)
+    np.save(filenameheader+'pathdataOH.npy', pathdataOH)
+    np.save(filenameheader+'oldpath.npy', oldpath)
+    np.save(filenameheader+'varvals.npy', varvals)
+
     scipy.sparse.save_npz(X_filename, Xtrain)
 
     print("Just created datasets for %s and %s\n" % (X_filename, y_filename))
