@@ -1,4 +1,5 @@
 import numpy as np
+import os
 import scipy.sparse
 from sklearn import svm, preprocessing, linear_model
 from sklearn.model_selection import cross_val_score, cross_val_predict, train_test_split, GridSearchCV
@@ -31,40 +32,53 @@ def SVM_hyperparameter_finder(X, y, num_folds=5):
     
 #======SVM Trials=======
 TYPE = "svm"
-filenames = [("blood_type_B_no_filter_no_augmentation_X.npz", "blood_type_B_no_filter_no_augmentation_y.npy"),
-             ("blood_type_Rh_chi2_balanced_augmentation_X.npz", "blood_type_Rh_chi2_balanced_augmentation_y.npy"),
-             ("blood_type_Rh_chi2_no_augmentation_X.npz", "blood_type_Rh_chi2_no_augmentation_y.npy"),
-             ("blood_type_A_chi2_no_augmentation_X.npz", "blood_type_A_chi2_no_augmentation_y.npy"),
-             ("blood_type_B_chi2_no_augmentation_X.npz", "blood_type_B_chi2_no_augmentation_y.npy")]
+filenames = [("blood_type_A_chi2_no_augmentation_X.npz", "blood_type_A_chi2_no_augmentation_y.npy")]
+#filenames = [("blood_type_B_no_filter_no_augmentation_X.npz", "blood_type_B_no_filter_no_augmentation_y.npy"),
+#             ("blood_type_Rh_chi2_balanced_augmentation_X.npz", "blood_type_Rh_chi2_balanced_augmentation_y.npy"),
+#             ("blood_type_Rh_chi2_no_augmentation_X.npz", "blood_type_Rh_chi2_no_augmentation_y.npy"),
+#             ("blood_type_A_chi2_no_augmentation_X.npz", "blood_type_A_chi2_no_augmentation_y.npy"),
+#             ("blood_type_B_chi2_no_augmentation_X.npz", "blood_type_B_chi2_no_augmentation_y.npy")]
 
 for data, labels in filenames:
     print("Beginning work on another dataset...")
     X = scipy.sparse.load_npz(data)
     y = np.load(labels)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+#    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     dataset_name = data[:-6]
-    f = open("trials/" + TYPE + "/" + dataset_name + "_" + TYPE + ".txt", "w")
+
+    directory_name = "trials/" + TYPE
+  
+    if not os.path.exists(directory_name):
+       os.makedirs(directory_name)
+
+    f = open("trials/" + TYPE + "/" + dataset_name + "_" + TYPE + ".txt", "w+")
     f.write("Details: LinearSVC with L1 Regularization\n")
     f.write("==========================================================\n")
 
-    crange = np.logspace(-2, 1, 5).tolist()
+    crange = np.logspace(-2, 0, 10).tolist()
     print("Training...")
 
     for C in crange:
         svc_test = LinearSVC(penalty='l1', class_weight='balanced', C=C, dual=False)
-        svc_test.fit(X_train, y_train)
-        score = svc_test.score(X_test, y_test)
-        print("accuracy: %f\n" % score)
-        f.write("accuracy: %f\n" % score)
+        svc_test.fit(X, y)
+#        score = svc_test.score(X_test, y_test)
+#        print("accuracy: %f\n" % score)
+#        f.write("accuracy: %f\n" % score)
         f.write("C: %f\n" % C)
-        d = num_zero(list(svc_test.coef_[0]))
-        num_coefficients = len(svc_test.coef_[0])
-        percentage_zero = d / num_coefficients
+        d = np.nonzero(svc_test.coef_)[1].shape[0]
+        print(d)
+        num_coefficients = svc_test.coef_.shape[0]
+        print(num_coefficients)
+        percentage_zero = float(d) / float(num_coefficients)
 
         f.write("Number of zero coefficients: %f\n" % d)
         f.write("Percentage of zero coefficients: %f\n" % percentage_zero)
+     
+        n = 10
+        scores = cross_val_score(svc_test, X, y, cv=n)
+        f.write("Accuracy 10-fold: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std()))
         f.write("==========================================================\n")
 
     print("Training completed for this dataset!")
@@ -72,7 +86,9 @@ for data, labels in filenames:
 
 print("Operations have completed and results have been written to disk!")
 
-#======Neural network Trials=======
+exit()
+
+#=====Neural network Trials=======
 TYPE = "neural_network"
 LEARNING_RATE = .0001
 BATCH_SIZE = 10
