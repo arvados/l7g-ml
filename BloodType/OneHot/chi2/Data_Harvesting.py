@@ -237,7 +237,7 @@ for X_filename, y_filename, blood_type, filter_type, augmentation_type in filena
     print(oldpath.shape)
     print(varvals.shape)
 
-    filenameheader = filename[:-5]
+    filenameheader = y_filename[:-5]
     
 
     np.save(y_filename, y)
