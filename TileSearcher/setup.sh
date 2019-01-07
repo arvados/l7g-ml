@@ -2,7 +2,7 @@
 
 # set up keep-mount
 mkdir -p ./keep
-arv-mount ./keep
+arv-mount --allow-other ./keep
 # download dependencies
 if [ ! -d ./tiling-files ]; then
 	mkdir tiling-files && cd tiling-files

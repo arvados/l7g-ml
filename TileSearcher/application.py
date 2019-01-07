@@ -4,19 +4,36 @@ from collections import defaultdict
 
 # test whether a command is available to the comptuer
 def test_command(command, error_msg):
-		try:
-			call(command, stdout=PIPE, stderr=PIPE)
-		except OSError as e:
-			if e.errno == os.errno.ENOENT:
-				raise Exception(error_msg)
+	try:
+		call(command, stdout=PIPE, stderr=PIPE)
+	except OSError as e:
+		if e.errno == os.errno.ENOENT:
+			raise Exception(error_msg)
 
 class Tile:
 	def __init__(self, index):
 		self.index = index
+		
+		# information that will be filled laterj
 		self.path = None
 		self.phase = None
 		self.step = None
 		self.tile_str = None
+		self.variants = None
+		self.clustalo_output = None
+		self.clustalo_diffs = None
+		self.bp_output = None		
+		self.diffs_map = None
+
+	def to_dict(self):
+		info_dict = {}
+		info_dict['step'] = self.step
+		info_dict['path'] = self.path
+		info_dict['chrom'] = self.tile_str.split(":")[1].replace("chr", "")
+		tile_location = self.bp_output.split('\n')
+		info_dict['position_start'] = tile_location[0].split('\t')[1].strip()
+		info_dict['position_end'] = tile_location[1].split('\t')[1].strip()
+		return info_dict
 
 	def __str__(self):
 		return "Tile {} information:\n{}\nPath: {}\nStep: {}\nPhase: {}".format(self.index, self.tile_str, self.path, self.step, self.phase)
@@ -39,7 +56,7 @@ class TileApplication:
 		if args.base_pair_locations and args.assembly_gz == None:
 			raise Exception("Cannot get base pair locations without --assembly-gz argument.")
 
-	def verify_config(self, args, config_args):
+	def verify_config(self, config_args):
 		if "diff_indices" in config_args['features'] and not config_args['keep']:
 			raise Exception("Cannot get diff indices without keep in configuration file.")
 		if "location" in config_args['features'] and not config_args['assembly_fwi']:
@@ -55,7 +72,7 @@ class TileApplication:
 		self.data['assembly_fwi'] = config_args['assembly_fwi']
 		self.data['keep'] = config_args['keep']
 
-	def set_functionality_from_config(self, args, config_args):
+	def set_functionality_from_config(self, config_args):
 
 		# parse functionality from input and save to dictionary
 		self.functionality['location'] = 'location' in config_args['features']

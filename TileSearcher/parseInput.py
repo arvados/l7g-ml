@@ -3,6 +3,8 @@ import application
 import yaml
 global parser
 
+CONFIG_FILENAME = 'config.yml'
+
 def setup_parsing(app):
 	# set up argument parsing
 	
@@ -18,6 +20,12 @@ def setup_parsing(app):
 	app.parser.add_argument('--assembly-fwi', type=str, nargs='?', default=None, help="Location of assembly.00.hg19.fw.fwi")
 	app.parser.add_argument('--write-to-file', type=int, nargs='?', default=False, help="Whether to write to a file or print to stdout.")
 
+def read_config(app):
+	with open(CONFIG_FILENAME, 'r') as stream:
+		data_args = yaml.load(stream)
+	app.set_functionality_from_config(data_args)
+	app.verify_config(data_args)
+	app.set_config_data_args(data_args)
 
 def parse_input(app):
 	# parse arguments
@@ -30,9 +38,9 @@ def parse_input(app):
 		app.set_functionality(args)
 	else:
 		print("Setting functionality from config...")
-		with open('config.yml', 'r') as stream:
+		with open(CONFIG_FILENAME, 'r') as stream:
 			data_args = yaml.load(stream)
-		app.set_functionality_from_config(args, data_args)
+		app.set_functionality_from_config(data_args)
 
 	if args.write_to_file == None:
 		app.write_to_file = True
@@ -42,12 +50,12 @@ def parse_input(app):
 
 	if not all([args.assembly_fwi, args.keep, args.assembly_gz]):
 		# if no command line data arguments are specified, read from config
-		print("No data command line arguments specified. Reading from config.yml...")
-		with open('config.yml', 'r') as stream:
+		print("No data command line arguments specified. Reading from {}...".format(CONFIG_FILENAME))
+		with open(CONFIG_FILENAME, 'r') as stream:
 			data_args = yaml.load(stream)
 
 		# verify that necessary data is provided
-		app.verify_config(args, data_args)
+		app.verify_config(data_args)
 
 		# set data and functionality
 		app.set_config_data_args(data_args)
