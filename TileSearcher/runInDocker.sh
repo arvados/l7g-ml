@@ -5,4 +5,5 @@ if [ "$#" -ne 1 ]; then
     exit
 fi
 
+# if your Docker image is not named "kfang/tile-tools", then change it in the command below.
 docker run -it -v $PWD:/tile-searcher kfang/tile-tools sh -c "cd tile-searcher && $1"

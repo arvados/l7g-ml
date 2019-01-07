@@ -49,6 +49,8 @@ class Mutation:
             print("Mutation not yet offsetted. Please offset before querying.")
             return None
 
+    def __repr__(self):
+        return "{}_{}{}{}".format(self.start, self.stop, self.mutation_type, self.change)
     
     def __str__(self):
         return "Start: {}, Stop: {}, Change: {}, Mutation type: {}".format(self.start, self.stop, self.change.upper(), self.mutation_type)
@@ -99,7 +101,7 @@ changes = changes.split(';')
 
 # create a mutation object from the description extractor information
 def get_mutation(mutation_string):
-    mutation_symbols = ['subst', 'del', 'ins', 'dup', 'inv', 'delins']
+    mutation_symbols = ['subst', 'delins', 'del', 'ins', 'dup', 'inv']
     for mutation in mutation_symbols:
         if mutation in mutation_string:
             info = mutation_string.split(mutation)
@@ -120,7 +122,6 @@ def get_mutation(mutation_string):
 
         return Mutation(start=num, change=mutation, mutation_type="subst", chrom=info_tile.to_dict()['chrom']) 
 
-print(changes)
 mutations = map(get_mutation, changes)
 
 # offset all mutations
@@ -136,6 +137,7 @@ mutations_lst = zip(mutations, rsid_queries)
 # print results
 for mutation, rsid_lst in mutations_lst:
     print("Mutation: {}".format(mutation))
+    print("Representation: {}".format(repr(mutation)))
     if len(rsid_lst) > 0 and rsid_lst[0] != '':
         print("Possible SNP RSIDS:")
         for rsid_query in rsid_lst:
@@ -143,4 +145,3 @@ for mutation, rsid_lst in mutations_lst:
             print("RSID: {}; Location: {}, REF: {}, ALT: {}".format(rsid, location, ref, alt))
     else:
         print("No possible SNPs found") 
-    print('---')

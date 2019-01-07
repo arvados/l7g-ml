@@ -18,7 +18,7 @@ def get_clustalo(sequence):
 		fasta += ">{},{}\n{}\n".format(*chunks)
 	fasta = fasta[:-1]
 
-	input_filename = "fasta"
+	input_filename = "fasta.tmp"
 	output_filename = "aligned.tmp"
 
 	with open(input_filename, 'w') as f:
