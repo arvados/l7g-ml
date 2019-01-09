@@ -136,6 +136,7 @@ mutations_lst = zip(mutations, rsid_queries)
 
 # print results
 for mutation, rsid_lst in mutations_lst:
+    print('---')
     print("Mutation: {}".format(mutation))
     print("Representation: {}".format(repr(mutation)))
     if len(rsid_lst) > 0 and rsid_lst[0] != '':

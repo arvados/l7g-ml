@@ -4,7 +4,6 @@ USER root
 
 # install necessary dependencies
 RUN apt-get update -y && \
-    apt-get upgrade -y && \
     apt-get install -y wget \ 
         gcc \
         libbz2-dev \
@@ -24,7 +23,12 @@ RUN apt-get update -y && \
         git \
         curl \
         g++ \
-        libgsl0-dev
+        libgsl0-dev \
+        swig \
+        clustalo \
+        perl \
+        snp-sites \
+    && rm -rf /var/lib/apt/lists/*
 
 # install htslib and bcftools
 RUN git clone git://github.com/samtools/htslib.git && \
@@ -39,11 +43,7 @@ RUN git clone git://github.com/samtools/htslib.git && \
  
 
 # alignment tools + variant decoder
-RUN apt-get install -y swig \
-    clustalo \
-    perl \
-    snp-sites && \
-    cpan DBI && \
+RUN cpan DBI && \
     cpan DBD::mysql && \
     cpan Module::Build && \
     cpan Try::Tiny && \
