@@ -6,4 +6,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # if your Docker image is not named "kfang/tile-tools", then change it in the command below.
-docker run -it -w=/tile-searcher -v $PWD:/tile-searcher kfang/tile-tools sh -c "$1"
+docker run -it -w=/tile-searcher -v $PWD:/tile-searcher kfangcurii/tile-tools sh -c "$1"

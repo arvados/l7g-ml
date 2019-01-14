@@ -1,21 +1,31 @@
 # location of assembly .fw.gz file
-assembly_gz: ./tiling-files/assembly.00.hg19.fw.gz
+assembly_gz: ./keep/by_id/su92l-4zz18-lj22pmb8h3ty0w8/assembly.00.hg19.fw.gz
 
 # location of assembly .fw.fwi file
-assembly_fwi: ./tiling-files/assembly.00.hg19.fw.fwi
+assembly_fwi: ./keep/by_id/su92l-4zz18-lj22pmb8h3ty0w8/assembly.00.hg19.fw.fwi
 
 # location of keep collection with sglf.gz files
-keep: ./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3
+sglf: ./keep/by_id/su92l-4zz18-fkbdz2w6b25ayj3
 
 # location of tile info array
-tile_info: ./tiling-files/all-info.npy
-#tile_info: ./tiling-files/hiq-pgp-info
+# for complete tile set
+tile_info: ./keep/by_id/su92l-4zz18-b8rs5x7t6gry16k/all-info.npy
+
+# only for high quality tile set from PGP
+#tile_info: ./keep/by_id/su92l-4zz18-xmmmg0qn0wuaxkl/hiq-pip-info
 
 # location of gzipped reference vcf file. Needed for getRsids.py
 ref_vcf: ./keep/by_id/su92l-4zz18-v96bt8gwbsini81/GRCh37p13.vcf.gz
 
 features:
+  # requires sglf
   - diff_indices
+
+  # requires assembly_fwi 
   - location
+
+  # requires assembly_gz
   - base_pair_locations
+
+  # requires sglf
   - variant_diffs
