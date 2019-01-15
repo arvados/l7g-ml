@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
 else:
     parseInput.read_config(app)
-    
+
 # ensure that the system has the commands it needs to search
 app.test_command_availability()
 
@@ -145,10 +145,14 @@ def fill_bp_loc(tile_item):
     # read base pair locations from assembly files
     cmdToRun = "bgzip -c -b %d -s %d -d %s | grep -B1 \"%s\s\"" % (
         begin, sequence, app.data['assembly_gz'], filled_tile.step)
-    
+
     try:
         # call bgzip to locate base pair locations
-        subprocess.Popen(["bgzip", "-c", app.data['assembly_gz']], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        subprocess.Popen(["bgzip",
+                          "-c",
+                          app.data['assembly_gz']],
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE).communicate()
         output = subprocess.check_output(cmdToRun, shell=True)
         filled_tile.bp_output = output
         return filled_tile
@@ -177,7 +181,7 @@ def group_continuous_diffs(clustalo_diffs):
 def tile_iteration(tile, suppress_output=False, all_functionality=False):
     if isinstance(tile, int):
         tile = Tile(tile)
-        
+
     def out_fn(msg):
         if not suppress_output:
             print(msg)

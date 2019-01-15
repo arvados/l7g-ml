@@ -14,7 +14,7 @@ CONFIG_FILENAME = "config.yml"
 with open(CONFIG_FILENAME, 'r') as stream:
     data_args = yaml.load(stream)
     ref_vcf = data_args['ref_vcf']
-    
+
 # import afterwards, because the process of importing takes a long time
 # and arguments should be parsed beforehand
 
@@ -84,7 +84,7 @@ class Mutation:
 # create a mutation object from the description extractor information
 
 
-def get_mutation(mutation_string, info_tile):
+def get_mutation(mutation_string, info_tile, common_seq):
     mutation_symbols = ['subst', 'delins', 'del', 'ins', 'dup', 'inv']
     for mutation in mutation_symbols:
         if mutation in mutation_string:
@@ -116,6 +116,7 @@ def get_mutation(mutation_string, info_tile):
             mutation_type="subst",
             chrom=info_tile.to_dict()['chrom'])
 
+
 def rsid_search(tile_index, variant, suppress_output=True):
     results_dict = {}
 
@@ -125,7 +126,8 @@ def rsid_search(tile_index, variant, suppress_output=True):
     info_tile = getTileVariants.tile_iteration(
         tile, suppress_output=True, all_functionality=True)
 
-    # break up output into common variant (.000) and specifically chosen variant
+    # break up output into common variant (.000) and specifically chosen
+    # variant
     tile_variant = info_tile.variants.split('\n')[varval]
     common_variant = info_tile.variants.split('\n')[0]
 
@@ -136,7 +138,7 @@ def rsid_search(tile_index, variant, suppress_output=True):
     # retrieve sequence, ignoring hash + id
     tile_seq = tile_variant.split(',')[2]
     common_seq = common_variant.split(',')[2]
-    
+
     results_dict['tile_sequence'] = tile_variant
     results_dict['common_sequence'] = common_variant
     results_dict['variant'] = variant
@@ -149,10 +151,13 @@ def rsid_search(tile_index, variant, suppress_output=True):
     # delete spanning tile parts if necessary
     if len(tile_seq) - len(common_seq) >= 24:
         tile_seq = tile_seq[:len(common_seq)]
-        if not suppress_output: print("Detected spanning tile. Deleting extra part...")
+        if not suppress_output:
+            print("Detected spanning tile. Deleting extra part...")
     elif len(common_seq) - len(tile_seq) >= 24:
         common_seq = common_seq[:len(tile_seq)]
-        if not suppress_output: print("Detected spanning tile. Deleting extra part...")
+        if not suppress_output:
+            print("Detected spanning tile. Deleting extra part...")
+
 
     # run mutalyzer description extractor for alignment data
     allele = describe_dna(common_seq, tile_seq)
@@ -163,7 +168,7 @@ def rsid_search(tile_index, variant, suppress_output=True):
     changes = changes.replace(']', '')
     changes = changes.split(';')
 
-    mutations = map(lambda x: get_mutation(x, info_tile), changes)
+    mutations = map(lambda x: get_mutation(x, info_tile, common_seq), changes)
 
     # offset all mutations
     map(lambda x: x.offset(info_tile.to_dict()['position_start']), mutations)
@@ -181,25 +186,28 @@ def rsid_search(tile_index, variant, suppress_output=True):
             print('---')
             print("Mutation: {}".format(mutation))
             print("Representation: {}".format(repr(mutation)))
-        
+
         mutation_info = []
-        
+
         if len(rsid_lst) > 0 and rsid_lst[0] != '':
-            if not suppress_output: print("Possible SNP RSIDS:")
+            if not suppress_output:
+                print("Possible SNP RSIDS:")
             for rsid_query in rsid_lst:
                 chrom, rsid, location, ref, alt = rsid_query.split(" ")
                 result_str = "RSID: {}; Location: {}, REF: {}, ALT: {}".format(
-                        rsid, location, ref, alt)
-                
-                if not suppress_output: print(result_str)
+                    rsid, location, ref, alt)
+
+                if not suppress_output:
+                    print(result_str)
                 mutation_info.append((rsid, location, ref, alt))
         else:
-            if not suppress_output: print("No possible SNPs found")
-                
+            if not suppress_output:
+                print("No possible SNPs found")
+
         results_dict['mutations'][repr(mutation)] = mutation_info
-            
-        
+
     return results_dict
+
 
 if __name__ == "__main__":
     # set up argument parsing
@@ -219,4 +227,3 @@ if __name__ == "__main__":
         help="Which variant to search for RSIDs for (e.g. for varval 1, it will use the variant with id ending in .001)")
     args = parser.parse_args()
     rsid_search(args.index, args.variant, suppress_output=False)
-    
