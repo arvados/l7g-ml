@@ -1,9 +1,0 @@
-script_path: 
-    class: File
-    path: /home/keldin/l7g-ml/BloodType/Blood_Type_Test-unified.py
-data_dir_hiq:
-    class: Directory
-    path: keep:74538e1b14fc0406ad95993dd5b5a0e2+42832
-data_dir_untap:
-    class: Directory
-    path: keep:e4b5e3059ae5d5e115c19f17b970c548+154

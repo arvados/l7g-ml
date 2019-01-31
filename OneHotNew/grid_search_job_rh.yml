@@ -1,9 +1,0 @@
-script:
-  class: File
-  path: grid_search_dask.py
-x_data:
-  class: File
-  path: npy_data/data_encoded_d.npy
-y_data:
-  class: File
-  path: npy_data/rh_types.npy
