@@ -1,4 +1,4 @@
-Using machine learning and the Arvados Lightning project, we are able to predict blood type using tiled PGP data.  
+Using machine learning and the **Arvados Lightning Project**, we are able to predict blood type using tiled PGP data.  
 
 Our latest machine learning model 1-hot encodes the data, applies a Pearson chi^2 filter and then performs classification using a SVM with a l1 regularization (found in folder chi2). 
 
