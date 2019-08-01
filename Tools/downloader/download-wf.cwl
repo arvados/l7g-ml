@@ -25,7 +25,7 @@ inputs:
   bashScript:
     type: File
     label: script handling curl and md5
-  
+
   urlFile:
     type: File
     label: list of URLs to download from

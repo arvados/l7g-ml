@@ -34,7 +34,7 @@ outputs:
 steps:
   readUrlList:
     run: readUrlList.cwl
-    in: 
+    in:
       infile: urlFile
     out: [urls]
 

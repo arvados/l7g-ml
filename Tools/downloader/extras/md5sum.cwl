@@ -34,7 +34,7 @@ outputs:
 steps:
   getSampleList:
     run: getSampleList.cwl
-    in: 
+    in:
       inputCollection: inputCollection
     out: [directories]
 

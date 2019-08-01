@@ -14,7 +14,7 @@ Run on Arvados node:
 
 ## Extras
 
-### Extras are experimental and have not been tested.  
+### Extras are experimental and have not been tested.
 
 for paired fastq's:
 
