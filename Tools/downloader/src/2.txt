@@ -1,0 +1,2 @@
+https://www.google.com/XX7890-DNA_A00.bam?something_or_other
+http://neverssl.com/subdir/Assembly/YY99999-DNA_A00.bam?something_else_or_other
