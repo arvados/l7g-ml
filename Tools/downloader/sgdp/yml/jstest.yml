@@ -1,0 +1,6 @@
+fn_list:
+  class: File
+  location: ../scripts/filenames.txt
+url_list:
+  class: File
+  location: ../scripts/urls.txt
