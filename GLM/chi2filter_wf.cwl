@@ -5,8 +5,8 @@ requirements:
   DockerRequirement:
     dockerPull: l7g-ml/pythonr 
   ResourceRequirement:
-    coresMin: 32
-    ramMin: 50000
+    coresMin: 16
+    ramMin: 32000
 hints:
   cwltool:LoadListingRequirement: 
     loadListing: deep_listing
