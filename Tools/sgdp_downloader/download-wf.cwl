@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: Workflow
-label: Simons Diversity from URL(s)
+label: (workflow) Simons Diversity from URL(s)
 
 $namespaces:
   arv: "http://arvados.org/cwl#"
