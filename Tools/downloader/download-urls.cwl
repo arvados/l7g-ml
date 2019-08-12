@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   - class: DockerRequirement
-    dockerPull: cure/arvados-download
+    dockerPull: curii/arvados-download
 
 hints:
   arv:RuntimeConstraints:
