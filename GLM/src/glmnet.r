@@ -52,46 +52,71 @@ pathdataOH <- np$load(args[4])
 varvals <- np$load(args[5])
 colorblood <- args[6]
 type_measure <- args[7]
-#cross validate and return the best lambda
-maxlog <- 0
-minlog <- -2
-lamvals <- 10^seq(maxlog,minlog, length=100)
-cvfit <- cv.glmnet(Xmat,y, family = "binomial", type.measure = type_measure, nfolds = 5, lambda=lamvals)
 
-plotname <- paste0('glmnet_',colorblood,'_',type_measure,'.png')
+#adaptiveLasso
+#Ridge Regression to create the Adaptive Weights Vector
+set.seed(999)
+cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=TRUE)
+w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
+                   [, 1][2:(ncol(x)+1)] ))^1 ## Using gamma = 1
+w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
+
+#Adaptive Lasso
+set.seed(999)
+cv.lasso <- cv.glmnet(Xmat, y, family='binomial', alpha=1, parallel=TRUE, standardize=TRUE, type.measure='auc', penalty.factor=w3)
+
+plotname <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'.png')
 png(plotname)
-plot(cvfit)
+plot(cv.lasso)
+plot(cv.lasso$glmnet.fit, xvar="lambda", label=TRUE)
+abline(v = log(cv.lasso$lambda.min))
 dev.off()
 
-filename <- paste0('glmnet_',colorblood,'_',type_measure,'min.txt' ) 
+filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'min.txt' )
 fileConn <- file(filename)
 
-idxnzmin <- which(coef(cvfit,s="lambda.min") !=0)
-idxnzmin <- idxnzmin[-1]
-nznumbmin <- coef(cvfit,s="lambda.min")[idxnzmin]
-coefPaths <- pathdataOH[idxnzmin]
+idxnzmin <- which(coef(cv.lasso,s="lambda.min") !=0)
+idxnzmin <- idxnzmin[-1] #why drop top one?
+nznumbmin <- coef(cv.lasso,s="lambda.min")[idxnzmin]
+coefPathsMin <- pathdataOH[idxnzmin]
+
+#coef <- coef(cv.lasso, s='lambda.min')
+#selected_attributes <- (coef@i[-1]+1) ## Considering the structure of the data frame dataF as shown earlier
+
+#I chose to get the coef with lambda.min because that is what was previously done. 
+#This caputures the lambda values with the min cross validation error. instead of largest lambda st error within 1stdv of minimum 
+#
+
+
+#cross validate and return the best lambda
+##maxlog <- 0
+##minlog <- -2
+##lamvals <- 10^seq(maxlog,minlog, length=100)
+##cvfit <- cv.glmnet(Xmat,y, family = "binomial", type.measure = type_measure, nfolds = 5, lambda=lamvals)
+
+
 #From equation Sarah has, basically reversing encoding: 
-tile_path <- np$trunc(coefPaths/(16**5))
-tile_step <- np$trunc((coefPaths - tile_path*16**5)/2)
-tile_phase <- np$trunc((coefPaths- tile_path*16**5 - 2*tile_step))
+tile_path <- np$trunc(coefPathsMin/(16**5))
+tile_step <- np$trunc((coefPathsMin - tile_path*16**5)/2)
+tile_phase <- np$trunc((coefPathsMin- tile_path*16**5 - 2*tile_step))
 tup <- tuple(tile_path, tile_step)
 tile_loc <- np$column_stack(tup)
 
 writeLines(c("Tile Location (min): ", tile_loc,"Nonnzero Coefs (min): ", nznumbmin,"Old Path (min): ", oldpath[idxnzmin],"Varvals (min): ", varvals[idxnzmin]), fileConn)
 close(fileConn)
 
-filename <- paste0('glmnet_',colorblood,'_',type_measure,'1se.txt' ) 
+filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'1se.txt' ) 
 fileConn <- file(filename)
 
-idxnzse <- which(coef(cvfit,s="lambda.1se") !=0)
+idxnzse <- which(coef(cv.lasso,s="lambda.1se") !=0)
 idxnzse <- idxnzse[-1]
-nznumbse <- coef(cvfit,s="lambda.1se")[idxnzse]
-coefPaths <- pathdataOH[idxnzse]
+nznumbse <- coef(cv.lasso,s="lambda.1se")[idxnzse]
+coefPaths1st <- pathdataOH[idxnzse] #should this be the same name as before? 
 
 #From equation Sarah has, basically reversing encoding: 
-tile_path <- np$trunc(coefPaths/(16**5))
-tile_step <- np$trunc((coefPaths - tile_path*16**5)/2)
-tile_phase <- np$trunc((coefPaths- tile_path*16**5 - 2*tile_step))
+tile_path <- np$trunc(coefPaths1st/(16**5))
+tile_step <- np$trunc((coefPaths1st - tile_path*16**5)/2)
+tile_phase <- np$trunc((coefPaths1st- tile_path*16**5 - 2*tile_step))
 tup <- tuple(tile_path, tile_step)
 tile_loc <- np$column_stack(tup)
 
