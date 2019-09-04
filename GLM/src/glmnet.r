@@ -47,8 +47,8 @@ y <- as.vector(ynump)
 # pathdata_file <- "/data-sdd/owebb/keep/by_id/su92l-4zz18-jq2eftdx22eow6s/pathdataOH.npy"
 # varvals_file <- "/data-sdd/owebb/keep/by_id/su92l-4zz18-jq2eftdx22eow6s/varvals.npy"
 
-oldpath <- np$load(args[3])
-pathdataOH <- np$load(args[4])
+pathdataOH <- np$load(args[3])
+oldpath <- np$load(args[4])
 varvals <- np$load(args[5])
 colorblood <- args[6]
 type_measure <- args[7]
@@ -58,16 +58,26 @@ type_measure <- args[7]
 set.seed(999)
 cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=TRUE)
 w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
-                   [, 1][2:(ncol(x)+1)] ))^1 ## Using gamma = 1
+                   [, 1][2:(ncol(Xmat)+1)] ))^.5 ## Using gamma = .5
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
 
 #Adaptive Lasso
 set.seed(999)
-cv.lasso <- cv.glmnet(Xmat, y, family='binomial', alpha=1, parallel=TRUE, standardize=TRUE, type.measure='auc', penalty.factor=w3)
+cv.lasso <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=TRUE, type.measure='auc', penalty.factor=w3)
 
-plotname <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'.png')
+cv.lasso.class <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=TRUE, type.measure='class', penalty.factor=w3)
+plotname_class <- paste0('glmnet_lasso_',colorblood,'_class.png')
+png(plotname_class)
+plot(cv.lasso.class)
+dev.off()
+
+plotname <- paste0('glmnet_lasso_',colorblood,'_auc','.png')
 png(plotname)
 plot(cv.lasso)
+dev.off()
+
+plotname1 <- paste0('glemnet_lasso_coefficients_',colorblood, '_auc.png')
+png(plotname1)
 plot(cv.lasso$glmnet.fit, xvar="lambda", label=TRUE)
 abline(v = log(cv.lasso$lambda.min))
 dev.off()
@@ -75,9 +85,11 @@ dev.off()
 filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'min.txt' )
 fileConn <- file(filename)
 
-idxnzmin <- which(coef(cv.lasso,s="lambda.min") !=0)
-idxnzmin <- idxnzmin[-1] #why drop top one?
-nznumbmin <- coef(cv.lasso,s="lambda.min")[idxnzmin]
+coefVec <- coef(cv.lasso, s= "lambda.min")
+coefVec <- coefVec[-1]
+idxnzmin <- which(coefVec !=0)
+sizeCoefMin <- length(coef(cv.lasso,s="lambda.min"))
+nznumbmin <- coefVec[idxnzmin]
 coefPathsMin <- pathdataOH[idxnzmin]
 
 #coef <- coef(cv.lasso, s='lambda.min')
@@ -102,15 +114,20 @@ tile_phase <- np$trunc((coefPathsMin- tile_path*16**5 - 2*tile_step))
 tup <- tuple(tile_path, tile_step)
 tile_loc <- np$column_stack(tup)
 
+filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'min.txt' )
+fileConn <- file(filename)
+
 writeLines(c("Tile Location (min): ", tile_loc,"Nonnzero Coefs (min): ", nznumbmin,"Old Path (min): ", oldpath[idxnzmin],"Varvals (min): ", varvals[idxnzmin]), fileConn)
 close(fileConn)
 
 filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'1se.txt' ) 
 fileConn <- file(filename)
 
-idxnzse <- which(coef(cv.lasso,s="lambda.1se") !=0)
-idxnzse <- idxnzse[-1]
-nznumbse <- coef(cv.lasso,s="lambda.1se")[idxnzse]
+coefVse <- coef(cv.lasso, s="lambda.1se")
+coefVse <- coefVse[-1]
+
+idxnzse <- which(coefVse !=0)
+nznumbse <- coefVse[idxnzse]
 coefPaths1st <- pathdataOH[idxnzse] #should this be the same name as before? 
 
 #From equation Sarah has, basically reversing encoding: 

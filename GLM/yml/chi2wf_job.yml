@@ -3,7 +3,7 @@ get_data_file:
   path: /data-sdd/owebb/l7g-ml/EyeColor/gettingeyedata.py
 glmnet_file:
   class: File
-  path: /data-sdd/owebb/l7g-ml/BloodType/chi2/cwlBloodType/src/glmnet.r
+  path: ../src/glmnet.r
 dbfile:
   class: File
   path: /data-sdd/owebb/PGP-Survey.csv
@@ -16,5 +16,5 @@ infofile:
 namefile: 
   class: File
   path: keep:984434bc0540105967920f6295423575+11783/names.npy
-colorblood: Blue
+colorblood: O
 type_measure: class
