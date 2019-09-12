@@ -53,7 +53,7 @@ outputs:
       glob: "*.txt"
 
   graph:
-    type: File
+    type: File[]
     outputBinding:
       glob: "*.png"
 

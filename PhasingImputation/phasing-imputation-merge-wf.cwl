@@ -2,6 +2,10 @@ cwlVersion: v1.0
 class: Workflow
 requirements:
   SubworkflowFeatureRequirement: {}
+hints:
+  ResourceRequirement:
+    coresMin: 2
+    ramMin: 12000
 inputs:
   sample: string
   phasingrefsdir: Directory

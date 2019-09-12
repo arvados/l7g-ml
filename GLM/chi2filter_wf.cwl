@@ -57,7 +57,7 @@ outputs:
     type: File[]
     outputSource: glmnet/text_file
   graph:
-    type: File
+    type: File[]
     outputSource: glmnet/graph
     
 steps:

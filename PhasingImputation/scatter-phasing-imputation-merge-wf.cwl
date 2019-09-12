@@ -3,7 +3,10 @@ class: Workflow
 requirements:
   ScatterFeatureRequirement: {}
   SubworkflowFeatureRequirement: {}
-
+hints:
+  ResourceRequirement:
+    coresMin: 2
+    ramMin: 12000
 inputs:
   phasingrefsdir: Directory
   phasingmap: File
