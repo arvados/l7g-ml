@@ -1,0 +1,400 @@
+---
+Tile 12099719 information:
+hg19:chr9:01c4	91424	96791024	15	16
+Path: 01c4
+Step: 0369
+Phase: 0x1
+
+0368	 136139786
+0369	 136140011
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ttcactgttcggggccactagcaacaaagcttctgtaaacactcatgtgcaggtatttgt
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ttcactgttcggggccactagcaacaaagcttctgtaaacactcatgtgcaggtatttgt
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ttcactgttcggggccactagcaacaaagcttctgtaaacactcatgtgcaggtatttgt
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ttcactgttcggggccactagcaacaaagcttctgtaaacactcatgtgcaggtatttgt
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ttcactgttcggggccactagcaacaaagcttctgtaaacactcatgtgcaggtatttgt
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      ttcactgttcggggccactagcaacaaagcttctgtaaacactcatgtgcaggtatttgt
+                                                         ************************************************************
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ggacctgtgttttcatttcccttgagtaaataccaaggaatggaaaagatgggtcatatg
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ggacctgtgttttcatttcccttgagtaaataccaaggaatggaaaagatgggtcatatg
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ggacctgtgttttcatttcccttgagtaaataccaaggaatggaaaagatgggtcatatg
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ggacctgtgtcttcatttcccttgagtaaataccaaggaatggaaaagatgggtcatatg
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ggacctgtgtcttcatttcccttgagtaaataccaaggaatggaaaagatgggtcatatg
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      ggacctgtgttttcatttcccttgagtaaataccaaggaatggaaaagatgggtcatatg
+                                                         ********** *************************************************
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      gtaagtgtatgtttaactttgtaagaaactgccaaactgtgttccaaagtggtgactgaa
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      gtaagtgtatgtttaactttgtaagaa--------actgtgttccaaagtggtgactgaa
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      gtaagtgtatgtttaactttgtaagaaactgccaaactgtgttccaaagtggtgactgaa
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      gtaagtgtatgtttaactttgtaagaaactgccaaactgtgttccaaagtggtgactgaa
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      gtaagtgtatgtttaactttgtaagaa--------actgtgttccaaagtggtgactgaa
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      gtaagtgtatgtttaactttgtaagaa--------actgtgttccaaagtggtgactgaa
+                                                         ***************************        *************************
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ttttccattcccgccaggaatgtacgagaaccacagtccttgccaacacttgatggtcac
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ttttccattcccgccaggaatgtacgagaaccacagtccttgccaacacttgatggtcac
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ttttccattcccaccaggaatgtacgagaaccacagtccttgccaacacttgatggtcac
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ttttccattcccgccaggaatgtacgagaaccacagtccttgccaacacttgatggtcac
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ttttccattcccgccaggaatgtacgagaaccacagtccttgccaacacttgatggtcac
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      ttttccattcccgccaggaatgtacgagaaccacagtccttgccaacacttgatggtcac
+                                                         ************ ***********************************************
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      tcttttatc---------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      tcttttatc---------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      tcttttatc---------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      tcttttatc---------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      tcttttatc---------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      tctttttatcctttagccatgctagtggatgaggagtggtatctaagtgtgtccaatgac
+                                                         ******                                                      
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      taaggaggtaaatcatcttttcatgtatttattggccatttgcttgcttcttatgaagcc
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      tgtccagatctttagctcattttattatttatttatttatttatttacttatatatattt
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      ttggggggcacagtcccactccagttgcccaggctggagtgtggtggcatgatcatggct
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      cactacagcctcgacttcctgggctcaggtgatcctcccacctcagccttttgagtagct
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      gagactataggcatgcaccacatctagctgattttttgtggttttggtagagatggggtt
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      tcaccatgttgcccaggctggtcttgaactcctgggcttaagcaatccacctgcctcagc
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      ctcccaatgtgctgggattacaggcataagccacctcacctggccctctatttttatttt
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      ttttagacaggatcttactctgtcacccaggctggagtgcagtggcacgatcacagctcg
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      ------------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      ------------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      ------------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      ------------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      ------------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      ctgcaacctcgaactcctgagcttaagtgatctttccccctcagcctcctgattaggtgg
+                                                                                                                     
+
+
+01c4.00.0369.000+1,60fe6d1a287c91939b151001adfdeada      --------------------------------------------------------
+01c4.00.0369.001+1,7214c84c18b994abdd0dbf6a176a7407      --------------------------------------------------------
+01c4.00.0369.002+1,34c37138df011524d54aec04d3f2d723      --------------------------------------------------------
+01c4.00.0369.003+1,bc42c6d168b007e5278f4308fd4db955      --------------------------------------------------------
+01c4.00.0369.004+1,dbac4cca74cdfeecc02209020cf2529b      --------------------------------------------------------
+01c4.00.0369.005+2,10bbbac9978c3fa024c501b33bd66c1e      gactacagacatgcaccaacatgcccggctaattattctactttttgtagacactg
+                                                                                                                 
+
+
+Variant diffs:
+
+Position on chromosome: 71, index of diff: 136139833
+
+Position range on chromosome: 148-155, index range: 136139910-136139917
+
+Position on chromosome: 193, index of diff: 136139955
+
+Position range on chromosome: 247-896, index range: 136140009-136140658
+
+Finished search for tile 12099719
+
+---
+Tile 12099701 information:
+hg19:chr9:01c4	91424	96791024	15	16
+Path: 01c4
+Step: 0360
+Phase: 0x1
+
+035f	 136137466
+0360	 136137691
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtttcttacc
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      ggctgctgtggtcacttctccccaagccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      ggctgctgtggtcacttctccccaaaccaggccagcctcgatggtcaaatgtgtcttacc
+                                                         ************************* ************************** *******
+
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      caaacaagaccaagacaagcattattaggaaaaggatcataggtagaagtgcgtggcatt
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcatggcatt
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgtgtggcatt
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgtgtggcatt
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcgtggcatt
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgtgtggcatt
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      caaacaagaccaagacaagcattattaggaaaaggatcataggtcgaagtgcatggcatt
+                                                         ******************************************** ******  *******
+
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      ttggttttcctggaaaacaggagtagaaaaatcacattactcaccctccttctctcacct
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      ttggttttcctcgaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      ttggttttcctggaaaacagtagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      ttggttttcctggaaaacaggagtagaaaaatcacatcactcaccctccttctctcacct
+                                                         *********** ******** **************** **********************
+
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      gccccactttacctgtcccgcctcgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      gccccactttacctgtcccgccttgtaattcaggtatcacaccctgcgacgggccttcat
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      gccccactttacctgtcccaccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      gccccactttacctgtcctgccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgatgggccttcat
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      gccccactttacctgtcccgccttgtaattcaggtatcacaccctgcgacgggccttcat
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgacgggccttcat
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      gccccactttacctgtcccgccttgtaattcaggcatcacaccctgcgatgggccttcat
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      gccccactttacctgtcccaccttgtaattcaggcatcacaccctgcgacgggccttcat
+                                                         ******************  *** ********** ************** **********
+
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      ctgccaaga---------------------------------------------------
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      ctgccaaga---------------------------------------------------
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      ctgccaaga---------------------------------------------------
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      ctgccaaga---------------------------------------------------
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      ctgccaaga---------------------------------------------------
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      ctgccaaga---------------------------------------------------
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      ctgccaaga---------------------------------------------------
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      ctgccaaga---------------------------------------------------
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      ctgccaaga---------------------------------------------------
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      ctgccaagatggtccctctgccccacaggtgatgctctgagccccacctgagcatctcca
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      ctgccaaga---------------------------------------------------
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      ctgccaaga---------------------------------------------------
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      ctgccaagatggtccctctgccccacaggtgatgctctgagccccacctgagcatctcca
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      ctgccaaga---------------------------------------------------
+                                                         *********                                                   
+
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      ------------------------------------------------------------
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      ------------------------------------------------------------
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      ------------------------------------------------------------
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      ------------------------------------------------------------
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      ------------------------------------------------------------
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      ------------------------------------------------------------
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      ------------------------------------------------------------
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      ------------------------------------------------------------
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      ------------------------------------------------------------
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      aacccagtccagatctggccctcctcccactcagagaagagggaggcggtctgctcctcc
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      ------------------------------------------------------------
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      ------------------------------------------------------------
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      aacccagtccagatctggccctcctcccactcagagaagagggaggcggtctgctcctcc
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      ------------------------------------------------------------
+                                                                                                                     
+
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      ------------------------------------------------------------
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      ------------------------------------------------------------
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      ------------------------------------------------------------
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      ------------------------------------------------------------
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      ------------------------------------------------------------
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      ------------------------------------------------------------
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      ------------------------------------------------------------
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      ------------------------------------------------------------
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      ------------------------------------------------------------
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      cagctcatcagcccgactgctcctgcagactctgagagccaccccggcttcccattgacc
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      ------------------------------------------------------------
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      ------------------------------------------------------------
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      cagctcatcagcccgactgctcctgcagactctgagagccaccccggcttcccagtgacc
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      ------------------------------------------------------------
+                                                                                                                     
+
+
+01c4.00.0360.000+1,68e4db823757e2a7452e1a19ca83a5b9      ------------------------------------------------------
+01c4.00.0360.001+1,18d6db874c0fbedf0930369afc4f41ad      ------------------------------------------------------
+01c4.00.0360.002+1,a4fd7f6c7f4a32389eb1811cae48608b      ------------------------------------------------------
+01c4.00.0360.003+1,a18c4768f015f2accf40306090e55629      ------------------------------------------------------
+01c4.00.0360.004+1,84c54bccfbd320f69c1207d14891d29e      ------------------------------------------------------
+01c4.00.0360.005+1,2cdfcc9664a07c07cb3e7aee136b5b6e      ------------------------------------------------------
+01c4.00.0360.006+1,c720278521d70a86be84c65d3a3939c7      ------------------------------------------------------
+01c4.00.0360.007+1,36532d4a6bd86e2a8eb02c159e8085e7      ------------------------------------------------------
+01c4.00.0360.008+1,7803af26b2aa1bcb2181a75b54f6d36b      ------------------------------------------------------
+01c4.00.0360.009+2,b216a024c3f3f555c3b3e8fa25bd3702      tccttccactcagcacccccttcccctgggagaccggaatgaaccacactgaaa
+01c4.00.0360.00a+1,f5eb9fc6386eac19cd763f910324ecfd      ------------------------------------------------------
+01c4.00.0360.00b+1,6593f44ddd6e985bed5992404742d2ca      ------------------------------------------------------
+01c4.00.0360.00c+2,d942939e7853715742e24ebfbcfc5e17      tccttccactcagcacccccttcccctgggagaccggaatgaaccacactgaaa
+01c4.00.0360.00d+1,ea63f8805996c904afe40429ce672fc3      ------------------------------------------------------
+                                                                                                               
+
+
+Variant diffs:
+
+Position on chromosome: 26, index of diff: 136137468
+
+Position on chromosome: 53, index of diff: 136137495
+
+Position on chromosome: 105, index of diff: 136137547
+
+Position range on chromosome: 112-113, index range: 136137554-136137555
+
+Position on chromosome: 132, index of diff: 136137574
+
+Position on chromosome: 141, index of diff: 136137583
+
+Position on chromosome: 158, index of diff: 136137600
+
+Position range on chromosome: 199-200, index range: 136137641-136137642
+
+Position on chromosome: 204, index of diff: 136137646
+
+Position on chromosome: 215, index of diff: 136137657
+
+Position on chromosome: 230, index of diff: 136137672
+
+Position range on chromosome: 250-474, index range: 136137692-136137916
+
+Finished search for tile 12099701
+
+---
+Tile 12099751 information:
+hg19:chr9:01c4	91424	96791024	15	16
+Path: 01c4
+Step: 0379
+Phase: 0x1
+
+0378	 136145068
+0379	 136145319
+
+01c4.00.0379.000+1,6f700008754cce54768cbf56b98c3114      ttaattatcccgcagcaatacatgaagcaaaaactcacagaattgaagggtgaaacagtc
+01c4.00.0379.001+1,663a6d72267b87ed5bb3394cb185f4a7      ttaattatcccgcagcaatacatgaagcaaaaactcacagaattgaagggtgaaacagtc
+01c4.00.0379.002+1,6532791a02261384c2e4622da13b81b2      ttaattatcccgcagcaatacatgaagcaaaaactcacagaattgaagggtgaaacagtc
+01c4.00.0379.003+1,77c61a00e760ae6dfa4175b8dcc061e8      ttaattatcccgcagcaatacatgaagcaaaaactcacagaattgaagggtgaaacagtc
+01c4.00.0379.004+1,299312650f3bf51f6596e3391396991e      ttaattatcccgcagcaatacatgaagcaaaaactcacagaattgaagggtgaaacagtc
+01c4.00.0379.005+1,3df69c9fb122a9450e8179f475199083      ttaattatcccgcagcaatacatgaagcaaaaactcacagaattgaagggtgaaacagtc
+                                                         ************************************************************
+
+
+01c4.00.0379.000+1,6f700008754cce54768cbf56b98c3114      aattcaccagtaacggttgggccaggcatggtgactcacgcttgtaatcccagcactttg
+01c4.00.0379.001+1,663a6d72267b87ed5bb3394cb185f4a7      aattcaccagtaatggttgggccaggcatggtgactcacgcttgtaatcccagcactttg
+01c4.00.0379.002+1,6532791a02261384c2e4622da13b81b2      aattcaccagtaatggttgggccaggcatggtgactcacgcttgtaatcccagcactttg
+01c4.00.0379.003+1,77c61a00e760ae6dfa4175b8dcc061e8      aattcaccagtaatggttgggccaggcatggtgactcacgcttgtaatcccagcactttg
+01c4.00.0379.004+1,299312650f3bf51f6596e3391396991e      aattcaccagtaacggttgggccaggcatggtgactcacgcttgtaatcccagcactttg
+01c4.00.0379.005+1,3df69c9fb122a9450e8179f475199083      aattcaccagtaacggttgggccaggcatggtgactcacgcttgtaatcccagcactttg
+                                                         ************* **********************************************
+
+
+01c4.00.0379.000+1,6f700008754cce54768cbf56b98c3114      ggaggccgaggtgggtgggtcacttgagcccaggagttcgtgaccagcctaagtaacatg
+01c4.00.0379.001+1,663a6d72267b87ed5bb3394cb185f4a7      ggaggccgaggtgggtgggtcacttgagcccaggagttcgtgaccagcctaagtaacatg
+01c4.00.0379.002+1,6532791a02261384c2e4622da13b81b2      ggaggccgaggtgggtgggtcacttgagcccaggagttcgtgaccagcctaagtaacatg
+01c4.00.0379.003+1,77c61a00e760ae6dfa4175b8dcc061e8      ggaggccgaggtgggtgggtcacttgaacccaggagttcgtgaccagcctaagtaacatg
+01c4.00.0379.004+1,299312650f3bf51f6596e3391396991e      ggaggccgaggtgggtgggtcacttgagcccaggagttcgtgaccagcctaagtaacatg
+01c4.00.0379.005+1,3df69c9fb122a9450e8179f475199083      ggaggccgaggtgggtgggtcacttgagcccagcagttcgtgaccagcctaagtaacatg
+                                                         *************************** ***** **************************
+
+
+01c4.00.0379.000+1,6f700008754cce54768cbf56b98c3114      gcaaaaccctgtctacaaaaaatgcaaaaatcagctaggcatgatggtacttgcctgtag
+01c4.00.0379.001+1,663a6d72267b87ed5bb3394cb185f4a7      gcaaaaccctgtctataaaaaatgcaaaaatcagctaggcatgatggtacttgcctgtag
+01c4.00.0379.002+1,6532791a02261384c2e4622da13b81b2      gcaaaaccctgtctacaaaaaatgcaaaaatcagctaggcatgatggtacttgcctgtag
+01c4.00.0379.003+1,77c61a00e760ae6dfa4175b8dcc061e8      gcaaaaccctgtctataaaaaatgcaaaaatcagctaggcatgatggtacttgcctgtag
+01c4.00.0379.004+1,299312650f3bf51f6596e3391396991e      gcaaaaccctgtctacaaaaaatggaaaaatcagctaggcatgatggtacttgcctgtag
+01c4.00.0379.005+1,3df69c9fb122a9450e8179f475199083      gcaaaaccctgtctacaaaaaatgcaaaaatcagctaggcatgatggtacttgcctgtag
+                                                         *************** ******** ***********************************
+
+
+01c4.00.0379.000+1,6f700008754cce54768cbf56b98c3114      ttgcagctactcaggaggctgaggtgacctaagcc
+01c4.00.0379.001+1,663a6d72267b87ed5bb3394cb185f4a7      ttgcagctactcaggaggctgaggtgacctaagcc
+01c4.00.0379.002+1,6532791a02261384c2e4622da13b81b2      ttgcagctactcaggaggctgaggtgacctaagcc
+01c4.00.0379.003+1,77c61a00e760ae6dfa4175b8dcc061e8      ttgcagctactcaggaggctgaggtgacctaagcc
+01c4.00.0379.004+1,299312650f3bf51f6596e3391396991e      ttgcagctactcaggaggctgaggtgacctaagcc
+01c4.00.0379.005+1,3df69c9fb122a9450e8179f475199083      ttgcagctactcaggaggctgaggtgacctaagcc
+                                                         ***********************************
+
+
+Variant diffs:
+
+Position on chromosome: 74, index of diff: 136145118
+
+Position on chromosome: 148, index of diff: 136145192
+
+Position on chromosome: 154, index of diff: 136145198
+
+Position on chromosome: 196, index of diff: 136145240
+
+Position on chromosome: 205, index of diff: 136145249
+
+Finished search for tile 12099751
+

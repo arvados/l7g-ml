@@ -47,9 +47,9 @@ y <- as.vector(ynump)
 # pathdata_file <- "/data-sdd/owebb/keep/by_id/su92l-4zz18-jq2eftdx22eow6s/pathdataOH.npy"
 # varvals_file <- "/data-sdd/owebb/keep/by_id/su92l-4zz18-jq2eftdx22eow6s/varvals.npy"
 
-pathdataOH <- np$load(args[3])
-oldpath <- np$load(args[4])
-varvals <- np$load(args[5])
+pathdataOH <- as.vector(np$load(args[3]))
+oldpath <- as.vector(np$load(args[4]))
+varvals <- as.vector(np$load(args[5]))
 colorblood <- args[6]
 type_measure <- args[7]
 
@@ -82,9 +82,6 @@ plot(cv.lasso$glmnet.fit, xvar="lambda", label=TRUE)
 abline(v = log(cv.lasso$lambda.min))
 dev.off()
 
-filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'min.txt' )
-fileConn <- file(filename)
-
 coefVec <- coef(cv.lasso, s= "lambda.min")
 coefVec <- coefVec[-1]
 idxnzmin <- which(coefVec !=0)
@@ -92,36 +89,24 @@ sizeCoefMin <- length(coef(cv.lasso,s="lambda.min"))
 nznumbmin <- coefVec[idxnzmin]
 coefPathsMin <- pathdataOH[idxnzmin]
 
-#coef <- coef(cv.lasso, s='lambda.min')
-#selected_attributes <- (coef@i[-1]+1) ## Considering the structure of the data frame dataF as shown earlier
-
-#I chose to get the coef with lambda.min because that is what was previously done. 
-#This caputures the lambda values with the min cross validation error. instead of largest lambda st error within 1stdv of minimum 
-#
-
-
-#cross validate and return the best lambda
-##maxlog <- 0
-##minlog <- -2
-##lamvals <- 10^seq(maxlog,minlog, length=100)
-##cvfit <- cv.glmnet(Xmat,y, family = "binomial", type.measure = type_measure, nfolds = 5, lambda=lamvals)
-
 
 #From equation Sarah has, basically reversing encoding: 
-tile_path <- np$trunc(coefPathsMin/(16**5))
-tile_step <- np$trunc((coefPathsMin - tile_path*16**5)/2)
+tile_path <- as.vector(np$trunc(coefPathsMin/(16**5)))
+tile_step <- as.vector(np$trunc((coefPathsMin - tile_path*16**5)/2))
 tile_phase <- np$trunc((coefPathsMin- tile_path*16**5 - 2*tile_step))
 tup <- tuple(tile_path, tile_step)
 tile_loc <- np$column_stack(tup)
 
 filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'min.txt' )
-fileConn <- file(filename)
+fileConn <- file(filename, "w")
 
-writeLines(c("Tile Location (min): ", tile_loc,"Nonnzero Coefs (min): ", nznumbmin,"Old Path (min): ", oldpath[idxnzmin],"Varvals (min): ", varvals[idxnzmin]), fileConn)
+dataF_min <- data.frame("nonnzerocoefs_min" = nznumbmin, "tile_path_min" = tile_path, "tile_step_min" = tile_step, "oldpath_min" = oldpath[idxnzmin], "varvals_min" = varvals[idxnzmin])
+o <- order(abs(dataF_min$nonnzerocoefs_min), decreasing = TRUE)
+dataF_min <- dataF_min[o,]
+
+write.table(dataF_min, fileConn, sep= "\t", row.names = FALSE)
 close(fileConn)
 
-filename <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'1se.txt' ) 
-fileConn <- file(filename)
 
 coefVse <- coef(cv.lasso, s="lambda.1se")
 coefVse <- coefVse[-1]
@@ -131,11 +116,20 @@ nznumbse <- coefVse[idxnzse]
 coefPaths1st <- pathdataOH[idxnzse] #should this be the same name as before? 
 
 #From equation Sarah has, basically reversing encoding: 
-tile_path <- np$trunc(coefPaths1st/(16**5))
-tile_step <- np$trunc((coefPaths1st - tile_path*16**5)/2)
+tile_path <- as.vector(np$trunc(coefPaths1st/(16**5)))
+tile_step <- as.vector(np$trunc((coefPaths1st - tile_path*16**5)/2))
 tile_phase <- np$trunc((coefPaths1st- tile_path*16**5 - 2*tile_step))
 tup <- tuple(tile_path, tile_step)
 tile_loc <- np$column_stack(tup)
 
-writeLines(c("Tile Location (1se): ", tile_loc,"Nonnzero Coefs (1se): ", nznumbse,"Old Path (1se): ", oldpath[idxnzse],"Varvals (1se): ", varvals[idxnzse]), fileConn)
-close(fileConn)
+dataF_1se <- data.frame("nonnzerocoefs_1se" = nznumbse, "tile_path_1se" = tile_path, "tile_step_1se" = tile_step, "oldpath_1se" = oldpath[idxnzse], "varvals_1se" = varvals[idxnzse])
+o_1se <- order(abs(dataF_1se$nonnzerocoefs_1se), decreasing = TRUE)
+dataF_1se <- dataF_1se[o_1se,]
+
+
+filename1 <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'1se.txt' )
+fileConn1 <- file(filename1, "w")
+write.table(dataF_1se, fileConn1, sep= "\t", row.names = FALSE)
+close(fileConn1)
+
+

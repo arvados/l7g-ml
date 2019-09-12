@@ -16,5 +16,5 @@ infofile:
 namefile: 
   class: File
   path: keep:984434bc0540105967920f6295423575+11783/names.npy
-colorblood: O
+colorblood: Blue
 type_measure: class

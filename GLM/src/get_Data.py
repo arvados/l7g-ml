@@ -34,7 +34,7 @@ namesfile = sys.argv[4]
 bloodtype = sys.argv[5]
 
 #Use to turn off the chi2 filter
-chi2filter = False
+chi2filter = True
 
 # Unnecesary if cwl is run
 # untapdb = '/data-sdd/owebb/untap.db'

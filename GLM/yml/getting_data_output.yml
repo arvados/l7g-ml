@@ -1,6 +1,6 @@
 glmnet_file:
   class: File
-  path: /data-sdd/owebb/l7g-ml/BloodType/chi2/cwlBloodType/src/glmnet.r
+  path: /src/glmnet.r
 X:
   class: File
   path: keep:53c8c0c80ce555b3333224878e225999+225/X.npz
