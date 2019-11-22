@@ -5,11 +5,11 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: l7g-ml/pythonr 
+    dockerPull: l7g-ml/pythonr
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    ramMin: 200698 
-    coresMin: 16 
+    ramMin: 200698
+    coresMin: 16
 hints:
   arv:RuntimeConstraints:
     keep_cache: 1500
@@ -20,7 +20,7 @@ inputs:
     inputBinding:
       position: 1
   tilefile:
-    type: File 
+    type: File
     inputBinding:
       position: 2
   tileinfo:

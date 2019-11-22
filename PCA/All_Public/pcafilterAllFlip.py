@@ -11,7 +11,7 @@ import re
 import sklearn
 from sklearn import preprocessing
 from sklearn.preprocessing import OneHotEncoder
-import argparse 
+import argparse
 from sklearn.utils.validation import assert_all_finite
 from scipy.sparse import csr_matrix
 from scipy.sparse import hstack
@@ -45,7 +45,7 @@ def pcafilter():
 
     [m,n] = tiledata.shape
 
-    for ix in range(m):     
+    for ix in range(m): 
        n20 = int(n/4)
        ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
        keepa = tiledata[ix,ieven]
@@ -53,7 +53,7 @@ def pcafilter():
        tiledata[ix,ieven] = keepb
        tiledata[ix,ieven+1] = keepa
        del keepa,keepb
-  
+
     tile_path = np.trunc(pathdata/(16**5))
     idx1 = tile_path >= 863
     idx2 = tile_path <= 810
@@ -113,8 +113,8 @@ def pcafilter():
     Xtrain = enc.fit_transform(tiledata)
 
     print(Xtrain.shape)
-    
-    to_keep = varvals > 2 
+ 
+    to_keep = varvals > 1
     idkTK = np.nonzero(to_keep)
     idkTK = idkTK[0]
 
