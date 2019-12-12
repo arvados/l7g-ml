@@ -1,25 +1,25 @@
-FROM arvados/jobs:latest
+FROM debian:buster
 
 USER root
 
-RUN apt-get update
-RUN apt-get -y install r-cran-rcpp r-cran-data.table libapt-pkg-dev less
-RUN apt-get install wget -y
-RUN apt-get install python-pip -y
-RUN apt-get install python-numpy -y
-RUN apt-get install python-scipy -y
-RUN apt-get install python-matplotlib -y
-RUN apt-get install python-pandas -y
-RUN apt-get -y dist-upgrade
-RUN apt-get clean
+RUN apt-get update && apt-get install -y --no-install-recommends gnupg
+RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+RUN echo "deb http://cloud.r-project.org/bin/linux/debian buster-cran35/" > /etc/apt/sources.list.d/cran.list
+
+RUN apt-get update && \
+    apt-get -y install r-cran-rcpp r-cran-data.table libapt-pkg-dev less \
+      wget \
+      python-pip \
+      python-numpy \
+      python-scipy \
+      python-matplotlib \
+      python-pandas && \
+    apt-get clean
 
 RUN R -e "install.packages('glmnet', repos = 'http://cran.us.r-project.org')"
 RUN R -e "install.packages('Matrix', repos = 'http://cran.us.r-project.org')"
 RUN R -e "install.packages('reticulate', repos = 'http://cran.us.r-project.org')"
 RUN R -e "install.packages('foreach', repos = 'http://cran.us.r-project.org')"
-
-
-
 
 RUN pip install sklearn
 RUN pip install --upgrade scipy
