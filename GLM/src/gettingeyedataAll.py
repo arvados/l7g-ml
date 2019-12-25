@@ -1,3 +1,4 @@
+
 from sklearn import preprocessing
 import numpy as np
 import pandas as pd
@@ -12,13 +13,14 @@ from scipy.sparse import save_npz
 
 from sklearn.feature_selection import chi2
 from sklearn.preprocessing import OneHotEncoder
-
+from sklearn.decomposition import PCA,TruncatedSVD
+from sklearn.preprocessing import StandardScaler
 
 surveyData = sys.argv[1]
 allfile = sys.argv[2]
 infofile = sys.argv[3]
 namesfile = sys.argv[4]
-color = sys.argv[5]  #use to get either blue or brown?
+color = sys.argv[5]
 
 includeHazel = False
 
@@ -38,9 +40,6 @@ names_file = open(namesfile,'r')
 names = []
 for line in names_file:
     names.append(line[:-1])
-
-#get_name = lambda full_name: full_name[45:53]
-#names = map(get_name, names)
 
 names1 = [i.split('/')[-1] for i in names]
 names2 = [i.replace('filtered_','') for i in names1]
@@ -112,111 +111,133 @@ blueOrNot = lambda color: 0 if int(color) > 13 else 1
 leftEyeList = map(blueOrNot, leftEyeList)
 
 y = np.array(leftEyeList)
+print(y.shape)
+y_filename = "y.npy"
+np.save(y_filename, y)
 
+#quit()
 print("==== End Of New Code for Eye Color ====")
 
-# allfile = tiled_data_dir + 'all.npy'
-# infofile = tiled_data_dir + 'all-info.npy'
-print("==== Loading Big Files... ====")
-Xtrain = np.load(allfile)
-Xtrain += 2 # All -2 so makes it to 0
+tiledata = np.load(allfile)
+tiledata += 2 # -2 to 0, 0 is missing data
 pathdata = np.load(infofile)
 print("==== Done Loading Big Files... ====")
 idx = nameIndices
-Xtrain = Xtrain[idx,:] 
+tiledata = tiledata[idx,:] 
+idxOP = np.arange(tiledata.shape[1])
 
-X_filename = "X.npy"
-y_filename = "y.npy"
-np.save(y_filename, y)
-np.save(X_filename, Xtrain)
+nnz = np.count_nonzero(tiledata,axis=0)
 
-min_indicator = np.amin(Xtrain, axis=0)
-max_indicator = np.amax(Xtrain, axis=0)
+fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
 
-sameTile = min_indicator == max_indicator
-skipTile = ~sameTile #this is the inverse operator for boolean
+# Unphasing Data
 
-idxOP = np.arange(Xtrain.shape[1])
-Xtrain = Xtrain[:, skipTile]
-newPaths = pathdata[skipTile]
-idxOP = idxOP[skipTile]
-# only keep data with less than 10% missing data
-nnz = np.count_nonzero(Xtrain, axis=0)
-fracnnz = np.divide(nnz.astype(float), Xtrain.shape[0])
+[m,n] = tiledata.shape
 
-idxKeep = fracnnz >= 0.9
-Xtrain = Xtrain[:, idxKeep]
+for ix in range(m):
+   n20 = int(n/4)
+   ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
+   keepa = tiledata[ix,ieven]
+   keepb = tiledata[ix,ieven+1]
+   tiledata[ix,ieven] = keepb
+   tiledata[ix,ieven+1] = keepa
+   del keepa,keepb
 
-# save information about deleted missing/spanning data
-varvals = np.full(50 * Xtrain.shape[1], np.nan)
-nx = 0
+# Don't keep X,Y and M data
+
+tile_path = np.trunc(pathdata/(16**5))
+idx1 = tile_path >= 863
+idx2 = tile_path <= 810
+idx3 = idx2
+
+pathdata = pathdata[idx3]
+tiledata = tiledata[:,idx3]
+idxOP = idxOP[idx3]
+
+# Only keeping data that has less than 10% missing data
+
+idxKeep = fracnnz[idx3] >= 0.9
+tiledata = tiledata[:,idxKeep]
+
+print("Encoding in 1-hot...")
+print("Determing new path and varval vectors...")
+
+print(tiledata.shape)
+
+def foo(col):
+   u = np.unique(col)
+   nunq = u.shape
+   return nunq
+
+invals = np.apply_along_axis(foo, 0, tiledata)
+invals = invals[0]
+
+varvals = np.full(50*tiledata.shape[1],np.nan)
+nx=0
 
 varlist = []
-for j in range(0, Xtrain.shape[1]):
-    u = np.unique(Xtrain[:,j])
-    varvals[nx : nx + u.size] = u
-    nx = nx + u.size
-    varlist.append(u)
+for j in range(0,tiledata.shape[1]):
+     u = np.unique(tiledata[:,j])
+     varvals[nx:nx+u.size] = u
+     nx = nx + u.size
+     varlist.append(u)
 
 varvals = varvals[~np.isnan(varvals)]
 
-def foo(col):
-    u = np.unique(col)
-    nunq = u.shape
-    return nunq
+print(varvals.shape)
+pathdataOH = np.repeat(pathdata[idxKeep], invals)
+oldpath = np.repeat(idxOP[idxKeep],invals)
 
-invals = np.apply_along_axis(foo, 0, Xtrain)
-invals = invals[0]
+print("Running the Encoder...")
 
-# used later to find coefPaths
-pathdataOH = np.repeat(newPaths[idxKeep], invals)
-# used later to find the original location of the path from non one hot encode
-oldpath = np.repeat(idxOP[idxKeep], invals)
+ny = tiledata.shape[1]
+
+print(ny)
+
+nnz = np.count_nonzero(tiledata,axis=0)
 
 print("==== One-hot Encoding Data... ====")
 
+#tiledata_filename = "tiledata.npy"
+#np.save(tiledata_filename, tiledata)
+
 data_shape = tiledata.shape[1]
 
-parts = 4
+parts = 20 
 idx = np.linspace(0,data_shape,num=parts).astype('int')
 Xtrain2 = csr_matrix(np.empty([tiledata.shape[0], 0]))
 pidx = np.empty([0,],dtype='bool')
 
-for i in range(0,parts-1):
-    min_idx = idx[i]
-    max_idx = idx[i+1]
-    enc = OneHotEncoder(sparse=True, dtype=np.uint16, categories='auto')
+for ichunk in np.arange(0,parts-1):
+#for ichunk in np.arange(25,parts-1):
+    print(ichunk)
+    print("==== Loading in First Chunk... ====")
+    min_idx = idx[ichunk]
+    max_idx = idx[ichunk+1]
+    print(min_idx)
+    print(max_idx)
+    enc = OneHotEncoder(sparse=True, dtype=np.uint16)
     Xtrain = enc.fit_transform(tiledata[:,min_idx:max_idx])
-    [chi2val,pval] = chi2(Xtrain, y)
-    print(pval.size)
-    print(Xtrain.size)
-    if chi2filter == True:
-        pidxchunk = pval <= 0.02
-    else:
-        pidxchunk = pval <= 1
-    Xchunk = Xtrain[:,pidxchunk]
-    print(Xchunk)
-    print(Xtrain2)
-    pidx=np.concatenate((pidx,pidxchunk),axis=0)
-    if i == 0:
-        Xtrain2 = Xchunk
-    else:
-        Xtrain2= hstack([Xtrain2,Xchunk],format='csr')
+    print(Xtrain.shape)
 
+    [chi2val,pval] = chi2(Xtrain, y)
+    print(np.amax(pval))
+    print(np.amin(pval))
+
+    pidxchunk = pval <= 0.02
+    Xchunk = Xtrain[:,pidxchunk]
+    print(Xchunk.shape)
+
+    pidx=np.concatenate((pidx,pidxchunk),axis=0)
+    Xtrain2=hstack([Xtrain2,Xchunk],format='csr')
+
+
+#quit()
 pathdataOH = pathdataOH[pidx]
 oldpath = oldpath[pidx]
 varvals = varvals[pidx]
 Xtrain = Xtrain2
-to_keep = varvals > 2
-idkTK = np.nonzero(to_keep)
-idkTK = idkTK[0]
-
-Xtrain = Xtrain[:,idkTK]
-pathdataOH = pathdataOH[idkTK]
-oldpath = oldpath[idkTK]
-varvals = varvals[idkTK]
-
-to_keep = varvals > 2
+to_keep = varvals > 2 
 idkTK = np.nonzero(to_keep)
 idkTK = idkTK[0]
 
@@ -240,5 +261,3 @@ np.save('varvals.npy', varvals)
 scipy.sparse.save_npz(X_filename, Xtrain)
 
 print("==== Done ====")
-
-

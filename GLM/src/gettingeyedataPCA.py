@@ -1,3 +1,4 @@
+
 from sklearn import preprocessing
 import numpy as np
 import pandas as pd
@@ -12,7 +13,8 @@ from scipy.sparse import save_npz
 
 from sklearn.feature_selection import chi2
 from sklearn.preprocessing import OneHotEncoder
-
+from sklearn.decomposition import PCA,TruncatedSVD
+from sklearn.preprocessing import StandardScaler
 
 surveyData = sys.argv[1]
 allfile = sys.argv[2]
@@ -39,18 +41,8 @@ names = []
 for line in names_file:
     names.append(line[:-1])
 
-#get_name = lambda full_name: full_name[45:53]
-#names = map(get_name, names)
-
-names1 = [i.split('/')[-1] for i in names]
-names2 = [i.replace('filtered_','') for i in names1]
-names3 = [i.replace('.cgf','') for i in names2]
-names4 = [i.split('_var')[0] for i in names3]
-names5 = [i.split('_GS')[0] for i in names4]
-names6 = [i.split('_lcl')[0] for i in names5]
-names7 = [i.split('_blood')[0] for i in names6]
-names8 = [i.split('_buffy')[0] for i in names7]
-names = names8
+get_name = lambda full_name: full_name[45:53]
+names = map(get_name, names)
 
 # simple lambda function to return if the input is a string
 isstr = lambda val: isinstance(val, str)
@@ -125,11 +117,6 @@ print("==== Done Loading Big Files... ====")
 idx = nameIndices
 Xtrain = Xtrain[idx,:] 
 
-X_filename = "X.npy"
-y_filename = "y.npy"
-np.save(y_filename, y)
-np.save(X_filename, Xtrain)
-
 min_indicator = np.amin(Xtrain, axis=0)
 max_indicator = np.amax(Xtrain, axis=0)
 
@@ -144,13 +131,23 @@ idxOP = idxOP[skipTile]
 nnz = np.count_nonzero(Xtrain, axis=0)
 fracnnz = np.divide(nnz.astype(float), Xtrain.shape[0])
 
+idxPCA = fracnnz >= 0.99
+Xtrainpca = Xtrain[:, idxPCA]
+enc = OneHotEncoder(sparse=True, dtype=np.uint16)
+Xpca_onehot = enc.fit_transform(Xtrainpca)
+
+pca = TruncatedSVD(n_components=15)
+Xpca = pca.fit_transform(Xpca_onehot)
+scaler = StandardScaler()
+Xpca= scaler.fit_transform(Xpca)
+Xpca = csr_matrix(Xpca)
+
 idxKeep = fracnnz >= 0.9
 Xtrain = Xtrain[:, idxKeep]
 
 # save information about deleted missing/spanning data
 varvals = np.full(50 * Xtrain.shape[1], np.nan)
 nx = 0
-
 varlist = []
 for j in range(0, Xtrain.shape[1]):
     u = np.unique(Xtrain[:,j])
@@ -173,6 +170,14 @@ pathdataOH = np.repeat(newPaths[idxKeep], invals)
 # used later to find the original location of the path from non one hot encode
 oldpath = np.repeat(idxOP[idxKeep], invals)
 
+randomize_idx = np.arange(len(y))
+np.random.shuffle(randomize_idx)
+tiledata = Xtrain[randomize_idx,:]
+y = y[randomize_idx]
+print("random y: ", y)
+
+nnz = np.count_nonzero(tiledata,axis=0)
+
 print("==== One-hot Encoding Data... ====")
 
 data_shape = tiledata.shape[1]
@@ -185,18 +190,11 @@ pidx = np.empty([0,],dtype='bool')
 for i in range(0,parts-1):
     min_idx = idx[i]
     max_idx = idx[i+1]
-    enc = OneHotEncoder(sparse=True, dtype=np.uint16, categories='auto')
+    enc = OneHotEncoder(sparse=True, dtype=np.uint16)
     Xtrain = enc.fit_transform(tiledata[:,min_idx:max_idx])
     [chi2val,pval] = chi2(Xtrain, y)
-    print(pval.size)
-    print(Xtrain.size)
-    if chi2filter == True:
-        pidxchunk = pval <= 0.02
-    else:
-        pidxchunk = pval <= 1
+    pidxchunk = pval <= 0.02
     Xchunk = Xtrain[:,pidxchunk]
-    print(Xchunk)
-    print(Xtrain2)
     pidx=np.concatenate((pidx,pidxchunk),axis=0)
     if i == 0:
         Xtrain2 = Xchunk
@@ -207,7 +205,7 @@ pathdataOH = pathdataOH[pidx]
 oldpath = oldpath[pidx]
 varvals = varvals[pidx]
 Xtrain = Xtrain2
-to_keep = varvals > 2
+to_keep = varvals > 2 
 idkTK = np.nonzero(to_keep)
 idkTK = idkTK[0]
 
@@ -216,20 +214,14 @@ pathdataOH = pathdataOH[idkTK]
 oldpath = oldpath[idkTK]
 varvals = varvals[idkTK]
 
-to_keep = varvals > 2
-idkTK = np.nonzero(to_keep)
-idkTK = idkTK[0]
-
-Xtrain = Xtrain[:,idkTK]
-pathdataOH = pathdataOH[idkTK]
-oldpath = oldpath[idkTK]
-varvals = varvals[idkTK]
+Xtrain = hstack([Xtrain,Xpca],format='csr')
 
 print(Xtrain.shape)
 print(y.shape)
 print(pathdataOH.shape)
 print(oldpath.shape)
 print(varvals.shape)
+
 
 X_filename = "X.npz"
 y_filename = "y.npy"
@@ -240,5 +232,3 @@ np.save('varvals.npy', varvals)
 scipy.sparse.save_npz(X_filename, Xtrain)
 
 print("==== Done ====")
-
-
