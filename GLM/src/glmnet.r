@@ -60,14 +60,17 @@ type_measure <- args[7]
 set.seed(999)
 cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=FALSE)
 w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
-                   [, 1][2:(ncol(Xmat)+1)] ))^0.5 ## Using gamma = .5
+                   [, 1][2:(ncol(Xmat)+1)] ))^5 ## Using gamma = .5
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
+
+# Keep PCA components
+w3[(length(w3) - 19):length(w3),1] <- 0
 
 #Adaptive Lasso
 set.seed(999)
-cv.lasso <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='auc', penalty.factor=w3)
+cv.lasso.auc <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 10, parallel=TRUE, standardize=FALSE, type.measure='auc', penalty.factor=w3)
 
-cv.lasso.class <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3)
+cv.lasso.class <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 10, parallel=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3)
 plotname_class <- paste0('glmnet_lasso_',colorblood,'_class.png')
 png(plotname_class)
 plot(cv.lasso.class)
@@ -75,19 +78,19 @@ dev.off()
 
 plotname <- paste0('glmnet_lasso_',colorblood,'_auc','.png')
 png(plotname)
-plot(cv.lasso)
+plot(cv.lasso.auc)
 dev.off()
 
-plotname1 <- paste0('glemnet_lasso_coefficients_',colorblood, '_auc.png')
-png(plotname1)
-plot(cv.lasso$glmnet.fit, xvar="lambda", label=TRUE)
-abline(v = log(cv.lasso$lambda.min))
-dev.off()
+#plotname1 <- paste0('glmnet_lasso_coefficients_',colorblood, '_auc.png')
+#png(plotname1)
+#plot(cv.lasso.glmnet.fit, xvar="lambda", label=TRUE)
+#abline(v = log(cv.lasso.class.$lambda.min))
+#dev.off()
 
-coefVec <- coef(cv.lasso, s= "lambda.min")
+coefVec <- coef(cv.lasso.class, s= "lambda.min")
 coefVec <- coefVec[-1]
 idxnzmin <- which(coefVec !=0)
-sizeCoefMin <- length(coef(cv.lasso,s="lambda.min"))
+sizeCoefMin <- length(coef(cv.lasso.class,s="lambda.min"))
 nznumbmin <- coefVec[idxnzmin]
 coefPathsMin <- pathdataOH[idxnzmin]
 
@@ -110,7 +113,7 @@ write.table(dataF_min, fileConn, sep= "\t", row.names = FALSE)
 close(fileConn)
 
 
-coefVse <- coef(cv.lasso, s="lambda.1se")
+coefVse <- coef(cv.lasso.class, s="lambda.1se")
 coefVse <- coefVse[-1]
 
 idxnzse <- which(coefVse !=0)

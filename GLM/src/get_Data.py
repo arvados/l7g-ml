@@ -77,7 +77,20 @@ names_file = open(namesfile, 'r') #not a "pickeled" file, so must just read it a
 names = []
 
 for line in names_file:
-    names.append(line[45:54][:-1])
+    names.append(line[:-1])
+
+names1 = [i.split('/')[-1] for i in names]
+names2 = [i.replace('filtered_','') for i in names1]
+names3 = [i.replace('.cgf','') for i in names2]
+names4 = [i.split('_var')[0] for i in names3]
+names5 = [i.split('_GS')[0] for i in names4]
+names6 = [i.split('_lcl')[0] for i in names5]
+names7 = [i.split('_blood')[0] for i in names6]
+names8 = [i.split('_buffy')[0] for i in names7]
+names = names8
+
+# simple lambda function to return if the input is a string
+isstr = lambda val: isinstance(val, str)
 
 dataBloodType.human_id = dataBloodType.human_id.str.lower()
 results = []
@@ -205,7 +218,6 @@ np.save('pathdataOH.npy', pathdataOH)
 np.save('oldpath.npy', oldpath)
 np.save('varvals.npy', varvals)
 scipy.sparse.save_npz(X_filename, Xtrain)
-
 
 
 print("==== Done ====")

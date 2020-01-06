@@ -154,6 +154,45 @@ pathdata = pathdata[idx3]
 tiledata = tiledata[:,idx3]
 idxOP = idxOP[idx3]
 
+# PCA components
+
+idxKeepPCA = fracnnz[idx3] >= 0.99
+tiledataPCA = tiledata[:,idxKeepPCA]
+
+varvalsPCA = np.full(50*tiledataPCA.shape[1],np.nan)
+nx=0
+
+varlistPCA = []
+
+for j in range(0,tiledataPCA.shape[1]):
+    u = np.unique(tiledataPCA[:,j])
+    varvalsPCA[nx:nx+u.size] = u
+    nx = nx + u.size
+    varlistPCA.append(u)
+
+varvalsPCA = varvalsPCA[~np.isnan(varvalsPCA)]
+
+print(varvalsPCA.shape)
+
+enc = OneHotEncoder(sparse=True, dtype=np.uint16)
+
+XtrainPCA = enc.fit_transform(tiledataPCA)
+
+print(XtrainPCA.shape)
+
+to_keepPCA = varvalsPCA > 1
+
+idkTKPCA = np.nonzero(to_keepPCA)
+idkTKPCA = idkTKPCA[0]
+
+XtrainPCA = XtrainPCA[:,idkTKPCA]
+XtrainPCA = XtrainPCA.todense()
+pca = PCA(n_components=20)
+XtrainPCA = pca.fit_transform(XtrainPCA)
+
+scaler = StandardScaler()
+XtrainPCA= scaler.fit_transform(XtrainPCA)
+
 # Only keeping data that has less than 10% missing data
 
 idxKeep = fracnnz[idx3] >= 0.9
@@ -245,6 +284,9 @@ Xtrain = Xtrain[:,idkTK]
 pathdataOH = pathdataOH[idkTK]
 oldpath = oldpath[idkTK]
 varvals = varvals[idkTK]
+
+Xpca = csr_matrix(XtrainPCA)
+Xtrain = hstack([Xtrain,XtrainPCA],format='csr')
 
 print(Xtrain.shape)
 print(y.shape)
