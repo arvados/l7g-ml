@@ -8,18 +8,21 @@ from sklearn.preprocessing import StandardScaler
 from scipy.sparse import csr_matrix, hstack
 from scipy.sparse import csr_matrix, vstack
 
-a = np.full(1008, True)
-# Remove points related to Simons diversity data files that had issues with preprocessing
-a[186] = False
-a[187] = False
-a[193] = False
-a[198] = False
-X = scipy.sparse.load_npz('/home/sarah/keep/by_id/e8aa8f9f2527c58a2b7b9119a184b12c+429/XtrainPCA.npz')
+#a = np.full(1008, True)
+#a[186] = False
+#a[187] = False
+#a[193] = False
+#a[198] = False
+X = scipy.sparse.load_npz('/home/sarah/keep/by_id/e206007c5c245a0decd02eb2f8599dbb+135/XtrainPCA.npz')
 X = X.todense()
-X = X[a,:]
 print(X.shape)
+#quit()
+#X2 = X[0:274,:]
+#X3 = X[639:1004,:]
+#Xfinal = vstack([X2,X3])
 X.shape
-pca = PCA(n_components=4)
+#svd = TruncatedSVD(n_components=4)
+pca = PCA(n_components=3)
 X = pca.fit_transform(X)
 print(pca.singular_values_)
-np.save('XfinalPCAAll.npy',X)
+np.save('XfinalPCAAllNewCombine.npy',X)
