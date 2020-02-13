@@ -108,20 +108,40 @@ idx = df2['Number'].values
 
 Xtrain = Xtrain[idx,:] 
 
-min_indicator = np.amin(Xtrain, axis=0)
-max_indicator = np.amax(Xtrain, axis=0)
-
-sameTile = min_indicator == max_indicator
-skipTile = ~sameTile #this is the inverse operator for boolean
-
 idxOP = np.arange(Xtrain.shape[1])
-Xtrain = Xtrain[:, skipTile]
-newPaths = pathdata[skipTile]
-idxOP = idxOP[skipTile]
+
 # only keep data with less than 10% missing data
+
 nnz = np.count_nonzero(Xtrain, axis=0)
 fracnnz = np.divide(nnz.astype(float), Xtrain.shape[0])
-idxKeep = fracnnz >= 0.9
+
+# Unphasing Data
+
+[m,n] = Xtrain.shape
+
+for ix in range(m):
+   n20 = int(n/4)
+   ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
+   keepa = Xtrain[ix,ieven]
+   keepb = Xtrain[ix,ieven+1]
+   Xtrain[ix,ieven] = keepb
+   Xtrain[ix,ieven+1] = keepa
+   del keepa,keepb
+
+# Don't keep X,Y and M data
+
+tile_path = np.trunc(pathdata/(16**5))
+idx1 = tile_path >= 863
+idx2 = tile_path <= 810
+idx3 = idx2
+
+pathdata = pathdata[idx3]
+Xtrain = Xtrain[:,idx3]
+idxOP = idxOP[idx3]
+
+# Only keeping data that has less than 10% missing data
+
+idxKeep = fracnnz[idx3] >= 0.9
 Xtrain = Xtrain[:, idxKeep]
 
 print("==== Extracting Blood Type %s... ====" %bloodtype)
@@ -150,7 +170,7 @@ invals = np.apply_along_axis(foo, 0, Xtrain)
 invals = invals[0]
 
 # used later to find coefPaths
-pathdataOH = np.repeat(newPaths[idxKeep], invals)
+pathdataOH = np.repeat(pathdata[idxKeep], invals)
 # used later to find the original location of the path from non one hot encode
 oldpath = np.repeat(idxOP[idxKeep], invals)
 

@@ -15,6 +15,7 @@ import sqlite3
 import pandas as pd
 import os
 import sys
+import re
 
 import scipy.sparse
 from scipy.sparse import csr_matrix
@@ -23,6 +24,9 @@ from scipy.sparse import save_npz
 
 from sklearn.feature_selection import chi2
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.decomposition import PCA,TruncatedSVD
+from sklearn.preprocessing import StandardScaler
+
 import hashlib
 
 
@@ -77,7 +81,28 @@ names_file = open(namesfile, 'r') #not a "pickeled" file, so must just read it a
 names = []
 
 for line in names_file:
-    names.append(line[45:54][:-1])
+    names.append(line[:-1])
+
+names1 = [i.split('/')[-1] for i in names]
+names2 = [i.replace('filtered_','') for i in names1]
+names3 = [i.replace('.haplotypeCalls.er.raw','') for i in names2]
+names4 = [i.replace('_cg_data_ASM','') for i in names3]
+names5 = [i.replace('data_','') for i in names4]
+names6 = [i.replace('.cgf','') for i in names5]
+names7 = [i.split('_var')[0] for i in names6]
+names8 = [i.split('_GS')[0] for i in names7]
+names9 = [i.split('_lcl')[0] for i in names8]
+names10 = [i.split('_blood')[0] for i in names9]
+names11 = [i.split('_buffy')[0] for i in names10]
+names12 = [i.split('_noHLA')[0] for i in names11]
+names13 = [re.sub('_(S1|sorted).genome','',i) for i in names12]
+names14 = [re.sub('_.+-portable', '',i) for i in names13]
+
+names = names14
+
+
+# simple lambda function to return if the input is a string
+isstr = lambda val: isinstance(val, str)
 
 dataBloodType.human_id = dataBloodType.human_id.str.lower()
 results = []
@@ -95,20 +120,76 @@ idx = df2['Number'].values
 
 Xtrain = Xtrain[idx,:] 
 
-min_indicator = np.amin(Xtrain, axis=0)
-max_indicator = np.amax(Xtrain, axis=0)
-
-sameTile = min_indicator == max_indicator
-skipTile = ~sameTile #this is the inverse operator for boolean
-
 idxOP = np.arange(Xtrain.shape[1])
-Xtrain = Xtrain[:, skipTile]
-newPaths = pathdata[skipTile]
-idxOP = idxOP[skipTile]
-# only keep data with less than 10% missing data
+
 nnz = np.count_nonzero(Xtrain, axis=0)
 fracnnz = np.divide(nnz.astype(float), Xtrain.shape[0])
-idxKeep = fracnnz >= 0.9
+
+# Unphasing Data
+
+[m,n] = Xtrain.shape
+
+for ix in range(m):
+   n20 = int(n/4)
+   ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
+   keepa = Xtrain[ix,ieven]
+   keepb = Xtrain[ix,ieven+1]
+#   Xtrain[ix,ieven] = keepb
+#   Xtrain[ix,ieven+1] = keepa
+   del keepa,keepb
+
+# Don't keep X,Y and M data
+
+tile_path = np.trunc(pathdata/(16**5))
+idx1 = tile_path >= 863
+idx2 = tile_path <= 810
+idx3 = idx2
+
+pathdata = pathdata[idx3]
+Xtrain = Xtrain[:,idx3]
+idxOP = idxOP[idx3]
+
+# PCA components
+
+idxKeepPCA = fracnnz[idx3] >= 0.99
+tiledataPCA = Xtrain[:,idxKeepPCA]
+
+varvalsPCA = np.full(50*tiledataPCA.shape[1],np.nan)
+nx=0
+
+varlistPCA = []
+for j in range(0,tiledataPCA.shape[1]):
+    u = np.unique(tiledataPCA[:,j])
+    varvalsPCA[nx:nx+u.size] = u
+    nx = nx + u.size
+    varlistPCA.append(u)
+
+varvalsPCA = varvalsPCA[~np.isnan(varvalsPCA)]
+
+print(varvalsPCA.shape)
+
+enc = OneHotEncoder(sparse=True, dtype=np.uint16)
+
+XtrainPCA = enc.fit_transform(tiledataPCA)
+
+print(XtrainPCA.shape)
+
+to_keepPCA = varvalsPCA > 1
+
+idkTKPCA = np.nonzero(to_keepPCA)
+idkTKPCA = idkTKPCA[0]
+
+XtrainPCA = XtrainPCA[:,idkTKPCA]
+XtrainPCA = XtrainPCA.todense()
+pca = PCA(n_components=20)
+XtrainPCA = pca.fit_transform(XtrainPCA)
+
+scaler = StandardScaler()
+XtrainPCA= scaler.fit_transform(XtrainPCA)
+
+# Only keeping data that has less than 10% missing data
+
+idxKeep = fracnnz[idx3] >= 0.9
 Xtrain = Xtrain[:, idxKeep]
 
 print("==== Extracting Blood Type %s... ====" %bloodtype)
@@ -137,20 +218,16 @@ invals = np.apply_along_axis(foo, 0, Xtrain)
 invals = invals[0]
 
 # used later to find coefPaths
-pathdataOH = np.repeat(newPaths[idxKeep], invals)
+pathdataOH = np.repeat(pathdata[idxKeep], invals)
 # used later to find the original location of the path from non one hot encode
 oldpath = np.repeat(idxOP[idxKeep], invals)
 
-randomize_idx = np.arange(len(y))
-np.random.shuffle(randomize_idx)
-tiledata = Xtrain[randomize_idx,:]
-y = y[randomize_idx]
-print("random y: ", y)
-
+tiledata = Xtrain
 nnz = np.count_nonzero(tiledata,axis=0)
 
 print("==== One-hot Encoding Data... ====")
 
+# removed randomization here
 data_shape = tiledata.shape[1]
 
 parts = 4
@@ -192,6 +269,9 @@ pathdataOH = pathdataOH[idkTK]
 oldpath = oldpath[idkTK]
 varvals = varvals[idkTK]
 
+XtrainPCA = csr_matrix(XtrainPCA)
+Xtrain = hstack([Xtrain,XtrainPCA],format='csr')
+
 print(Xtrain.shape)
 print(y.shape)
 print(pathdataOH.shape)
@@ -205,7 +285,6 @@ np.save('pathdataOH.npy', pathdataOH)
 np.save('oldpath.npy', oldpath)
 np.save('varvals.npy', varvals)
 scipy.sparse.save_npz(X_filename, Xtrain)
-
 
 
 print("==== Done ====")

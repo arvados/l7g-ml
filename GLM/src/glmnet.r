@@ -64,7 +64,7 @@ w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
 
 # Keep PCA components
-w3[(length(w3) - 19):length(w3),1] <- 0
+#w3[(length(w3) - 19):length(w3),1] <- 0
 
 #Adaptive Lasso
 set.seed(999)
