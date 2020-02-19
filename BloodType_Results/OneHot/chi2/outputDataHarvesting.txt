@@ -1,0 +1,1 @@
+===========Beginning work on blood_type_B_no_filter_no_augmentation_X.npz and blood_type_B_no_filter_no_augmentation_y.npy===========

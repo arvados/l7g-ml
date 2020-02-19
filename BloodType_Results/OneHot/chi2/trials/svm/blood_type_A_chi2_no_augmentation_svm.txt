@@ -1,0 +1,82 @@
+Details: LinearSVC with L1 Regularization
+==========================================================
+C: 1.000000
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 1.128838
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 1.274275
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 1.438450
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 1.623777
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 1.832981
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 2.069138
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 2.335721
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 2.636651
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 2.976351
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 3.359818
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 3.792690
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 4.281332
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 4.832930
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 5.455595
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 6.158482
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 6.951928
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 7.847600
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 8.858668
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================
+C: 10.000000
+Number of zero coefficients: 41856.000000
+Percentage of zero coefficients: 41856.000000
+Accuracy 10-fold: 1.00 (+/- 0.00)==========================================================

@@ -1,0 +1,3 @@
+ftp://ftp.sra.ebi.ac.uk/vol1/ERZ106/ERZ1065952/ERS1176551_noHLA.vcf.gz
+ftp://ftp.sra.ebi.ac.uk/vol1/ERZ106/ERZ1065952/ERS1176551_noHLA.vcf.gz.tbi
+ftp://ftp.sra.ebi.ac.uk/vol1/ERZ106/ERZ1065952/ERS1176552_noHLA.vcf.gz

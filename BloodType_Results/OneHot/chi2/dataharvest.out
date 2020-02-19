@@ -1,0 +1,14 @@
+===========Beginning work on blood_type_A_chi2_no_augmentation_X.npz and blood_type_A_chi2_no_augmentation_y.npy===========
+Extracting data for blood type A
+Using no data augmentation
+Beginning to one-hot encode data
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+(79, 41856)
+(79,)
+(41856,)
+(41856,)
+(41856,)
+Just created datasets for blood_type_A_chi2_no_augmentation_X.npz and blood_type_A_chi2_no_augmentation_y.npy
+
