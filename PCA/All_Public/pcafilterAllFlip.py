@@ -45,7 +45,7 @@ def pcafilter():
 
     [m,n] = tiledata.shape
 
-    for ix in range(m): 
+    for ix in range(m):
        n20 = int(n/4)
        ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
        keepa = tiledata[ix,ieven]
