@@ -1,0 +1,20 @@
+get_data_file:
+  class: File
+  path: /data-sdd/owebb/l7g-ml/EyeColor/gettingeyedata.py
+glmnet_file:
+  class: File
+  path: ../src/glmnet.r
+dbfile:
+  class: File
+  path: /data-sdd/owebb/PGP-Survey.csv
+allfile: 
+  class: File
+  path: keep:984434bc0540105967920f6295423575+11783/all.npy
+infofile: 
+  class: File
+  path: keep:984434bc0540105967920f6295423575+11783/all-info.npy
+namefile: 
+  class: File
+  path: keep:984434bc0540105967920f6295423575+11783/names.npy
+colorblood: Blue
+type_measure: class

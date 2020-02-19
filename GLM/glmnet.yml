@@ -1,0 +1,20 @@
+glmnet_file:
+  class: File
+  path: /data-sdd/cwl_tiling/l7g-ml/GLM/src/glmnet_auc.r
+X: 
+  class: File
+  path: keep:76a604ace15f391147527fe648b7c61b+230/X.npz
+y: 
+  class: File
+  path: keep:76a604ace15f391147527fe648b7c61b+230/y.npy
+pathdataoh: 
+  class: File
+  path: keep:76a604ace15f391147527fe648b7c61b+230/pathdataOH.npy
+oldpath:
+  class: File
+  path: keep:76a604ace15f391147527fe648b7c61b+230/oldpath.npy
+varvals:
+  class: File
+  path: keep:76a604ace15f391147527fe648b7c61b+230/varvals.npy
+colorblood: Blood
+type_measure: B
