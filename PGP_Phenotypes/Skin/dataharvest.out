@@ -1,0 +1,145 @@
+===========Beginning work on blood_type_Acne_chi2_no_augmentation_X.npz and blood_type_Acne_chi2_no_augmentation_y.npy===========
+      Acne  human_id
+0        0  hu005023
+1        0  hu005725
+2        0  hu005EB9
+3        1  hu00698E
+4        0  hu00D419
+5        0  hu01024B
+6        1  hu011C57
+7        0  hu013ACD
+8        0  hu014B59
+9        1  hu014EFA
+10       1  hu015074
+11       1  hu0165DF
+12       1  hu016B28
+13       0  hu01EECF
+14       1  hu01F73B
+15       1  hu01FB26
+16       1  hu01FCAD
+17       1  hu02100D
+18       1  hu02105B
+19       1  hu0211D6
+20       1  hu022DC1
+21       1  hu024B5D
+22       1  hu0257DA
+23       0  hu026DEA
+24       1  hu02A209
+25       1  hu02ACEF
+26       0  hu02F2F9
+27       0  hu0326FF
+28       0  hu032C04
+29       1  hu033AF6
+...    ...       ...
+1673     1  huFB2631
+1674     1  huFB42F7
+1675     0  huFB4F9E
+1676     1  huFB87DF
+1677     1  huFBBA79
+1678     1  huFBC418
+1679     1  huFBFF8B
+1680     0  huFC361A
+1681     0  huFC5E38
+1682     1  huFD13AB
+1683     0  huFD37BE
+1684     1  huFD37C8
+1685     0  huFD4AD3
+1686     1  huFD847C
+1687     0  huFD9E3B
+1688     0  huFDF88E
+1689     0  huFE018E
+1690     0  huFE0257
+1691     1  huFE1782
+1692     1  huFE4343
+1693     1  huFE71F3
+1694     1  huFE9B3F
+1695     0  huFEB4D6
+1696     1  huFEC65A
+1697     1  huFEE3D8
+1698     1  huFEEFBB
+1699     0  huFF2969
+1700     1  huFF55F2
+1701     1  huFF7476
+1702     1  huFFA651
+
+[1703 rows x 2 columns]
+Loading in Tile Data
+       Sample  Number  Acne  human_id
+0    hu011c57       0     1  hu011c57
+1    hu016b28       1     1  hu016b28
+2    hu01f73b       2     1  hu01f73b
+3    hu0211d6       3     1  hu0211d6
+4    hu032c04       5     0  hu032c04
+5    hu034db1       6     0  hu034db1
+6    hu034db1       7     0  hu034db1
+7    hu040c0a       9     0  hu040c0a
+8    hu0486d6      10     0  hu0486d6
+9    hu04df3c      11     1  hu04df3c
+10   hu04f220      12     1  hu04f220
+11   hu05fd49      15     1  hu05fd49
+12   hu085b6d      16     0  hu085b6d
+13   hu089792      17     0  hu089792
+14   hu0cf2ee      19     0  hu0cf2ee
+15   hu0d1fa1      20     0  hu0d1fa1
+16   hu0d879f      21     0  hu0d879f
+17   hu0d879f      22     0  hu0d879f
+18   hu0e64a1      23     1  hu0e64a1
+19   hu1187ff      25     0  hu1187ff
+20   hu132b5c      26     1  hu132b5c
+21   hu1378e3      27     1  hu1378e3
+22   hu15feca      28     0  hu15feca
+23   hu19c09f      30     1  hu19c09f
+24   hu1e868d      31     0  hu1e868d
+25   hu1f73ab      32     0  hu1f73ab
+26   hu24a473      34     1  hu24a473
+27   hu24c863      35     1  hu24c863
+28   hu26b551      37     0  hu26b551
+29   hu27fd1f      38     1  hu27fd1f
+..        ...     ...   ...       ...
+133  huc93106     174     0  huc93106
+134  huca14d2     176     1  huca14d2
+135  hucbdc6d     177     1  hucbdc6d
+136  huccafd0     178     0  huccafd0
+137  hucd380f     179     1  hucd380f
+138  hud09534     180     0  hud09534
+139  hud103cc     181     0  hud103cc
+140  hud10e53     182     1  hud10e53
+141  hud2b804     183     1  hud2b804
+142  hud37d14     184     1  hud37d14
+143  hud3a569     185     0  hud3a569
+144  hud52556     186     1  hud52556
+145  hud649f1     187     1  hud649f1
+146  hud81f3d     188     0  hud81f3d
+147  hudbd591     190     0  hudbd591
+148  hudbf9dd     191     1  hudbf9dd
+149  hue2e371     194     0  hue2e371
+150  hue58004     195     0  hue58004
+151  hue9b698     197     1  hue9b698
+152  huea4ee5     198     0  huea4ee5
+153  huebd467     199     1  huebd467
+154  huec6eec     200     0  huec6eec
+155  hued0f40     201     1  hued0f40
+156  huedea65     202     1  huedea65
+157  huedf7da     203     1  huedf7da
+158  huf160aa     204     1  huf160aa
+159  huf5ad12     207     1  huf5ad12
+160  huf80f84     209     0  huf80f84
+161  huf83462     210     0  huf83462
+162  hufe71f3     214     1  hufe71f3
+
+[163 rows x 4 columns]
+Beginning to one-hot encode data
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+(163, 72634)
+(163,)
+(72634,)
+(72634,)
+(72634,)
+Just created datasets for blood_type_Acne_chi2_no_augmentation_X.npz and blood_type_Acne_chi2_no_augmentation_y.npy
+

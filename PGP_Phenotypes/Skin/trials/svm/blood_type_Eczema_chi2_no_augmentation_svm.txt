@@ -1,0 +1,42 @@
+Details: LinearSVC with L1 Regularization
+==========================================================
+C: 0.010000
+Number of zero coefficients: 0.000000
+Percentage of zero coefficients: 0.000000
+Accuracy 10-fold: 0.82 (+/- 0.01)==========================================================
+C: 0.012915
+Number of zero coefficients: 0.000000
+Percentage of zero coefficients: 0.000000
+Accuracy 10-fold: 0.82 (+/- 0.01)==========================================================
+C: 0.016681
+Number of zero coefficients: 15.000000
+Percentage of zero coefficients: 15.000000
+Accuracy 10-fold: 0.62 (+/- 0.08)==========================================================
+C: 0.021544
+Number of zero coefficients: 28.000000
+Percentage of zero coefficients: 28.000000
+Accuracy 10-fold: 0.70 (+/- 0.08)==========================================================
+C: 0.027826
+Number of zero coefficients: 46.000000
+Percentage of zero coefficients: 46.000000
+Accuracy 10-fold: 0.75 (+/- 0.06)==========================================================
+C: 0.035938
+Number of zero coefficients: 62.000000
+Percentage of zero coefficients: 62.000000
+Accuracy 10-fold: 0.80 (+/- 0.04)==========================================================
+C: 0.046416
+Number of zero coefficients: 72.000000
+Percentage of zero coefficients: 72.000000
+Accuracy 10-fold: 0.80 (+/- 0.04)==========================================================
+C: 0.059948
+Number of zero coefficients: 85.000000
+Percentage of zero coefficients: 85.000000
+Accuracy 10-fold: 0.82 (+/- 0.04)==========================================================
+C: 0.077426
+Number of zero coefficients: 93.000000
+Percentage of zero coefficients: 93.000000
+Accuracy 10-fold: 0.82 (+/- 0.04)==========================================================
+C: 0.100000
+Number of zero coefficients: 100.000000
+Percentage of zero coefficients: 100.000000
+Accuracy 10-fold: 0.83 (+/- 0.04)==========================================================

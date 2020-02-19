@@ -3,10 +3,10 @@ $namespaces:
  cwltool: "http://commonwl.org/cwltool#"
 requirements:
   DockerRequirement:
-    dockerPull: l7g-ml/pythonr 
+    dockerPull: l7g-ml/pythonr
   ResourceRequirement:
     coresMin: 16
-    ramMin: 32000
+    ramMin: 200698
 hints:
   cwltool:LoadListingRequirement: 
     loadListing: deep_listing

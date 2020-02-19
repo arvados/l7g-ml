@@ -1,0 +1,8 @@
+pcafunc:
+   class: File
+   path: /home/sarah/PCA_All.py 
+
+tilefile:
+   class: File
+   path: keep:bb4671471a0e3a7dd9440d18637959e3+640/XtrainPCA.npz
+

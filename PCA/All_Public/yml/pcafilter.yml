@@ -1,0 +1,11 @@
+pcafunc:
+   class: File
+   path: /data-sdd/upenn/apoecheck/ML/WholeGenome/pcafilterAllFlip.py
+
+tilefile:
+   class: File
+   path: keep:1f769486fd7bbbba9dc3f06c411f5804+53847/outdir/all
+
+tileinfo:
+   class: File
+   path: keep:1f769486fd7bbbba9dc3f06c411f5804+53847/outdir/all-info

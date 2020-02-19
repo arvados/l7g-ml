@@ -1,0 +1,6 @@
+urlFile:
+  class: File
+  location: ../src/ftpUKPGP.txt
+bashScript:
+  class: File
+  location: ../src/download.sh

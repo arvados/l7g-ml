@@ -1,0 +1,20 @@
+glmnet_file:
+  class: File
+  path: ../src/glmnet.r
+X: 
+  class: File
+  path: keep:8ce4b2cc563fba294070d3d25a6cc47d+225/X.npz
+y: 
+  class: File
+  path: keep:8ce4b2cc563fba294070d3d25a6cc47d+225/y.npy
+pathdataoh: 
+  class: File
+  path: keep:8ce4b2cc563fba294070d3d25a6cc47d+225/pathdataOH.npy
+oldpath:
+  class: File
+  path: keep:8ce4b2cc563fba294070d3d25a6cc47d+225/oldpath.npy
+varvals:
+  class: File
+  path: keep:8ce4b2cc563fba294070d3d25a6cc47d+225/varvals.npy
+colorblood: Blue
+type_measure: class

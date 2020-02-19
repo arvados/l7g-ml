@@ -4,9 +4,6 @@ $namespaces:
 requirements:
   DockerRequirement:
     dockerPull: l7g-ml/pythonr 
-  ResourceRequirement:
-    coresMin: 16
-    ramMin: 32000
 hints:
   cwltool:LoadListingRequirement: 
     loadListing: deep_listing

@@ -6,6 +6,7 @@ import scipy
 import collections
 import os
 import sys
+import re
 
 from scipy.sparse import csr_matrix
 from scipy.sparse import hstack
@@ -43,13 +44,20 @@ for line in names_file:
 
 names1 = [i.split('/')[-1] for i in names]
 names2 = [i.replace('filtered_','') for i in names1]
-names3 = [i.replace('.cgf','') for i in names2]
-names4 = [i.split('_var')[0] for i in names3]
-names5 = [i.split('_GS')[0] for i in names4]
-names6 = [i.split('_lcl')[0] for i in names5]
-names7 = [i.split('_blood')[0] for i in names6]
-names8 = [i.split('_buffy')[0] for i in names7]
-names = names8
+names3 = [i.replace('.haplotypeCalls.er.raw','') for i in names2]
+names4 = [i.replace('_cg_data_ASM','') for i in names3]
+names5 = [i.replace('data_','') for i in names4]
+names6 = [i.replace('.cgf','') for i in names5]
+names7 = [i.split('_var')[0] for i in names6]
+names8 = [i.split('_GS')[0] for i in names7]
+names9 = [i.split('_lcl')[0] for i in names8]
+names10 = [i.split('_blood')[0] for i in names9]
+names11 = [i.split('_buffy')[0] for i in names10]
+names12 = [i.split('_noHLA')[0] for i in names11]
+names13 = [re.sub('_(S1|sorted).genome','',i) for i in names12]
+names14 = [re.sub('_.+-portable', '',i) for i in names13]
+
+names = names14
 
 # simple lambda function to return if the input is a string
 isstr = lambda val: isinstance(val, str)
@@ -119,6 +127,7 @@ np.save(y_filename, y)
 print("==== End Of New Code for Eye Color ====")
 
 tiledata = np.load(allfile)
+print(tiledata.shape)
 tiledata += 2 # -2 to 0, 0 is missing data
 pathdata = np.load(infofile)
 print("==== Done Loading Big Files... ====")
@@ -126,9 +135,8 @@ idx = nameIndices
 tiledata = tiledata[idx,:] 
 idxOP = np.arange(tiledata.shape[1])
 
-nnz = np.count_nonzero(tiledata,axis=0)
-
-fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
+#nnz = np.count_nonzero(tiledata,axis=0)
+#fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
 
 # Unphasing Data
 
@@ -143,6 +151,9 @@ for ix in range(m):
    tiledata[ix,ieven+1] = keepa
    del keepa,keepb
 
+nnz = np.count_nonzero(tiledata,axis=0)
+fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
+
 # Don't keep X,Y and M data
 
 tile_path = np.trunc(pathdata/(16**5))
@@ -155,6 +166,9 @@ tiledata = tiledata[:,idx3]
 idxOP = idxOP[idx3]
 
 # PCA components
+
+#nnz = np.count_nonzero(tiledata,axis=0)
+#fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
 
 idxKeepPCA = fracnnz[idx3] >= 0.99
 tiledataPCA = tiledata[:,idxKeepPCA]
@@ -285,7 +299,7 @@ pathdataOH = pathdataOH[idkTK]
 oldpath = oldpath[idkTK]
 varvals = varvals[idkTK]
 
-Xpca = csr_matrix(XtrainPCA)
+XtrainPCA = csr_matrix(XtrainPCA)
 Xtrain = hstack([Xtrain,XtrainPCA],format='csr')
 
 print(Xtrain.shape)

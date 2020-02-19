@@ -1,0 +1,400 @@
+===========Beginning work on colorblind_chi2_no_augmentation_X.npz and colorblind_chi2_no_augmentation_y.npy===========
+            id  human_id                 date        phenotype_category  \
+102334  102335  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102335  102336  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102336  102337  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102337  102338  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102338  102339  huF974A8  2012-10-09 18:41:14        Vision_and_hearing   
+102339  102340  huF974A8  2012-10-09 18:41:14        Vision_and_hearing   
+102340  102341  huF974A8  2012-10-09 18:41:14        Vision_and_hearing   
+102341  102342  hu620F18  2012-10-09 19:19:08        Vision_and_hearing   
+102342  102343  hu620F18  2012-10-09 19:19:08        Vision_and_hearing   
+102343  102344  hu620F18  2012-10-09 19:19:08        Vision_and_hearing   
+102344  102345  hu384E20  2012-10-09 21:59:29        Vision_and_hearing   
+102345  102346  hu774230  2012-10-09 23:05:07        Vision_and_hearing   
+102346  102347  huE9B698  2012-10-10 00:12:23        Vision_and_hearing   
+102347  102348  huE9B698  2012-10-10 00:12:23        Vision_and_hearing   
+102348  102349  huDBD591  2012-10-10 01:59:45        Vision_and_hearing   
+102349  102350  hu6C733E  2012-10-10 09:20:18        Vision_and_hearing   
+102350  102351  hu670F98  2012-10-10 13:58:44        Vision_and_hearing   
+102351  102352  hu670F98  2012-10-10 13:58:44        Vision_and_hearing   
+102352  102353  hu670F98  2012-10-10 13:58:44  Vision_and_hearing:other   
+102353  102354  hu68A2D7  2012-10-10 15:50:22        Vision_and_hearing   
+102354  102355  hu68A2D7  2012-10-10 15:50:22        Vision_and_hearing   
+102355  102356  hu68A2D7  2012-10-10 15:50:22  Vision_and_hearing:other   
+102356  102357  hu5FCE15  2012-10-10 18:03:23        Vision_and_hearing   
+102357  102358  hu5FCE15  2012-10-10 18:03:23        Vision_and_hearing   
+102358  102359  hu519DE2  2012-10-10 21:50:32        Vision_and_hearing   
+102359  102360  hu519DE2  2012-10-10 21:50:32        Vision_and_hearing   
+102360  102361  hu054530  2012-10-10 22:58:28        Vision_and_hearing   
+102361  102362  hu7ACF34  2012-10-10 23:18:20        Vision_and_hearing   
+102362  102363  hu7ACF34  2012-10-10 23:18:20        Vision_and_hearing   
+102363  102364  hu7ACF34  2012-10-10 23:18:20        Vision_and_hearing   
+...        ...       ...                  ...                       ...   
+106992  106993  hu49561A  2018-01-19 21:58:58        Vision_and_hearing   
+106993  106994  hu21D283  2018-01-21 11:25:38        Vision_and_hearing   
+106994  106995  hu21D283  2018-01-21 11:25:38        Vision_and_hearing   
+106995  106996  huC8F2AA  2018-01-25 11:53:47        Vision_and_hearing   
+106996  106997  huC8F2AA  2018-01-25 11:53:47        Vision_and_hearing   
+106997  106998  hu85F3ED  2018-02-01 21:31:47        Vision_and_hearing   
+106998  106999  hu4D8786  2018-02-03 09:07:00        Vision_and_hearing   
+106999  107000  hu4D8786  2018-02-03 09:07:00        Vision_and_hearing   
+107000  107001  huF14C16  2018-02-10 17:10:06        Vision_and_hearing   
+107001  107002  huF14C16  2018-02-10 17:10:06        Vision_and_hearing   
+107002  107003  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107003  107004  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107004  107005  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107005  107006  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107006  107007  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107007  107008  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107008  107009  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107009  107010  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107010  107011  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107011  107012  hu0491FD  2018-02-15 23:01:36        Vision_and_hearing   
+107012  107013  hu0491FD  2018-02-15 23:01:36        Vision_and_hearing   
+107013  107014  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107014  107015  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107015  107016  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107016  107017  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107017  107018  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107018  107019  huFBBA79  2018-03-06 21:32:15        Vision_and_hearing   
+107019  107020  huFBBA79  2018-03-06 21:32:15        Vision_and_hearing   
+107020  107021  huFBBA79  2018-03-06 21:32:15  Vision_and_hearing:other   
+107021  107022  hu9B3EA3  2018-03-08 01:19:52        Vision_and_hearing   
+
+                                                phenotype  
+102334                               Age-related cataract  
+102335                           Myopia (Nearsightedness)  
+102336                                         Presbyopia  
+102337                                           Floaters  
+102338                           Myopia (Nearsightedness)  
+102339                                   Dry eye syndrome  
+102340                                           Floaters  
+102341                           Myopia (Nearsightedness)  
+102342                                        Astigmatism  
+102343                                           Floaters  
+102344                                           Floaters  
+102345                           Myopia (Nearsightedness)  
+102346                           Myopia (Nearsightedness)  
+102347                                           Floaters  
+102348                           Myopia (Nearsightedness)  
+102349                           Myopia (Nearsightedness)  
+102350                                        Astigmatism  
+102351                                   Dry eye syndrome  
+102352                                             Iritis  
+102353                           Myopia (Nearsightedness)  
+102354                                        Astigmatism  
+102355                     sudden hearing loss, right ear  
+102356                           Myopia (Nearsightedness)  
+102357                                        Astigmatism  
+102358                           Myopia (Nearsightedness)  
+102359                                        Astigmatism  
+102360                           Myopia (Nearsightedness)  
+102361                           Myopia (Nearsightedness)  
+102362                                        Astigmatism  
+102363                                           Tinnitus  
+...                                                   ...  
+106992                                        Astigmatism  
+106993                           Myopia (Nearsightedness)  
+106994                                        Astigmatism  
+106995                                        Astigmatism  
+106996                                           Tinnitus  
+106997                                   Dry eye syndrome  
+106998                           Myopia (Nearsightedness)  
+106999                                        Astigmatism  
+107000                         Hyperopia (Farsightedness)  
+107001                                           Floaters  
+107002                         Hyperopia (Farsightedness)  
+107003                                        Astigmatism  
+107004                           Age-related hearing loss  
+107005                                           Tinnitus  
+107006                           Myopia (Nearsightedness)  
+107007                                        Astigmatism  
+107008                                         Strabismus  
+107009                                           Floaters  
+107010  Sensorineural hearing loss or congenital deafness  
+107011                           Myopia (Nearsightedness)  
+107012                                        Astigmatism  
+107013                         Hyperopia (Farsightedness)  
+107014                           Myopia (Nearsightedness)  
+107015                                        Astigmatism  
+107016                                           Tinnitus  
+107017  Sensorineural hearing loss or congenital deafness  
+107018                         Hyperopia (Farsightedness)  
+107019                                   Dry eye syndrome  
+107020                                 Cornea Ulcerations  
+107021                                        Astigmatism  
+
+[4688 rows x 5 columns]
+            id  human_id                 date        phenotype_category  \
+102334  102335  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102335  102336  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102336  102337  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102337  102338  hu3073E3  2012-10-08 21:24:24        Vision_and_hearing   
+102338  102339  huF974A8  2012-10-09 18:41:14        Vision_and_hearing   
+102339  102340  huF974A8  2012-10-09 18:41:14        Vision_and_hearing   
+102340  102341  huF974A8  2012-10-09 18:41:14        Vision_and_hearing   
+102341  102342  hu620F18  2012-10-09 19:19:08        Vision_and_hearing   
+102342  102343  hu620F18  2012-10-09 19:19:08        Vision_and_hearing   
+102343  102344  hu620F18  2012-10-09 19:19:08        Vision_and_hearing   
+102344  102345  hu384E20  2012-10-09 21:59:29        Vision_and_hearing   
+102345  102346  hu774230  2012-10-09 23:05:07        Vision_and_hearing   
+102346  102347  huE9B698  2012-10-10 00:12:23        Vision_and_hearing   
+102347  102348  huE9B698  2012-10-10 00:12:23        Vision_and_hearing   
+102348  102349  huDBD591  2012-10-10 01:59:45        Vision_and_hearing   
+102349  102350  hu6C733E  2012-10-10 09:20:18        Vision_and_hearing   
+102350  102351  hu670F98  2012-10-10 13:58:44        Vision_and_hearing   
+102351  102352  hu670F98  2012-10-10 13:58:44        Vision_and_hearing   
+102352  102353  hu670F98  2012-10-10 13:58:44  Vision_and_hearing:other   
+102353  102354  hu68A2D7  2012-10-10 15:50:22        Vision_and_hearing   
+102354  102355  hu68A2D7  2012-10-10 15:50:22        Vision_and_hearing   
+102355  102356  hu68A2D7  2012-10-10 15:50:22  Vision_and_hearing:other   
+102356  102357  hu5FCE15  2012-10-10 18:03:23        Vision_and_hearing   
+102357  102358  hu5FCE15  2012-10-10 18:03:23        Vision_and_hearing   
+102358  102359  hu519DE2  2012-10-10 21:50:32        Vision_and_hearing   
+102359  102360  hu519DE2  2012-10-10 21:50:32        Vision_and_hearing   
+102360  102361  hu054530  2012-10-10 22:58:28        Vision_and_hearing   
+102361  102362  hu7ACF34  2012-10-10 23:18:20        Vision_and_hearing   
+102362  102363  hu7ACF34  2012-10-10 23:18:20        Vision_and_hearing   
+102363  102364  hu7ACF34  2012-10-10 23:18:20        Vision_and_hearing   
+...        ...       ...                  ...                       ...   
+106992  106993  hu49561A  2018-01-19 21:58:58        Vision_and_hearing   
+106993  106994  hu21D283  2018-01-21 11:25:38        Vision_and_hearing   
+106994  106995  hu21D283  2018-01-21 11:25:38        Vision_and_hearing   
+106995  106996  huC8F2AA  2018-01-25 11:53:47        Vision_and_hearing   
+106996  106997  huC8F2AA  2018-01-25 11:53:47        Vision_and_hearing   
+106997  106998  hu85F3ED  2018-02-01 21:31:47        Vision_and_hearing   
+106998  106999  hu4D8786  2018-02-03 09:07:00        Vision_and_hearing   
+106999  107000  hu4D8786  2018-02-03 09:07:00        Vision_and_hearing   
+107000  107001  huF14C16  2018-02-10 17:10:06        Vision_and_hearing   
+107001  107002  huF14C16  2018-02-10 17:10:06        Vision_and_hearing   
+107002  107003  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107003  107004  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107004  107005  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107005  107006  hu3B4E60  2018-02-10 22:21:31        Vision_and_hearing   
+107006  107007  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107007  107008  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107008  107009  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107009  107010  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107010  107011  hu6368DD  2018-02-11 06:35:50        Vision_and_hearing   
+107011  107012  hu0491FD  2018-02-15 23:01:36        Vision_and_hearing   
+107012  107013  hu0491FD  2018-02-15 23:01:36        Vision_and_hearing   
+107013  107014  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107014  107015  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107015  107016  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107016  107017  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107017  107018  hu55931A  2018-02-26 21:27:43        Vision_and_hearing   
+107018  107019  huFBBA79  2018-03-06 21:32:15        Vision_and_hearing   
+107019  107020  huFBBA79  2018-03-06 21:32:15        Vision_and_hearing   
+107020  107021  huFBBA79  2018-03-06 21:32:15  Vision_and_hearing:other   
+107021  107022  hu9B3EA3  2018-03-08 01:19:52        Vision_and_hearing   
+
+                                                phenotype  Acne  
+102334                               Age-related cataract     0  
+102335                           Myopia (Nearsightedness)     0  
+102336                                         Presbyopia     0  
+102337                                           Floaters     0  
+102338                           Myopia (Nearsightedness)     0  
+102339                                   Dry eye syndrome     0  
+102340                                           Floaters     0  
+102341                           Myopia (Nearsightedness)     0  
+102342                                        Astigmatism     0  
+102343                                           Floaters     0  
+102344                                           Floaters     0  
+102345                           Myopia (Nearsightedness)     0  
+102346                           Myopia (Nearsightedness)     0  
+102347                                           Floaters     0  
+102348                           Myopia (Nearsightedness)     0  
+102349                           Myopia (Nearsightedness)     0  
+102350                                        Astigmatism     0  
+102351                                   Dry eye syndrome     0  
+102352                                             Iritis     0  
+102353                           Myopia (Nearsightedness)     0  
+102354                                        Astigmatism     0  
+102355                     sudden hearing loss, right ear     0  
+102356                           Myopia (Nearsightedness)     0  
+102357                                        Astigmatism     0  
+102358                           Myopia (Nearsightedness)     0  
+102359                                        Astigmatism     0  
+102360                           Myopia (Nearsightedness)     0  
+102361                           Myopia (Nearsightedness)     0  
+102362                                        Astigmatism     0  
+102363                                           Tinnitus     0  
+...                                                   ...   ...  
+106992                                        Astigmatism     0  
+106993                           Myopia (Nearsightedness)     0  
+106994                                        Astigmatism     0  
+106995                                        Astigmatism     0  
+106996                                           Tinnitus     0  
+106997                                   Dry eye syndrome     0  
+106998                           Myopia (Nearsightedness)     0  
+106999                                        Astigmatism     0  
+107000                         Hyperopia (Farsightedness)     0  
+107001                                           Floaters     0  
+107002                         Hyperopia (Farsightedness)     0  
+107003                                        Astigmatism     0  
+107004                           Age-related hearing loss     0  
+107005                                           Tinnitus     0  
+107006                           Myopia (Nearsightedness)     0  
+107007                                        Astigmatism     0  
+107008                                         Strabismus     0  
+107009                                           Floaters     0  
+107010  Sensorineural hearing loss or congenital deafness     0  
+107011                           Myopia (Nearsightedness)     0  
+107012                                        Astigmatism     0  
+107013                         Hyperopia (Farsightedness)     0  
+107014                           Myopia (Nearsightedness)     0  
+107015                                        Astigmatism     0  
+107016                                           Tinnitus     0  
+107017  Sensorineural hearing loss or congenital deafness     0  
+107018                         Hyperopia (Farsightedness)     0  
+107019                                   Dry eye syndrome     0  
+107020                                 Cornea Ulcerations     0  
+107021                                        Astigmatism     0  
+
+[4688 rows x 6 columns]
+      Acne  human_id
+0        0  hu005023
+1        0  hu005725
+2        0  hu005EB9
+3        0  hu00698E
+4        0  hu00D419
+5        0  hu01024B
+6        0  hu011C57
+7        0  hu013ACD
+8        0  hu014EFA
+9        0  hu015074
+10       0  hu0165DF
+11       0  hu016B28
+12       0  hu0199C8
+13       0  hu01EECF
+14       0  hu01FCAD
+15       0  hu02100D
+16       0  hu02105B
+17       0  hu0211D6
+18       1  hu022DC1
+19       0  hu024B5D
+20       0  hu025CEA
+21       0  hu026DEA
+22       0  hu029DBB
+23       0  hu02A209
+24       0  hu02ACEF
+25       0  hu02F007
+26       0  hu02F2F9
+27       0  hu0326FF
+28       0  hu032C04
+29       0  hu033AF6
+...    ...       ...
+1666     0  huFB4F9E
+1667     0  huFB6D3A
+1668     0  huFB87DF
+1669     0  huFBBA79
+1670     0  huFBC418
+1671     0  huFBD57F
+1672     0  huFC361A
+1673     0  huFC5E38
+1674     0  huFCE5FD
+1675     0  huFD020F
+1676     0  huFD37BE
+1677     0  huFD37C8
+1678     0  huFD4AD3
+1679     0  huFD847C
+1680     0  huFD9E3B
+1681     0  huFDF88E
+1682     0  huFE0257
+1683     0  huFE0B5B
+1684     0  huFE1782
+1685     0  huFE4343
+1686     0  huFE71F3
+1687     0  huFE9B3F
+1688     0  huFEB4D6
+1689     0  huFEE3D8
+1690     0  huFF2969
+1691     0  huFF55F2
+1692     0  huFF6AB4
+1693     0  huFF7476
+1694     0  huFFA651
+1695     0  huFFB09D
+
+[1696 rows x 2 columns]
+Loading in Tile Data
+       Sample  Number  Acne  human_id
+0    hu011c57       0     0  hu011c57
+1    hu016b28       1     0  hu016b28
+2    hu0211d6       3     0  hu0211d6
+3    hu025cea       4     0  hu025cea
+4    hu032c04       5     0  hu032c04
+5    hu034db1       6     1  hu034db1
+6    hu034db1       7     1  hu034db1
+7    hu040c0a       9     1  hu040c0a
+8    hu04df3c      11     0  hu04df3c
+9    hu04f220      12     0  hu04f220
+10   hu050e9c      14     0  hu050e9c
+11   hu05fd49      15     0  hu05fd49
+12   hu085b6d      16     0  hu085b6d
+13   hu089792      17     0  hu089792
+14   hu0cf2ee      19     0  hu0cf2ee
+15   hu0d1fa1      20     0  hu0d1fa1
+16   hu0d879f      21     0  hu0d879f
+17   hu0d879f      22     0  hu0d879f
+18   hu0e64a1      23     0  hu0e64a1
+19   hu0e7aaf      24     0  hu0e7aaf
+20   hu1187ff      25     0  hu1187ff
+21   hu1378e3      27     0  hu1378e3
+22   hu19c09f      30     0  hu19c09f
+23   hu1e868d      31     0  hu1e868d
+24   hu1f73ab      32     0  hu1f73ab
+25   hu24a473      34     0  hu24a473
+26   hu24c863      35     0  hu24c863
+27   hu26b551      37     0  hu26b551
+28   hu27fd1f      38     0  hu27fd1f
+29   hu2843c9      39     0  hu2843c9
+..        ...     ...   ...       ...
+125  huc5733c     172     0  huc5733c
+126  huc93106     174     0  huc93106
+127  hucbdc6d     177     0  hucbdc6d
+128  huccafd0     178     0  huccafd0
+129  hucd380f     179     0  hucd380f
+130  hud09534     180     0  hud09534
+131  hud2b804     183     0  hud2b804
+132  hud37d14     184     0  hud37d14
+133  hud3a569     185     0  hud3a569
+134  hud52556     186     0  hud52556
+135  hud649f1     187     0  hud649f1
+136  hud81f3d     188     0  hud81f3d
+137  hudbd591     190     0  hudbd591
+138  hudbf9dd     191     0  hudbf9dd
+139  hudf04cc     193     0  hudf04cc
+140  hue2e371     194     0  hue2e371
+141  hue58004     195     0  hue58004
+142  hue9b698     197     0  hue9b698
+143  huea4ee5     198     1  huea4ee5
+144  huebd467     199     0  huebd467
+145  hued0f40     201     0  hued0f40
+146  huedea65     202     0  huedea65
+147  huedf7da     203     0  huedf7da
+148  huf160aa     204     0  huf160aa
+149  huf1dc30     205     0  huf1dc30
+150  huf5ad12     207     0  huf5ad12
+151  huf80f84     209     0  huf80f84
+152  huf83462     210     0  huf83462
+153  hufe71f3     214     0  hufe71f3
+154  huffb09d     216     0  huffb09d
+
+[155 rows x 4 columns]
+8
+Beginning to one-hot encode data
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+Using chi2 filter
+(155, 626517)
+(155,)
+(626517,)
+(626517,)
+(626517,)
+Just created datasets for colorblind_chi2_no_augmentation_X.npz and colorblind_chi2_no_augmentation_y.npy
+
