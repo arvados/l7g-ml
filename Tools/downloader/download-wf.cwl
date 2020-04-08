@@ -32,11 +32,13 @@ inputs:
 
 outputs:
   out1:
-    type: File[]
-    label: container with downloaded files
-    outputBinding:
-      glob: "*"
-    outputSource: download-urls/out1
+    type:
+      type: array
+      items:
+        type: array
+        items: File
+    label: downloaded files
+    outputSource: downloadUrls/out1
 
 steps:
   get-urls:
@@ -45,7 +47,7 @@ steps:
       infile: urlFile
     out: [urls]
 
-  downloadUrl:
+  downloadUrls:
     run: download-urls.cwl
     scatter: [url]
     scatterMethod: dotproduct
