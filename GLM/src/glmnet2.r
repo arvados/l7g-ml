@@ -60,7 +60,7 @@ type_measure <- args[7]
 set.seed(999)
 cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=FALSE)
 w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
-                   [, 1][2:(ncol(Xmat)+1)] ))^4 ## Using gamma = .5
+                   [, 1][2:(ncol(Xmat)+1)] ))^4.75 ## Using gamma = 10
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
 
 # Keep PCA components
@@ -112,7 +112,6 @@ dataF_min <- dataF_min[o,]
 write.table(dataF_min, fileConn, sep= "\t", row.names = FALSE)
 close(fileConn)
 
-
 coefVse <- coef(cv.lasso.class, s="lambda.1se")
 coefVse <- coefVse[-1]
 
@@ -130,7 +129,6 @@ tile_loc <- np$column_stack(tup)
 dataF_1se <- data.frame("nonnzerocoefs_1se" = nznumbse, "tile_path_1se" = tile_path, "tile_step_1se" = tile_step, "oldpath_1se" = oldpath[idxnzse], "varvals_1se" = varvals[idxnzse])
 o_1se <- order(abs(dataF_1se$nonnzerocoefs_1se), decreasing = TRUE)
 dataF_1se <- dataF_1se[o_1se,]
-
 
 filename1 <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'1se.txt' )
 fileConn1 <- file(filename1, "w")
