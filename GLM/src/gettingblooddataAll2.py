@@ -1,13 +1,23 @@
+#/usr/bin/python
 
-from sklearn import preprocessing
+# **** get_Data.py ****
+# * CREATED FOR: Curii Research
+# * AUTHOR: Owen Webb
+# * PURPOSE: To process tiled numpy arrays and run a chi2 filter on it 
+# * USE: Used prior to ML algorithm Ex: SVM_Trial.py
+# * INPUT FILES: untap.db ; all.npy ; all-info.npy ; names.npy
+# * OUTPUT FILES: blood_type_A_chi2_no_augmentation_X.npy ; blood_type_A_chi2_no_augmentation_y.npy ;
+#                 blood_type_A_chi2_no_augmentation_pathdataoh.npy ; blood_type_A_chi2_no_augmentation_oldpath.npy ; 
+#                 blood_type_A_chi2_no_augmentation_varvals.npy
+
 import numpy as np
+import sqlite3
 import pandas as pd
-import scipy
-import collections
 import os
 import sys
 import re
 
+import scipy.sparse
 from scipy.sparse import csr_matrix
 from scipy.sparse import hstack
 from scipy.sparse import save_npz
@@ -17,28 +27,59 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.decomposition import PCA,TruncatedSVD
 from sklearn.preprocessing import StandardScaler
 
-surveyData = sys.argv[1]
+import hashlib
+
+
+untapdb = sys.argv[1]
 allfile = sys.argv[2]
 infofile = sys.argv[3]
 namesfile = sys.argv[4]
-color = sys.argv[5]
+#if choice.lower() == "blood":
+bloodtype = sys.argv[5]
 
-includeHazel = False
+#Use to turn off the chi2 filter
+chi2filter = True
 
-# read names that have provided survey eye color data
-columns = ['name', 'timestamp', 'id', 'blood_type', 'height', 'weight', 'hw_comments', 'left', 'right', 'left_desc', 'right_desc', 'eye_comments', 'hair', 'hair_desc', 'hair_comments', 'misc', 'handedness']
+# Unnecesary if cwl is run
+# untapdb = '/data-sdd/owebb/untap.db'
+# allfile = '/home/owebb/keep/by_id/su92l-j7d0g-4mnq9juobvg0qwy/CopyOfTileDataNumpy/all.npy'
+# infofile = '/home/owebb/keep/by_id/su92l-j7d0g-4mnq9juobvg0qwy/CopyOfTileDataNumpy/all-info.npy'
+# namesfile = '/home/owebb/keep/by_id/su92l-j7d0g-4mnq9juobvg0qwy/CopyOfTileDataNumpy/names.npy'
+# bloodtype = 'A'
 
-# pgp eye color data from survey
-#surveyData = pd.read_csv("/data-sdd/owebb/l7g-ml/EyeColor/eye_color_data/PGP-Survey.csv", names=columns, na_values=['nan', '', 'NaN'])
+print("==== Command Line Arguments Received... =====")
 
-# names of the pgp participants
-surveyData = pd.read_csv(surveyData, names=columns, na_values=['nan', '', 'NaN'])
-surveyNames = np.asarray(surveyData['name'].values.tolist())
+# Go get the data from the database as and create dataframe
 
-# tiled_data_dir = "/data-sdd/owebb/keep/by_id/su92l-4zz18-b8rs5x7t6gry16k/
+conn = sqlite3.connect(untapdb)
+c = conn.cursor()
+c.execute('SELECT * FROM demographics')
+rows = c.fetchall()
+colnames = []
+for i in c.description:
+    colnames.append(i[0])
+data = pd.DataFrame(rows, columns=colnames)
+conn.close()
 
-names_file = open(namesfile,'r')
+dataBloodType = data[['human_id','blood_type']]
+dataBloodType = dataBloodType.replace('', np.nan, inplace=False)
+dataBloodType = dataBloodType.dropna(axis=0, inplace=False)
+
+#Encodes blood type to integers
+dataBloodType['A'] = dataBloodType['blood_type'].str.contains('A',na=False).astype(int)
+dataBloodType['B'] = dataBloodType['blood_type'].str.contains('B',na=False).astype(int)
+dataBloodType['O'] = dataBloodType['blood_type'].str.contains('O',na=False).astype(int)
+dataBloodType['Rh'] = dataBloodType['blood_type'].str.contains('\+',na=False).astype(int)
+
+print("==== Loading Files... ====")
+Xtrain = np.load(allfile)
+
+
+Xtrain += 2 # All -2 so makes it to 0
+pathdata = np.load(infofile)
+names_file = open(namesfile, 'r') #not a "pickeled" file, so must just read it and pull data out of it
 names = []
+
 for line in names_file:
     names.append(line[:-1])
 
@@ -59,96 +100,48 @@ names14 = [re.sub('_.+-portable', '',i) for i in names13]
 
 names = names14
 
+
 # simple lambda function to return if the input is a string
 isstr = lambda val: isinstance(val, str)
 
-eye_color = collections.namedtuple("EyeColor", ['left', 'right'])
+dataBloodType.human_id = dataBloodType.human_id.str.lower()
+results = []
+for name in names:
+    results.append(name.lower())
 
-# lookup a name in the survey data and return a tuple of the eye colors
-def getData(name, surveyData, includeHazel=False):
-    for index, row in surveyData.iterrows():
-        if row['name'] == name:
-            if not includeHazel:
-                return eye_color(row['left'], row['right'])
-            else:
-                if isstr(row['left_desc']) and isstr(row['right_desc']):
-                    if 'azel' in row['left_desc'] or 'azel' in row['right_desc']:
-                        return None
-                return eye_color(row['left'], row['right'])
+df_names = pd.DataFrame(results,columns={'Sample'})
+df_names['Number'] = df_names.index
+
+df2 = df_names.merge(dataBloodType,left_on = 'Sample', right_on='human_id', how='inner')
+del dataBloodType
+df2['blood_type'].value_counts()
+del df_names
+idx = df2['Number'].values
+
+Xtrain = Xtrain[idx,:] 
+
+idxOP = np.arange(Xtrain.shape[1])
+
+print("==== Extracting Blood Type %s... ====" %bloodtype)
+y = df2[bloodtype].values #for blood type A to start
+
+print("Y size: ", y.size)
 
 
-# list of tuples for index and name with eye color data (idx, name)
-nameEyeMap = []
-namePair = collections.namedtuple("NamePair", ['index', 'name'])
-
-# dictionary of left and right eye colors with respective name, i.e., {"huID": 12}
-leftEyeMap = {}
-rightEyeMap = {}
-
-existingNames = []
-# loop through pgpNames and add eye color to maps, making sure not to add the same name twice
-for i, name in enumerate(names):
-    if name in surveyNames and name not in existingNames:
-        existingNames.append(name)
-        # change `includeHazel=True` to include hazel in the training/testing data.
-        eyeData = getData(name, surveyData, includeHazel=includeHazel)
-        if eyeData == None:
-            pass
-        elif isstr(eyeData.left) and isstr(eyeData.right):
-            nameEyeMap.append(namePair(i, name))
-            leftEyeMap[name] = eyeData.left
-            rightEyeMap[name] = eyeData.right
-
-# create lists containing the known eye color names and the unknown eye colors.
-nameIndices, correspondingNames = [], []
-for pair in nameEyeMap:
-    nameIndices.append(pair.index)
-    correspondingNames.append(pair.name)
-
-# convert dictionaries to lists 
-leftEyeList = []
-rightEyeList = []
-# nametuple looks like (index, name)
-for _, name in nameEyeMap:
-    if isstr(leftEyeMap[name]):
-        leftEyeList.append(leftEyeMap[name])
-    if isstr(rightEyeMap[name]):
-        rightEyeList.append(rightEyeMap[name])
-
-blueOrNot = lambda color: 0 if int(color) > 13 else 1
-leftEyeList = map(blueOrNot, leftEyeList)
-
-y = np.array(leftEyeList)
-print(y.shape)
-y_filename = "y.npy"
-np.save(y_filename, y)
-
-#quit()
-print("==== End Of New Code for Eye Color ====")
-
-tiledata = np.load(allfile)
-print(tiledata.shape)
-tiledata += 2 # -2 to 0, 0 is missing data
-pathdata = np.load(infofile)
-print("==== Done Loading Big Files... ====")
-idx = nameIndices
-tiledata = tiledata[idx,:] 
-idxOP = np.arange(tiledata.shape[1])
-
-#nnz = np.count_nonzero(tiledata,axis=0)
-#fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
+#nnz = np.count_nonzero(Xtrain, axis=0)
+#fracnnz = np.divide(nnz.astype(float), Xtrain.shape[0])
 
 # Unphasing Data
 
-[m,n] = tiledata.shape
+[m,n] = Xtrain.shape
 
 for ix in range(m):
    n20 = int(n/4)
    ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
-   keepa = tiledata[ix,ieven]
-   keepb = tiledata[ix,ieven+1]
-   tiledata[ix,ieven] = keepb
-   tiledata[ix,ieven+1] = keepa
+   keepa = Xtrain[ix,ieven]
+   keepb = Xtrain[ix,ieven+1]
+   Xtrain[ix,ieven] = keepb
+   Xtrain[ix,ieven+1] = keepa
    del keepa,keepb
 
 nnz = np.count_nonzero(tiledata,axis=0)
@@ -166,9 +159,6 @@ tiledata = tiledata[:,idx3]
 idxOP = idxOP[idx3]
 
 # PCA components
-
-#nnz = np.count_nonzero(tiledata,axis=0)
-#fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
 
 idxKeepPCA = fracnnz[idx3] >= 0.99
 tiledataPCA = tiledata[:,idxKeepPCA]
@@ -269,7 +259,7 @@ print("==== One-hot Encoding Data... ====")
 
 data_shape = tiledata.shape[1]
 
-parts = 20 
+parts = 20
 idx = np.linspace(0,data_shape,num=parts).astype('int')
 Xtrain2 = csr_matrix(np.empty([m, 0]))
 Xtrain2hom = csr_matrix(np.empty([m, 0]))
@@ -289,16 +279,16 @@ for ichunk in np.arange(0,parts-1):
     print(Xtrain.shape)
 
     Xdouble =  Xtrain[0:m,:] + Xtrain[m:2*m,:]
-    idx2 = Xdouble >= 2 
+    idx2 = Xdouble >= 2
 
     datahom = Xdouble.data
     [rhom,chom] = Xdouble.nonzero()
-    idx3 = datahom == 2 
+    idx3 = datahom == 2
     datahom = datahom[idx3]
     rhom = rhom[idx3]
-    chom = chom[idx3] 
-    
-    Xtrainhom = csr_matrix((datahom, (rhom, chom)), Xdouble.shape)  
+    chom = chom[idx3]
+
+    Xtrainhom = csr_matrix((datahom, (rhom, chom)), Xdouble.shape)
     Xtrainhom[idx2] = 1
 
     datahet = Xdouble.data
@@ -306,10 +296,10 @@ for ichunk in np.arange(0,parts-1):
     idx4 = datahet == 1
     datahet = datahet[idx4]
     rhom = rhom[idx4]
-    chom = chom[idx4] 
+    chom = chom[idx4]
 
     Xtrainhet = csr_matrix((datahet, (rhom, chom)), Xdouble.shape)
-     
+
     [chi2val,pval] = chi2(Xtrainhet, y)
     print(np.amax(pval))
     print(np.amin(pval))
@@ -317,7 +307,6 @@ for ichunk in np.arange(0,parts-1):
     pidxchunk = pval <= 0.02
     Xchunk = Xtrainhet[:,pidxchunk]
     print(Xchunk.shape)
-
     [chi2val2,pval2] = chi2(Xtrainhom, y)
     print(np.amax(pval2))
     print(np.amin(pval2))
@@ -327,7 +316,7 @@ for ichunk in np.arange(0,parts-1):
     print(Xchunkhom.shape)
 
     pidx = np.concatenate((pidx,pidxchunk),axis=0)
-    pidxhom = np.concatenate((pidxhom,pidxchunk2),axis=0) 
+    pidxhom = np.concatenate((pidxhom,pidxchunk2),axis=0)
 
     print(pidx.shape)
     print(pidxhom.shape)
@@ -352,7 +341,7 @@ print(oldpath.shape)
 print(varvals.shape)
 
 Xtrain = hstack([Xtrain2,Xtrain2hom],format='csr')
-to_keep = varvals > 2 
+to_keep = varvals > 2
 idkTK = np.nonzero(to_keep)
 idkTK = idkTK[0]
 
@@ -379,3 +368,4 @@ np.save('varvals.npy', varvals)
 scipy.sparse.save_npz(X_filename, Xtrain)
 
 print("==== Done ====")
+

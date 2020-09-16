@@ -1,6 +1,6 @@
 get_data_file:
   class: File
-  path: ../src/gettingeyedataAll.py
+  path: ../src/gettingeyedataAll2.py
 glmnet_file:
   class: File
   path: ../src/glmnet.r

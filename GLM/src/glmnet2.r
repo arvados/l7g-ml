@@ -60,7 +60,7 @@ type_measure <- args[7]
 set.seed(999)
 cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=FALSE)
 w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
-                   [, 1][2:(ncol(Xmat)+1)] ))^4.75 ## Using gamma = 10
+                   [, 1][2:(ncol(Xmat)+1)] ))^8 ## Using gamma = 10
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
 
 # Keep PCA components
@@ -68,9 +68,9 @@ w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999
 
 #Adaptive Lasso
 set.seed(999)
-cv.lasso.auc <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 10, parallel=TRUE, standardize=FALSE, type.measure='auc', penalty.factor=w3)
+cv.lasso.auc <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='auc', penalty.factor=w3)
 
-cv.lasso.class <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 10, parallel=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3)
+cv.lasso.class <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3)
 plotname_class <- paste0('glmnet_lasso_',colorblood,'_class.png')
 png(plotname_class)
 plot(cv.lasso.class)

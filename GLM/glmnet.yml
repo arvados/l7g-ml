@@ -1,20 +1,20 @@
 glmnet_file:
   class: File
-  path: /data-sdd/cwl_tiling/l7g-ml/GLM/src/glmnet_auc.r
+  path: /data-sdd/cwl_tiling/l7g-ml/GLM/src/glmnet2.r
 X: 
   class: File
-  path: keep:76a604ace15f391147527fe648b7c61b+230/X.npz
+  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/X.npz
 y: 
   class: File
-  path: keep:76a604ace15f391147527fe648b7c61b+230/y.npy
+  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/y.npy
 pathdataoh: 
   class: File
-  path: keep:76a604ace15f391147527fe648b7c61b+230/pathdataOH.npy
+  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/pathdataOH.npy
 oldpath:
   class: File
-  path: keep:76a604ace15f391147527fe648b7c61b+230/oldpath.npy
+  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/oldpath.npy
 varvals:
   class: File
-  path: keep:76a604ace15f391147527fe648b7c61b+230/varvals.npy
-colorblood: Blood
-type_measure: B
+  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/varvals.npy
+colorblood: Blue
+type_measure: class
