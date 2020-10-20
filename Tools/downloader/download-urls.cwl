@@ -19,6 +19,7 @@ hints:
   arv:APIRequirement: {}
 
 baseCommand: bash
+
 inputs:
   bashScript:
     type: File

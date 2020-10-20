@@ -9,7 +9,7 @@ sglf: ./keep/by_id/0005f6e64c510865d4997467764f305e+58830
 
 # location of tile info array
 # for complete tile set
-tile_info: ./keep/by_id/1f769486fd7bbbba9dc3f06c411f5804+53847/outdir/all-info
+tile_info: ./keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/pathdata.npy
 
 # only for high quality tile set from PGP
 #tile_info: ./keep/by_id/su92l-4zz18-xmmmg0qn0wuaxkl/hiq-pip-info

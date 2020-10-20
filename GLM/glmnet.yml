@@ -3,18 +3,18 @@ glmnet_file:
   path: /data-sdd/cwl_tiling/l7g-ml/GLM/src/glmnet2.r
 X: 
   class: File
-  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/X.npz
+  path: keep:b08a63700bf31b13edd78639a8906dbc+228/X.npz
 y: 
   class: File
-  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/y.npy
+  path: keep:b08a63700bf31b13edd78639a8906dbc+228/y.npy
 pathdataoh: 
   class: File
-  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/pathdataOH.npy
+  path: keep:b08a63700bf31b13edd78639a8906dbc+228/pathdataOH.npy
 oldpath:
   class: File
-  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/oldpath.npy
+  path: keep:b08a63700bf31b13edd78639a8906dbc+228/oldpath.npy
 varvals:
   class: File
-  path: keep:a43ff71d986502fdf851b02cbb9f6c0f+228/varvals.npy
-colorblood: Blue
+  path: keep:b08a63700bf31b13edd78639a8906dbc+228/varvals.npy
+colorblood: A 
 type_measure: class

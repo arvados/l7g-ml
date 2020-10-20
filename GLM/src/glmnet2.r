@@ -60,7 +60,7 @@ type_measure <- args[7]
 set.seed(999)
 cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=FALSE)
 w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
-                   [, 1][2:(ncol(Xmat)+1)] ))^8 ## Using gamma = 10
+                   [, 1][2:(ncol(Xmat)+1)] ))^2 ## Using gamma = 10
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
 
 # Keep PCA components

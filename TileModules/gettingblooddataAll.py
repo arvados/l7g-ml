@@ -72,10 +72,10 @@ dataBloodType['O'] = dataBloodType['blood_type'].str.contains('O',na=False).asty
 dataBloodType['Rh'] = dataBloodType['blood_type'].str.contains('\+',na=False).astype(int)
 
 print("==== Loading Files... ====")
-tiledata = np.load(allfile)
+Xtrain = np.load(allfile)
 
 
-tiledata += 2 # All -2 so makes it to 0
+Xtrain += 2 # All -2 so makes it to 0
 pathdata = np.load(infofile)
 names_file = open(namesfile, 'r') #not a "pickeled" file, so must just read it and pull data out of it
 names = []
@@ -118,34 +118,25 @@ df2['blood_type'].value_counts()
 del df_names
 idx = df2['Number'].values
 
-tiledata = tiledata[idx,:] 
+Xtrain = Xtrain[idx,:] 
 
-idxOP = np.arange(tiledata.shape[1])
+idxOP = np.arange(Xtrain.shape[1])
 
-print("==== Extracting Blood Type %s... ====" %bloodtype)
-y = df2[bloodtype].values #for blood type A to start
-
-print("Y size: ", y.size)
-
-
-#nnz = np.count_nonzero(Xtrain, axis=0)
-#fracnnz = np.divide(nnz.astype(float), Xtrain.shape[0])
+nnz = np.count_nonzero(Xtrain, axis=0)
+fracnnz = np.divide(nnz.astype(float), Xtrain.shape[0])
 
 # Unphasing Data
 
-[m,n] = tiledata.shape
+[m,n] = Xtrain.shape
 
 for ix in range(m):
    n20 = int(n/4)
    ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
-   keepa = tiledata[ix,ieven]
-   keepb = tiledata[ix,ieven+1]
-   tiledata[ix,ieven] = keepb
-   tiledata[ix,ieven+1] = keepa
+   keepa = Xtrain[ix,ieven]
+   keepb = Xtrain[ix,ieven+1]
+#   Xtrain[ix,ieven] = keepb
+#   Xtrain[ix,ieven+1] = keepa
    del keepa,keepb
-
-nnz = np.count_nonzero(tiledata,axis=0)
-fracnnz = np.divide(nnz.astype(float),tiledata.shape[0])
 
 # Don't keep X,Y and M data
 
@@ -155,19 +146,18 @@ idx2 = tile_path <= 810
 idx3 = idx2
 
 pathdata = pathdata[idx3]
-tiledata = tiledata[:,idx3]
+Xtrain = Xtrain[:,idx3]
 idxOP = idxOP[idx3]
 
 # PCA components
 
 idxKeepPCA = fracnnz[idx3] >= 0.99
-tiledataPCA = tiledata[:,idxKeepPCA]
+tiledataPCA = Xtrain[:,idxKeepPCA]
 
 varvalsPCA = np.full(50*tiledataPCA.shape[1],np.nan)
 nx=0
 
 varlistPCA = []
-
 for j in range(0,tiledataPCA.shape[1]):
     u = np.unique(tiledataPCA[:,j])
     varvalsPCA[nx:nx+u.size] = u
@@ -196,152 +186,81 @@ XtrainPCA = pca.fit_transform(XtrainPCA)
 
 scaler = StandardScaler()
 XtrainPCA= scaler.fit_transform(XtrainPCA)
-[m,n] = tiledata.shape
-
-# Reshaping matrix to account for phases
-tiledata = np.concatenate((tiledata[:,0:n:2], tiledata[:,1:n:2]),axis=0)
-pathdata = pathdata[0:n:2]
-idxOP = idxOP[0:n:2]
 
 # Only keeping data that has less than 10% missing data
 
-#idxKeep = fracnnz[idx3] >= 0.9
-nnzRS = np.count_nonzero(tiledata,axis=0)
-fracnnzRS = np.divide(nnzRS.astype(float),tiledata.shape[0])
-idxKeep = fracnnzRS >= 0.9
-tiledata = tiledata[:,idxKeep]
+idxKeep = fracnnz[idx3] >= 0.9
+Xtrain = Xtrain[:, idxKeep]
 
-print("Encoding in 1-hot...")
-print("Determing new path and varval vectors...")
+print("==== Extracting Blood Type %s... ====" %bloodtype)
+y = df2[bloodtype].values #for blood type A to start
 
-print(tiledata.shape)
+print("Y size: ", y.size)
 
-def foo(col):
-   u = np.unique(col)
-   nunq = u.shape
-   return nunq
-
-invals = np.apply_along_axis(foo, 0, tiledata)
-invals = invals[0]
-
-varvals = np.full(50*tiledata.shape[1],np.nan)
-nx=0
-
+# save information about deleted missing/spanning data
+varvals = np.full(50 * Xtrain.shape[1], np.nan)
+nx = 0
 varlist = []
-for j in range(0,tiledata.shape[1]):
-     u = np.unique(tiledata[:,j])
-     varvals[nx:nx+u.size] = u
-     nx = nx + u.size
-     varlist.append(u)
+for j in range(0, Xtrain.shape[1]):
+    u = np.unique(Xtrain[:,j])
+    varvals[nx : nx + u.size] = u
+    nx = nx + u.size
+    varlist.append(u)
 
 varvals = varvals[~np.isnan(varvals)]
 
-print(varvals.shape)
+def foo(col):
+    u = np.unique(col)
+    nunq = u.shape
+    return nunq
+
+invals = np.apply_along_axis(foo, 0, Xtrain)
+invals = invals[0]
+
+# used later to find coefPaths
 pathdataOH = np.repeat(pathdata[idxKeep], invals)
-oldpath = np.repeat(idxOP[idxKeep],invals)
+# used later to find the original location of the path from non one hot encode
+oldpath = np.repeat(idxOP[idxKeep], invals)
 
-print(pathdataOH.shape)
-print(oldpath.shape)
-print(varvals.shape)
-
-print("Running the Encoder...")
-
-ny = tiledata.shape[1]
-
-print(ny)
-
+tiledata = Xtrain
 nnz = np.count_nonzero(tiledata,axis=0)
 
 print("==== One-hot Encoding Data... ====")
 
-#tiledata_filename = "tiledata.npy"
-#np.save(tiledata_filename, tiledata)
-
+# removed randomization here
 data_shape = tiledata.shape[1]
 
-parts = 20
+parts = 4
 idx = np.linspace(0,data_shape,num=parts).astype('int')
-Xtrain2 = csr_matrix(np.empty([m, 0]))
-Xtrain2hom = csr_matrix(np.empty([m, 0]))
+Xtrain2 = csr_matrix(np.empty([tiledata.shape[0], 0]))
 pidx = np.empty([0,],dtype='bool')
-pidxhom = np.empty([0,],dtype='bool')
 
-for ichunk in np.arange(0,parts-1):
-#for ichunk in np.arange(25,parts-1):
-    print(ichunk)
-    print("==== Loading in First Chunk... ====")
-    min_idx = idx[ichunk]
-    max_idx = idx[ichunk+1]
-    print(min_idx)
-    print(max_idx)
-    enc = OneHotEncoder(sparse=True, dtype=np.uint16)
+for i in range(0,parts-1):
+    min_idx = idx[i]
+    max_idx = idx[i+1]
+    enc = OneHotEncoder(sparse=True, dtype=np.uint16, categories='auto')
     Xtrain = enc.fit_transform(tiledata[:,min_idx:max_idx])
-    print(Xtrain.shape)
+    [chi2val,pval] = chi2(Xtrain, y)
+    print(pval.size)
+    print(Xtrain.size)
+    if chi2filter == True:
+        pidxchunk = pval <= 0.02
+    else:
+        pidxchunk = pval <= 1
+    Xchunk = Xtrain[:,pidxchunk]
+    print(Xchunk)
+    print(Xtrain2)
+    pidx=np.concatenate((pidx,pidxchunk),axis=0)
+    if i == 0:
+        Xtrain2 = Xchunk
+    else:
+        Xtrain2= hstack([Xtrain2,Xchunk],format='csr')
 
-    Xdouble =  Xtrain[0:m,:] + Xtrain[m:2*m,:]
-    idx2 = Xdouble >= 2
-
-    datahom = Xdouble.data
-    [rhom,chom] = Xdouble.nonzero()
-    idx3 = datahom == 2
-    datahom = datahom[idx3]
-    rhom = rhom[idx3]
-    chom = chom[idx3]
-
-    Xtrainhom = csr_matrix((datahom, (rhom, chom)), Xdouble.shape)
-    Xtrainhom[idx2] = 1
-
-    datahet = Xdouble.data
-    [rhom,chom] = Xdouble.nonzero()
-    idx4 = datahet == 1
-    datahet = datahet[idx4]
-    rhom = rhom[idx4]
-    chom = chom[idx4]
-
-    Xtrainhet = csr_matrix((datahet, (rhom, chom)), Xdouble.shape)
-
-    [chi2val,pval] = chi2(Xtrainhet, y)
-    print(np.amax(pval))
-    print(np.amin(pval))
-
-    pidxchunk = pval <= 0.02
-    Xchunk = Xtrainhet[:,pidxchunk]
-    print(Xchunk.shape)
-    [chi2val2,pval2] = chi2(Xtrainhom, y)
-    print(np.amax(pval2))
-    print(np.amin(pval2))
-
-    pidxchunk2 = pval2 <= 0.02
-    Xchunkhom = Xtrainhom[:,pidxchunk2]
-    print(Xchunkhom.shape)
-
-    pidx = np.concatenate((pidx,pidxchunk),axis=0)
-    pidxhom = np.concatenate((pidxhom,pidxchunk2),axis=0)
-
-    print(pidx.shape)
-    print(pidxhom.shape)
-    Xtrain2 = hstack([Xtrain2,Xchunk],format='csr')
-    Xtrain2hom = hstack([Xtrain2hom,Xchunkhom],format='csr')
-
-#quit()
-pathdataOHhet = pathdataOH[pidx]
-oldpathhet = oldpath[pidx]
-varvalshet = varvals[pidx]
-
-pathdataOHhom = pathdataOH[pidxhom]
-oldpathhom = oldpath[pidxhom]
-varvalshom = varvals[pidxhom]
-
-pathdataOH = np.concatenate((pathdataOHhet,pathdataOHhom),axis=0)
-oldpath = np.concatenate((oldpathhet,oldpathhom),axis=0)
-varvals = np.concatenate((varvalshet,varvalshom),axis=0)
-
-print(pathdataOH.shape)
-print(oldpath.shape)
-print(varvals.shape)
-
-Xtrain = hstack([Xtrain2,Xtrain2hom],format='csr')
-to_keep = varvals > 2
+pathdataOH = pathdataOH[pidx]
+oldpath = oldpath[pidx]
+varvals = varvals[pidx]
+Xtrain = Xtrain2
+to_keep = varvals > 2 
 idkTK = np.nonzero(to_keep)
 idkTK = idkTK[0]
 
@@ -367,5 +286,5 @@ np.save('oldpath.npy', oldpath)
 np.save('varvals.npy', varvals)
 scipy.sparse.save_npz(X_filename, Xtrain)
 
-print("==== Done ====")
 
+print("==== Done ====")

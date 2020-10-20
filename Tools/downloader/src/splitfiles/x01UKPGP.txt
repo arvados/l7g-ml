@@ -1,0 +1,10 @@
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/008/ERR2122558/ERR2122558_1.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/008/ERR2122558/ERR2122558_2.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/009/ERR2122559/ERR2122559_1.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/009/ERR2122559/ERR2122559_2.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/000/ERR2122560/ERR2122560_1.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/000/ERR2122560/ERR2122560_2.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/001/ERR2122561/ERR2122561_1.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/001/ERR2122561/ERR2122561_2.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/002/ERR2122562/ERR2122562_1.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR212/002/ERR2122562/ERR2122562_2.fastq.gz

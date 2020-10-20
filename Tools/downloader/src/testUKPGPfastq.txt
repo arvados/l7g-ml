@@ -1,2 +1,4 @@
 ftp.sra.ebi.ac.uk/vol1/fastq/ERR172/004/ERR1726424/ERR1726424_1.fastq.gz
 ftp.sra.ebi.ac.uk/vol1/fastq/ERR172/004/ERR1726424/ERR1726424_2.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR172/005/ERR1726425/ERR1726425_1.fastq.gz
+ftp.sra.ebi.ac.uk/vol1/fastq/ERR172/005/ERR1726425/ERR1726425_2.fastq.gz

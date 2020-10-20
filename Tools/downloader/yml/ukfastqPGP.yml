@@ -1,6 +1,6 @@
 urlFile:
   class: File
-  location: ../src/testUKPGPfastq.txt
+  location: ../src/splitfiles/x05UKPGP.txt
 bashScript:
   class: File
-  location: ../src/download.sh
+  location: ../src/download2.sh
