@@ -3,6 +3,7 @@
 def removeXYM(tiledgenomes,tilepos,idxOP):
     # Remove tiles in X,Y,M Chromosomes
     import numpy as np
+
     tilepath = np.trunc(tilepos/(16**5))
     idx22= tilepath <= 810
 
@@ -13,6 +14,8 @@ def removeXYM(tiledgenomes,tilepos,idxOP):
     return tiledgenomes, tilepos, idxOP
 
 def randomizePhase(tiledgenomes)
+    import numpy as np
+
     [m,n] = tiledgenomes.shape
 
     for ix in range(m):
@@ -45,8 +48,8 @@ def qualCutOff(tiledgenomes,tilepos,idxOP,qual):
 def findTileVars(tiledgenomes,tilepos,idxOP)
     # Compute array of tile variants, tile positions, and original indices for a given set of tiled genomes
     # that would match the set of 1-hot data generated from that set of tile genomes
-
     import numpy as np
+
     varvals = np.full(50*tiledgenomes.shape[1],np.nan)
     nx = 0
 
@@ -76,6 +79,12 @@ def findTileVars(tiledgenomes,tilepos,idxOP)
 
 def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff): 
     #filter by Pearson chi^2 and return one-hot by tile variant with each phase represented seperately
+    import numpy as np
+    import scipy.sparse
+    from scipy.sparse import csr_matrix
+    from scipy.sparse import hstack
+    from sklearn.feature_selection import chi2
+    from sklearn.preprocessing import OneHotEncoder
 
     data_shape = tiledgenomes.shape[1]
     idx = np.linspace(0,data_shape,num=parts).astype('int')
@@ -98,10 +107,13 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
        if i == 0:
            tiledgenomesOH = tiledgenomeOHchunk 
        else:
-           tiledgenomesOH  = hstack([tiledgenomesOH,tiledgenomeOHchunk],format='csr')
+           tiledgenomesOH = hstack([tiledgenomesOH,tiledgenomeOHchunk],format='csr')
 
        tileposOH = tileposOH[pidx]
        varvals = varvals[pidx]
+
+       # Remove spanning , no call tile variants, most common tile variant (usually ref) for each position
+       # 0 --> Low Quality Tiles, 1 --> Spanning Tiles, 2--> Most Common Tile Variant (Usually Ref)
 
        to_keep = varvals > 2
        idkTK = np.nonzero(to_keep)
@@ -122,10 +134,12 @@ def pcaComponents(tilegenomes,varvals,n):
     import numpy as np
     import scipy.sparse
     from sklearn.decomposition import PCA   
+    from sklearn.preprocessing import OneHotEncoder
+    from sklearn.preprocessing import StandardScaler
   
     enc = OneHotEncoder(sparse=True, dtype=np.uint16)
 
-    XtrainPCA = enc.fit_transform(tiledataPCA)
+    tiledgenomesOH = enc.fit_transform(tiledgenomes)
 
     # Remove spanning and no call tile variants for each position
     # 0 --> Low Quality Tiles, 1 --> Spanning Tiles
@@ -134,14 +148,13 @@ def pcaComponents(tilegenomes,varvals,n):
     idkTKPCA = np.nonzero(to_keepPCA)
     idkTKPCA = idkTKPCA[0]
 
-    XtrainPCA = XtrainPCA[:,idkTKPCA]
-    XtrainPCA = XtrainPCA.todense()
-
+    tiledgenomesOH = tiledgenomesOH[:,idkTKPCA]
     tiledgenomesOH = tiledgenomesOH.todense()
+
     pca = PCA(n_components=n)
     tiledPCA = pca.fit_transform(tiledgenomesOH)
 
     scaler = StandardScaler()
-    tiledPCA= scaler.fit_transform(tiledPCA)
+    tiledPCA = scaler.fit_transform(tiledPCA)
 
     return tiledPCA
