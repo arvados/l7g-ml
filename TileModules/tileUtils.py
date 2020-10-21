@@ -12,6 +12,20 @@ def removeXYM(tiledgenomes,tilepos,idxOP):
 
     return tiledgenomes, tilepos, idxOP
 
+def randomizePhase(tiledgenomes)
+    [m,n] = tiledgenomes.shape
+
+    for ix in range(m):
+       n20 = int(n/4)
+       ieven = (np.random.randint(0,int(n/2),size=n20)) * 2
+       keepa = tiledgenomes[ix,ieven]
+       keepb = tiledgenomes[ix,ieven+1]
+       tiledgenomes[ix,ieven] = keepb
+       tiledgenomes[ix,ieven+1] = keepa
+       del keepa,keepb
+
+     return tiledgenomes
+
 def qualCutOff(tiledgenomes,tilepos,idxOP,qual): 
     # Keep positions where qual% of the tiles at the position are high quality tiles 
     # Note: Assumes you have added +2 to the tiled set so 0 represents low quality tile placeholder
@@ -27,11 +41,6 @@ def qualCutOff(tiledgenomes,tilepos,idxOP,qual):
 
     return tiledgenomes, tilepos, idxOP
 
-
-def removeCommonVariant(tiledgenomes,tilepos,idxOP)
-    # Remove most common tile variant (tile variant of 0 -- usually reference) at each tile position
-    # Note: Assumes you have added +2 to the tiled set so 2 represents most common tile
-  
     
 def findTileVars(tiledgenomes,tilepos,idxOP)
     # Compute array of tile variants, tile positions, and original indices for a given set of tiled genomes
@@ -52,22 +61,87 @@ def findTileVars(tiledgenomes,tilepos,idxOP)
     varvals = varvals[~np.isnan(varvals)]
 
     def foo(col):
-    u = np.unique(col)
-    nunq = u.shape
-    return nunq
+        u = np.unique(col)
+        nunq = u.shape
+        return nunq
 
     invals = np.apply_along_axis(foo, 0, tiledgenomes)
     invals = invals[0]
 
+    tileposOH = np.repeat(tilepos[idxKeep], invals)
+    idxOPOH = np.repeat(idxOP[idxKeep], invals)
 
-def chiPhased():  #filter by Pearson chi^2 and return one-hot by tile variant using phase
+    return tileposOH, idxOPOH, varvals
+
+
+def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff): 
+    #filter by Pearson chi^2 and return one-hot by tile variant with each phase represented seperately
+
+    data_shape = tiledgenomes.shape[1]
+    idx = np.linspace(0,data_shape,num=parts).astype('int')
+    tiledgenomesOH = csr_matrix(np.empty([tiledgenomes.shape[0], 0]))
+    pidx = np.empty([0,],dtype='bool')
+
+    # calculate in chunks because one-hot calculation hits memory bug when
+    # sparse matrix gets too large (also allows user to use smaller memory machine)
+
+    for i in range(0,nparts-1):
+       min_idx = idx[i]
+       max_idx = idx[i+1]
+       enc = OneHotEncoder(sparse=True, dtype=np.uint16, categories='auto')
+       tiledgenomeOHchunk = enc.fit_transform(tilegenomes[:,min_idx:max_idx])
+       [chi2val,pval] = chi2(tiledgenomesOHchunk, y)
+       pidxchunk = pval <= pcutoff 
+       tiledgenomeOHchunkfiltered = tiledgenomeOHchunk[:,pidxchunk]
+       pidx = np.concatenate((pidx,pidxchunk),axis=0)
+
+       if i == 0:
+           tiledgenomesOH = tiledgenomeOHchunk 
+       else:
+           tiledgenomesOH  = hstack([tiledgenomesOH,tiledgenomeOHchunk],format='csr')
+
+       tileposOH = tileposOH[pidx]
+       varvals = varvals[pidx]
+
+       to_keep = varvals > 2
+       idkTK = np.nonzero(to_keep)
+       idkTK = idkTK[0]
+
+       tiledgenomesOH = tiledgenomesOH[:,idkTK]
+       tileposOH = tileposOH[idkTK]
+       varvals = varvals[idkTK]
+       idxOPOH = idxOPOH[idxTK]
+
+       return tiledgenomesOH, tileposOH, varvals, idxOPOH
 
 def chiZygosity():  #filter by Pearson chi^2 and return one-hot by tile variant using zygosity
 
 
-def pcaComponents(tilegenomes,tilepos):  #create top n PCA components
-   
-    
+def pcaComponents(tilegenomes,varvals,n):  
+    #calculate top n PCA from one-hot encoded tiled genomes
+    import numpy as np
+    import scipy.sparse
+    from sklearn.decomposition import PCA   
+  
+    enc = OneHotEncoder(sparse=True, dtype=np.uint16)
 
+    XtrainPCA = enc.fit_transform(tiledataPCA)
 
+    # Remove spanning and no call tile variants for each position
+    # 0 --> Low Quality Tiles, 1 --> Spanning Tiles
+    to_keepPCA = varvalsPCA > 1
 
+    idkTKPCA = np.nonzero(to_keepPCA)
+    idkTKPCA = idkTKPCA[0]
+
+    XtrainPCA = XtrainPCA[:,idkTKPCA]
+    XtrainPCA = XtrainPCA.todense()
+
+    tiledgenomesOH = tiledgenomesOH.todense()
+    pca = PCA(n_components=n)
+    tiledPCA = pca.fit_transform(tiledgenomesOH)
+
+    scaler = StandardScaler()
+    tiledPCA= scaler.fit_transform(tiledPCA)
+
+    return tiledPCA
