@@ -107,11 +107,11 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
        if i == 0:
            tiledgenomesOH = tiledgenomesOHchunkfiltered 
        else:
-           tiledgenomesOH = hstack([tiledgenomesOH,tiledgenomeOHchunkfiltered],format='csr')
+           tiledgenomesOH = hstack([tiledgenomesOH,tiledgenomesOHchunkfiltered],format='csr')
 
     tileposOH = tileposOH[pidx]
     varvals = varvals[pidx]
-    idxOPOH = idOPOH[pidx]
+    idxOPOH = idxOPOH[pidx]
 
        # Remove spanning , no call tile variants, most common tile variant (usually ref) for each position
        # 0 --> Low Quality Tiles, 1 --> Spanning Tiles, 2--> Most Common Tile Variant (Usually Ref)
@@ -123,7 +123,7 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     tiledgenomesOH = tiledgenomesOH[:,idkTK]
     tileposOH = tileposOH[idkTK]
     varvals = varvals[idkTK]
-    idxOPOH = idxOPOH[idxTK]
+    idxOPOH = idxOPOH[idkTK]
 
     return tiledgenomesOH, tileposOH, varvals, idxOPOH
 

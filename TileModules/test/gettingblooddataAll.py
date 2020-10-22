@@ -7,6 +7,8 @@ import os
 import sys
 import re
 import scipy.sparse
+from scipy.sparse import csr_matrix
+from scipy.sparse import hstack
 import hashlib
 
 a = '/data-sdd/cwl_tiling/l7g-ml/TileModules'
@@ -93,10 +95,10 @@ idx = df2['Number'].values
 Xtrain = Xtrain[idx,:] 
 y = df2[bloodtype].values 
 
-# Creating vector of original index of each tile position
+# Create Vector of Original Index of Tile Position
 idxOP = np.arange(Xtrain.shape[1])
 
-# Randomize phases each tile position
+# Randomize Phases
 Xtrain = randomizePhase(Xtrain)
 
 # Removing XYM Chromosomes
@@ -113,15 +115,16 @@ tiledPCA = pcaComponents(XtrainPCA,varvalsPCA,20)
 [Xtrain, pathdata, idxOP] = qualCutOff(Xtrain,pathdata,idxOP,0.90)
 [pathdataOH, idxOPOH, varvals]= findTileVars(Xtrain,pathdata,idxOP)
 
-# Calculate OH representation, filtered using Pearson chi2
+# Calculate OH Representation, Filtered using Pearson Chi2
 [Xtrain, pathdataOH, varvals, idxOPOH] = chiPhased(Xtrain,pathdataOH,idxOPOH,varvals,y,5,.02)
 
-print("==== Saving Outputs... ====")
-
-# Saving final outputs
+# Combine Filtered OH Encoded Tiled Genomes and PCA Components
 XtrainPCA = csr_matrix(XtrainPCA)
 Xtrain = hstack([Xtrain,XtrainPCA],format='csr')
 
+print("==== Saving Outputs... ====")
+
+# Save Final Outputs
 np.save('y.npy', y)
 np.save('pathdataOH.npy', pathdataOH)
 np.save('oldpath.npy', idxOPOH)
