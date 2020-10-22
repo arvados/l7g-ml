@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "gettingblooddataAll.py", line 117, in <module>
+    [Xtrain, pathdataOH, varvals, idxOPOH] = chiPhased(Xtrain,pathdataOH,idxOPOH,varvals,y,5,.02)
+  File "/data-sdd/cwl_tiling/l7g-ml/TileModules/tileUtils.py", line 112, in chiPhased
+    tileposOH = tileposOH[pidx]
+IndexError: boolean index did not match indexed array along dimension 0; dimension is 36695069 but corresponding boolean dimension is 9017701
