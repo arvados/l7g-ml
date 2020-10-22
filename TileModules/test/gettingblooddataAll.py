@@ -9,14 +9,13 @@ import re
 import scipy.sparse
 from scipy.sparse import csr_matrix
 from scipy.sparse import hstack
-import hashlib
 
 a = '/data-sdd/cwl_tiling/l7g-ml/TileModules'
 sys.path.insert(0, a)
 
 from tileUtils import *
 
-untapdb = sys.argv[1]
+ydatasource = sys.argv[1]
 allfile = sys.argv[2]
 infofile = sys.argv[3]
 namesfile = sys.argv[4]
@@ -24,9 +23,9 @@ bloodtype = sys.argv[5]
 
 print("==== Command Line Arguments Received... =====")
 
-# Access PGP database and create dataframe
+# Load y Data as Dataframe (Data and IDs) 
 
-conn = sqlite3.connect(untapdb)
+conn = sqlite3.connect(ydatasource)
 c = conn.cursor()
 c.execute('SELECT * FROM demographics')
 rows = c.fetchall()

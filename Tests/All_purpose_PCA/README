@@ -1,8 +1,0 @@
-You can use this to perform 2-component PCA on any matrix of 1hot data and
-plot the result.
-
-It's meant to be run as a pipeline, so call All_purpose_PCA.cwl with
-arv cwl runner, and input_All_purpose_PCA.yml as the input file.
-This will run the python script All_purpose_PCA.py
-
-You need only edit the yml file to point to the desired 1hot data in Keep.

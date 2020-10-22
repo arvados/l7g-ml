@@ -1,6 +1,0 @@
-script_path: 
-    class: File
-    path: ./All_purpose_PCA.py
-data_1hot_file:
-    class: File
-    path: keep:4128909eaab83c10f3efbb683ef63309+56883/npy-hiq/hiq-1hot

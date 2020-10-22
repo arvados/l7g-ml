@@ -1,7 +1,0 @@
-urlFile: 
-  class: File
-  location: ../src/2.txt
-bashScript:
-  class: File
-  location: ../src/download.sh
-  
