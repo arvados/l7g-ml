@@ -13,6 +13,27 @@ def removeXYM(tiledgenomes,tilepos,idxOP):
 
     return tiledgenomes, tilepos, idxOP
 
+def syncTiles(dfy,tiledgenomes,names): 
+    import numpy as np
+    import pandas as pd
+
+    dfy.human_id = dfy.human_id.str.lower()
+    results = []
+
+    for name in names:
+       results.append(name.lower())
+
+    df_names = pd.DataFrame(results,columns={'Sample'})
+    df_names['Number'] = df_names.index
+
+    df2 = df_names.merge(dfy,left_on = 'Sample', right_on='human_id', how='inner')
+    idx = df2['Number'].values
+
+    tiledgenomes = tiledgenomes[idx,:]
+    y = df2['y'].values
+
+    return tiledgenomes, y    
+
 def randomizePhase(tiledgenomes):
     import numpy as np
 
