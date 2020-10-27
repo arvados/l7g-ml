@@ -46,9 +46,6 @@ names = pgputils.pgpCleanNames(names)
 # Create Vector of Original Index of Tile Position
 idxOP = np.arange(Xtrain.shape[1])
 
-# Randomize Phases
-#Xtrain = tileutils.randomizePhase(Xtrain)
-
 # Remove XYM Chromosomes
 [Xtrain,pathdata,idxOP]  = tileutils.removeXYM(Xtrain,pathdata,idxOP)
 

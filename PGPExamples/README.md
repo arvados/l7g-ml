@@ -1,1 +1,5 @@
+Examples on how to do machine learning with tiled data using public data from PGP (Personal Genome Project)
+
+Example Calls Below:
+
 python gettingblooddataAll.py /data-sdd/cwl_tiling/datafiles/untap.db /data-sdd/cwl_tiling/keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/tiledataMerge.npy /data-sdd/cwl_tiling/keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/pathdata.npy /data-sdd/cwl_tiling/keep/by_id/3be2f1df678736f85a1ec6a8c3beb386+338/allnames.txt A 
