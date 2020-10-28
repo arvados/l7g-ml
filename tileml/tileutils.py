@@ -134,8 +134,8 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     varvals = varvals[pidx]
     idxOPOH = idxOPOH[pidx]
 
-       # Remove spanning , no call tile variants, most common tile variant (usually ref) for each position
-       # 0 --> Low Quality Tiles, 1 --> Spanning Tiles, 2--> Most Common Tile Variant (Usually Ref)
+    # Remove spanning , no call tile variants, most common tile variant (usually ref) for each position
+    # 0 --> Low Quality Tiles, 1 --> Spanning Tiles, 2--> Most Common Tile Variant (Usually Ref)
 
     to_keep = varvals > 2
     idkTK = np.nonzero(to_keep)
@@ -148,8 +148,58 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
 
     return tiledgenomesOH, tileposOH, varvals, idxOPOH
 
-#def chiZygosity():  #filter by Pearson chi^2 and return one-hot by tile variant using zygosity
+def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
+    #filter by Pearson chi^2 and return one-hot by tile variant considering zygosity (phases considered together, and 1 column for het tile variant and 1 column for hom tile variant)
+    import numpy as np
+    import scipy.sparse
+    from scipy.sparse import csr_matrix
+    from scipy.sparse import hstack
+    from sklearn.feature_selection import chi2
+    from sklearn.preprocessing import OneHotEncoder
 
+    [m,n] = tilegenomes.shape
+    m = m/2
+    idx = np.linspace(0,n,num=nparts).astype('int')
+    tiledgenomesOH = csr_matrix(np.empty([m, 0]))
+    tiledgenomesOHhom = csr_matrix(np.empty([m, 0]))
+    pidx = np.empty([0,],dtype='bool')
+    pidxhom = np.empty([0,],dtype='bool')
+
+    # calculate in chunks because one-hot calculation hits memory bug when
+    # sparse matrix gets too large (also allows user to use smaller memory machine)
+
+    for i in range(0,nparts-1):
+       min_idx = idx[ichunk]
+       max_idx = idx[ichunk+1]
+       enc = OneHotEncoder(sparse=True, dtype=np.uint16)
+       tiledgenomesOHchunk = enc.fit_transform(tiledata[:,min_idx:max_idx])
+       tiledgenomeOHphasechunk = tiledgenomesOHchunk[0:m,:] + tiledgenomesOHchunk[m:2*m,:]
+
+       idx2 = tiledgenomeOHphasechunk >= 2
+       datahom = tiledgenomeOHphasechunk.data
+       [rhom,chom] = tiledgenomeOHphasechunk.nonzero()
+       idx3 = datahom == 2
+       datahom = datahom[idx3]
+       rhom = rhom[idx3]
+       chom = chom[idx3]
+    
+       tiledgenomeOHhomchunk = csr_matrix((datahom, (rhom, chom)), tiledgenomeOHphasechunk.shape)
+       tiledgenomeOHhomchunk[idx2] = 1
+
+       datahet = tiledgenomeOHphasechunk.data
+       [rhom,chom] = tiledgenomeOHphasechunk.nonzero()
+       idx4 = datahet == 1
+       rhom = rhom[idx4]
+       chom = chom[idx4]
+
+       tiledgenomeOHhetchunk = csr_matrix((datahet, (rhom, chom)), tiledgenomeOHphasechunk.shape)
+
+       [chi2valhet,pvalhet] = chi2(tiledgenomesOHhetchunk, y)
+
+
+
+       [chi2valhom,pvalhom] = chi2(tiledgenomesOHhomchunk, y)
+   
 
 def pcaComponents(tiledgenomes,varvals,n):  
     #calculate top n PCA from one-hot encoded tiled genomes
