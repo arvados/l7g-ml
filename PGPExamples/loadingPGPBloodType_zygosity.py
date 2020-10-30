@@ -69,13 +69,27 @@ idxOP = idxOP[0:n:2]
 # Calculate OH Representation, Filtered using Pearson Chi2
 [Xtrain, pathdataOH, varvals, idxOPOH] = tileutils.chiZygosity(Xtrain,pathdataOH,idxOPOH,varvals,y,5,.02)
 
+print(Xtrain.shape)
+print(pathdataOH.shape)
+print(varvals.shape)
+print(idxOPOH.shape)
+
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
-XtrainPCA = csr_matrix(XtrainPCA)
-Xtrain = hstack([Xtrain,XtrainPCA],format='csr')
+tiledPCA = csr_matrix(tiledPCA)
+print(tiledPCA.shape)
+Xtrain = hstack([Xtrain,tiledPCA],format='csr')
+print(Xtrain.shape)
+
+[Xr,Xc] = Xtrain.nonzero()
+print(Xr.shape)
+Xtrain = Xtrain.data
+print(Xtrain.shape)
 
 # Save Final Outputs
 np.save('y.npy', y)
 np.save('pathdataOH.npy', pathdataOH)
 np.save('oldpath.npy', idxOPOH)
 np.save('varvals.npy', varvals)
-scipy.sparse.save_npz("X.npz", Xtrain)
+np.save("X.npy", Xtrain)
+np.save("Xr.npy", Xr)
+np.save("Xc.npy", Xc)

@@ -67,12 +67,20 @@ tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,20)
 [Xtrain, pathdataOH, varvals, idxOPOH] = tileutils.chiPhased(Xtrain,pathdataOH,idxOPOH,varvals,y,5,.02)
 
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
-XtrainPCA = csr_matrix(XtrainPCA)
-Xtrain = hstack([Xtrain,XtrainPCA],format='csr')
+tiledPCA = csr_matrix(tiledPCA)
+Xtrain = hstack([Xtrain,tileldPCA],format='csr')
+
+[Xr,Xc] = Xtrain.nonzero()
+print(Xr.shape)
+Xtrain = Xtrain.data
+print(Xtrain.shape)
 
 # Save Final Outputs
 np.save('y.npy', y)
 np.save('pathdataOH.npy', pathdataOH)
 np.save('oldpath.npy', idxOPOH)
 np.save('varvals.npy', varvals)
-scipy.sparse.save_npz("X.npz", Xtrain)
+np.save("X.npy", Xtrain)
+np.save("Xr.npy", Xr)
+np.save("Xc.npy", Xc)
+
