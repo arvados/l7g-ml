@@ -1,0 +1,8 @@
+get_data_file:
+  class: File
+  path: ../src/gettingblooddataAll2New.py
+dbfile:
+  class: File
+  path: /data-sdd/cwl_tiling/datafiles/untap.db
+colorblood: Rh 
+type_measure: class
