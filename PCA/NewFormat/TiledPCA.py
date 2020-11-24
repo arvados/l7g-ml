@@ -41,8 +41,6 @@ Xtrain[idxN2] = 0
 
 [m,n] = Xtrain.shape
 
-print(Xtrain.shape)
-
 # Placeholder for Locations of Tiles
 pathdata = np.zeros(n) 
 idxOP = np.arange(Xtrain.shape[1])
@@ -50,28 +48,20 @@ idxOP = np.arange(Xtrain.shape[1])
 # Quality Cutoff 100% for PCA
 [XtrainPCA, pathdataPCA, idxOPPCA] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,1)
 
-print(Xtrain.shape)
-print(XtrainPCA.shape)
-print(np.nanmax(XtrainPCA,axis=0).shape)
-
+# Removing Locations With Over 20 Tile Variants
 idxMax = np.nanmax(XtrainPCA,axis=0) <= 20
 XtrainPCA = XtrainPCA[:,idxMax]
 pathdataPCA = pathdataPCA[idxMax]
 idxOPPCA = idxOPPCA[idxMax]
 
+# This is just a hack for now to test memory (taking ~1/2 the data)
 XtrainPCA = XtrainPCA[:,:5000000]
 pathdataPCA = pathdataPCA[:5000000]
 idxOPPCA = idxOPPCA[:5000000]
 
-print(XtrainPCA.shape)
-print(pathdataPCA.shape)
-print(idxOPPCA.shape)
-
 # Calculate Top 3 PCA Components
 [__, __, varvalsPCA]= tileutils.findTileVars(XtrainPCA,pathdataPCA,idxOPPCA)
 tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,3)
-
-print(tiledPCA.shape)
 
 plt.figure
 plt.scatter(tiledPCA[:,0],tiledPCA[:,1])
