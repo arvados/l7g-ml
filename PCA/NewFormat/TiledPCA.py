@@ -39,17 +39,15 @@ idxN2 = Xtrain == 1
 Xtrain[idxN1] = 1
 Xtrain[idxN2] = 0
 
-# Randomize Phases
-#Xtrain = tileutils.randomizePhase(Xtrain)
 [m,n] = Xtrain.shape
 
 print(Xtrain.shape)
 
-# Placeholder for Names of Tiles
+# Placeholder for Locations of Tiles
 pathdata = np.zeros(n) 
 idxOP = np.arange(Xtrain.shape[1])
 
-# Quality Cutoff 99% for PCA
+# Quality Cutoff 100% for PCA
 [XtrainPCA, pathdataPCA, idxOPPCA] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,1)
 
 print(Xtrain.shape)
@@ -69,7 +67,6 @@ print(XtrainPCA.shape)
 print(pathdataPCA.shape)
 print(idxOPPCA.shape)
 
-#quit()
 # Calculate Top 3 PCA Components
 [__, __, varvalsPCA]= tileutils.findTileVars(XtrainPCA,pathdataPCA,idxOPPCA)
 tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,3)
@@ -78,4 +75,4 @@ print(tiledPCA.shape)
 
 plt.figure
 plt.scatter(tiledPCA[:,0],tiledPCA[:,1])
-plt.savefig("test.png",format='png')
+plt.savefig("testPCA.png",format='png')
