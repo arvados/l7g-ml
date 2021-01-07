@@ -1,0 +1,1 @@
+ python loadingPGPBloodType_zygosity.py ../../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../../keep/by_id/1095421d8a544e48d0a1a6ff4641510b+9891/matrix.npy ../../keep/by_id/1095421d8a544e48d0a1a6ff4641510b+9891/labels.csv A > glm.output 2> glm.error &
