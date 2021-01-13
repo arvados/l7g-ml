@@ -3,7 +3,7 @@ Examples on how to do machine learning with tiled data using public data (from P
 Data available here:
 
 Explaination of Data Formats:
-* 
+*TileDataFormat.md 
 
 Genomes using GrCh37: 
 * Link for Download: https://su92l-4zz18-eheqmei0wm6k9e9.collections.su92l.arvadosapi.com/t=35g3tu8lo4hcgp1b11bjwaw22hw5ufks2oumv71v1gciw52aso/_/
