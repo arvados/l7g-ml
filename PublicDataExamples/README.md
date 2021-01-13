@@ -1,6 +1,6 @@
-<h1>Public Tiled Data Analysis Examples<h1>   
+<h1>Public Tiled Data Analysis Examples</h1>   
 
-**Tiled Public Data**
+<h2>Tiled Public Data</h2>
 
 Explaination of Data Formats:
 * In this repo: TileDataFormat.md 
@@ -30,7 +30,7 @@ PGP Database:
 * sqlite database of PGP data, can use for getting phenotype informations
 * Location: https://collections.su92l.arvadosapi.com/c=9070d59896b003686089a25e79aba3b5-3558/_/html/index.html?disposition=inline
 
-**Analysis Examples**
+<h2>Analysis Exampls</h2>
 
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
 
