@@ -52,3 +52,8 @@ PGP Database:
 * Rscript ../GLM/src/ X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
 
 <h3>PCA Example</h3>
+
+* Uses Simons or 1K Genomes Data
+* Will create a PCA for input data 
+* Step 1: Calculate PCA
+* Step 2: Plot PCA
