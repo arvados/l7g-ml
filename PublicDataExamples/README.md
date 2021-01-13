@@ -39,6 +39,8 @@ PGP Database:
 
 <h3>Classification Example</h3>
 
+* Uses Harvard PGP Data
+
 * Step 1: Processing/Filtering Data for Model</li>
 
 * Will create filtered 1-hot encoded X data and corresponding y data you can use for your modeling work (for a given Blood Type) where in the X matrix each tile variant is represented by 2 columns: if the tile variant is present in 1 (1st column) or 2 (2nd column) phases at that tile location.</li>
