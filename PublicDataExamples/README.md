@@ -27,8 +27,8 @@ Tile Library:
 
 PGP Database:
 * sqlite database of PGP data, can use for getting phenotype informations
-* Location: 
-https://collections.su92l.arvadosapi.com/c=9070d59896b003686089a25e79aba3b5-3558/_/html/index.html?disposition=inline
+* Location: https://collections.su92l.arvadosapi.com/c=9070d59896b003686089a25e79aba3b5-3558/_/html/index.html?disposition=inline
+
 **Analysis Examples**
 
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
