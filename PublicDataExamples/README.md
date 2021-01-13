@@ -18,7 +18,8 @@ Full Set of 1K Genomes with reference GrCh38:
 * Includes:  Newly recalled 1000 Genomes using GrCh38 (broken into 2 sets for memory considerations)
 
 Genomes with reference  hg19:
-* Includes:  Harvard PGP (Ilumina), PGP Canada 
+* Link for Download: https://su92l-4zz18-16ntyiehb807lrt.collections.su92l.arvadosapi.com/t=5387c6s20nzxs0rlu3xxcfco1gky8bi0qeyxv7fccq2zdr3aag/_/
+* Includes: Harvard PGP, PGP Canada 
 
 Tile Library:
 * Full Tile Library for all public genomes that were tiled, recommend only downloading when necessary and/or getting access to cluster and running on collection directly
@@ -28,6 +29,7 @@ Tile Library:
 
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
 
+* Using python libaries for working with Tiled Data located in https://github.com/arvados/l7g-ml/blob/master/tileml/tileutils.py and https://github.com/arvados/l7g-ml/blob/master/pgpml/pgputils.py 
 * Example Calls Below:
 
 ** Processing/Filtering Data for Model
