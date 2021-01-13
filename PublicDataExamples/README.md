@@ -30,22 +30,17 @@ PGP Database:
 * sqlite database of PGP data, can use for getting phenotype informations
 * Location: https://collections.su92l.arvadosapi.com/c=9070d59896b003686089a25e79aba3b5-3558/_/html/index.html?disposition=inline
 
-<h2>Analysis Exampls</h2>
+<h2>Analysis Examples</h2>
 
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
 
 * Using python libaries for working with Tiled Data located in https://github.com/arvados/l7g-ml/blob/master/tileml/tileutils.py and https://github.com/arvados/l7g-ml/blob/master/pgpml/pgputils.py 
 
-<li> Classification Example:
-<ul>
-<li>Step 1: Processing/Filtering Data for Model</li>
-<li> Will create filtered 1-hot encoded X data and corresponding y data you can use for your modeling work (for a given Blood Type) where in the X matrix each tile variant is represented by 2 columns: if the tile variant is present in 1 (1st column) or 2 (2nd column) phases at that tile location.</li>
-<li> python loadingPGPBloodType_zygosity.py pgpdatabase.db tiledata.npy pathdata.npy allnames.txt A</li>
-</ul>
-</li>
+<h3>Classification Example</h3>
+* Step 1: Processing/Filtering Data for Model</li>
+* Will create filtered 1-hot encoded X data and corresponding y data you can use for your modeling work (for a given Blood Type) where in the X matrix each tile variant is represented by 2 columns: if the tile variant is present in 1 (1st column) or 2 (2nd column) phases at that tile location.</li>
+* python loadingPGPBloodType_zygosity.py pgpdatabase.db tiledata.npy pathdata.npy allnames.txt A
 
-** Running Modeling 
-
-Will create a GLM model using Adaptive Lasso Regularization X and y data (X data is sparse matrix so given as values and row and column coordinates). Output will be non-zero coefficents and tile location information for "choosen tiles" that correspond to those non-zero coefficents for minimum and std of given metric and related plots 
-
-Rscript ../GLM/src/ X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
+* Step2: Running Modeling 
+* Will create a GLM model using Adaptive Lasso Regularization X and y data (X data is sparse matrix so given as values and row and column coordinates). Output will be non-zero coefficents and tile location information for "choosen tiles" that correspond to those non-zero coefficents for minimum and std of given metric and related plots
+* Rscript ../GLM/src/ X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
