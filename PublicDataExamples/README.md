@@ -15,6 +15,7 @@ Genomes with reference GrCh38:
 * Includes: Subset of 1K Genomes for testing, UK PGP 
 
 Full Set of 1K Genomes with reference GrCh38:
+* Link for Download (set1): https://su92l-4zz18-ex19fny5l1vmdw9.collections.su92l.arvadosapi.com/t=clwmbdk8vlt93zw304s413wfg928fgryzivlz2ga6g14f91rf/_/
 * Link for Download (set2): https://su92l-4zz18-k1txafpxx1f3c6a.collections.su92l.arvadosapi.com/t=242pijuhbgiiu8rxbfuxrjfroolnqhwtfrxs6gam8w1elux51u/_/
 * Includes:  Newly recalled 1000 Genomes using GrCh38 (broken into 2 sets for memory considerations)
 
@@ -23,8 +24,8 @@ Genomes with reference hg19:
 * Includes: Harvard PGP, PGP Canada 
 
 Tile Library:
-* Full Tile Library for all public genomes that were tiled, recommend only downloading when necessary and/or getting access to cluster and running on collection directly
-* https://su92l-4zz18-4lgzarfnuefpm4j.collections.su92l.arvadosapi.com/t=faw6d0cuxkymq23m94m4lz0lrbdoscq0giuc5td0owe7oae1v/_/ 
+* Full Tile Library for all public genomes that were tiled, recommend only downloading when necessary and/or getting access to cluster and running on collection directly (~115 GB)
+* https://su92l-4zz18-4g601pj0w917v3s.collections.su92l.arvadosapi.com/t=3cgpa03bn3wo9sjiz5e9o5nd2scz4daor4q2zodrt5ytgdzc8r/_/ 
 
 PGP Database:
 * sqlite database of PGP data, can use for getting phenotype informations
