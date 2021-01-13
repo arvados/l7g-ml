@@ -1,5 +1,20 @@
 Examples on how to do machine learning with tiled data using public data (from PPGP, 1000 Genomes, etc)  
 
+Data available here:
+Genomes using GrCh37: "https://su92l-4zz18-eheqmei0wm6k9e9.collections.su92l.arvadosapi.com/t=35g3tu8lo4hcgp1b11bjwaw22hw5ufks2oumv71v1gciw52aso/_/"
+    
+Includes: Harvard PGP (CGI), Simons Diversity, and 1000 Genomes (old CGI)
+
+Genomes using GrCh38:
+Includes: 
+
+1000 Genomes using GrCh38:
+Includes:  Newly recalled 1000 Genomes using GrCh38 (broken into 2 sets for memory considerations)
+
+Genomes using hg19:
+
+Tile Library:
+
 
 For PCA Examples:
 
