@@ -1,30 +1,30 @@
 Examples on how to do machine learning with tiled data using public data (from PPGP, 1000 Genomes, etc)  
 
-Data available here:
+**Tiled Public Data**
 
 Explaination of Data Formats:
 * In this repo: TileDataFormat.md 
 * https://github.com/arvados/l7g-ml/blob/master/PublicDataExamples/TileDataFormat.md
 
-Genomes using GrCh37: 
+Genomes with reference GrCh37: 
 * Link for Download: https://su92l-4zz18-eheqmei0wm6k9e9.collections.su92l.arvadosapi.com/t=35g3tu8lo4hcgp1b11bjwaw22hw5ufks2oumv71v1gciw52aso/_/
-* Includes: Harvard PGP (CGI), Simons Diversity, and 1000 Genomes (old CGI)
+* Includes: Harvard PGP (CGI), Simons Diversity, and 1K Genomes (old CGI)
 
-Genomes using GrCh38:
+Genomes with reference GrCh38:
 * Link for Download: https://su92l-4zz18-7ld2fd87dgi8gr1.collections.su92l.arvadosapi.com/t=5nplveba410soklxc5ndausxw31gjemx3bcgddot06ch6l3amx/_/
 * Includes: Subset of 1K Genomes for testing, UK PGP 
 
-Full Set of 1000 Genomes using GrCh38:
+Full Set of 1K Genomes with reference GrCh38:
 * Includes:  Newly recalled 1000 Genomes using GrCh38 (broken into 2 sets for memory considerations)
 
-Genomes using hg19:
-* Includes:  Harvard PGP (Ilumina) 
+Genomes with reference  hg19:
+* Includes:  Harvard PGP (Ilumina), PGP Canada 
 
 Tile Library:
 * Full Tile Library for all public genomes that were tiled, recommend only downloading when necessary and/or getting access to cluster and running on collection directly
 * https://su92l-4zz18-4lgzarfnuefpm4j.collections.su92l.arvadosapi.com/t=faw6d0cuxkymq23m94m4lz0lrbdoscq0giuc5td0owe7oae1v/_/ 
 
-Analysis Examples:
+**Analysis Examples**
 
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
 
