@@ -1,4 +1,4 @@
-Examples on how to do machine learning with tiled data using public data (from PPGP, 1000 Genomes, etc)  
+#Public Tiled Data Analysis Examples#   
 
 **Tiled Public Data**
 
@@ -15,9 +15,10 @@ Genomes with reference GrCh38:
 * Includes: Subset of 1K Genomes for testing, UK PGP 
 
 Full Set of 1K Genomes with reference GrCh38:
+* Link for Download (set2): https://su92l-4zz18-k1txafpxx1f3c6a.collections.su92l.arvadosapi.com/t=242pijuhbgiiu8rxbfuxrjfroolnqhwtfrxs6gam8w1elux51u/_/
 * Includes:  Newly recalled 1000 Genomes using GrCh38 (broken into 2 sets for memory considerations)
 
-Genomes with reference  hg19:
+Genomes with reference hg19:
 * Link for Download: https://su92l-4zz18-16ntyiehb807lrt.collections.su92l.arvadosapi.com/t=5387c6s20nzxs0rlu3xxcfco1gky8bi0qeyxv7fccq2zdr3aag/_/
 * Includes: Harvard PGP, PGP Canada 
 
