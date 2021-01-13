@@ -25,6 +25,10 @@ Tile Library:
 * Full Tile Library for all public genomes that were tiled, recommend only downloading when necessary and/or getting access to cluster and running on collection directly
 * https://su92l-4zz18-4lgzarfnuefpm4j.collections.su92l.arvadosapi.com/t=faw6d0cuxkymq23m94m4lz0lrbdoscq0giuc5td0owe7oae1v/_/ 
 
+PGP Database:
+* sqlite database of PGP data, can use for getting phenotype informations
+* Location: 
+https://collections.su92l.arvadosapi.com/c=9070d59896b003686089a25e79aba3b5-3558/_/html/index.html?disposition=inline
 **Analysis Examples**
 
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
