@@ -3,7 +3,7 @@ Examples on how to do machine learning with tiled data using public data (from P
 Data available here:
 
 Explaination of Data Formats:
-*TileDataFormat.md 
+* TileDataFormat.md 
 
 Genomes using GrCh37: 
 * Link for Download: https://su92l-4zz18-eheqmei0wm6k9e9.collections.su92l.arvadosapi.com/t=35g3tu8lo4hcgp1b11bjwaw22hw5ufks2oumv71v1gciw52aso/_/
@@ -20,7 +20,8 @@ Genomes using hg19:
 * Includes:  Harvard PGP (Ilumina) 
 
 Tile Library:
-* 
+* Full Tile Library for all public genomes that were tiled, recommend only downloading when necessary and/or getting access to cluster and running on collection directly
+* https://su92l-4zz18-4lgzarfnuefpm4j.collections.su92l.arvadosapi.com/t=faw6d0cuxkymq23m94m4lz0lrbdoscq0giuc5td0owe7oae1v/_/ 
 
 Analysis Examples:
 
