@@ -37,10 +37,15 @@ PGP Database:
 * Using python libaries for working with Tiled Data located in https://github.com/arvados/l7g-ml/blob/master/tileml/tileutils.py and https://github.com/arvados/l7g-ml/blob/master/pgpml/pgputils.py 
 
 <h3>Classification Example</h3>
+
 * Step 1: Processing/Filtering Data for Model</li>
+
 * Will create filtered 1-hot encoded X data and corresponding y data you can use for your modeling work (for a given Blood Type) where in the X matrix each tile variant is represented by 2 columns: if the tile variant is present in 1 (1st column) or 2 (2nd column) phases at that tile location.</li>
+
 * python loadingPGPBloodType_zygosity.py pgpdatabase.db tiledata.npy pathdata.npy allnames.txt A
 
-* Step2: Running Modeling 
+* Step 2: Running Modeling 
 * Will create a GLM model using Adaptive Lasso Regularization X and y data (X data is sparse matrix so given as values and row and column coordinates). Output will be non-zero coefficents and tile location information for "choosen tiles" that correspond to those non-zero coefficents for minimum and std of given metric and related plots
 * Rscript ../GLM/src/ X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
+
+<h3>PCA Example</h3>
