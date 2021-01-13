@@ -35,13 +35,14 @@ PGP Database:
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
 
 * Using python libaries for working with Tiled Data located in https://github.com/arvados/l7g-ml/blob/master/tileml/tileutils.py and https://github.com/arvados/l7g-ml/blob/master/pgpml/pgputils.py 
-* Example Calls Below:
 
-** Processing/Filtering Data for Model
-
-Will create filtered 1-hot encoded X data and corresponding y data you can use for your modeling work (for a given Blood Type) where in the X matrix each tile variant is represented by 2 columns: if the tile variant is present in 1 (1st column) or 2 (2nd column) phases at that tile location. 
-
-python loadingPGPBloodType_zygosity.py pgpdatabase.db tiledata.npy pathdata.npy allnames.txt A
+<li> Classification Example:
+<ul>
+<li>Step 1: Processing/Filtering Data for Model</li>
+<li> Will create filtered 1-hot encoded X data and corresponding y data you can use for your modeling work (for a given Blood Type) where in the X matrix each tile variant is represented by 2 columns: if the tile variant is present in 1 (1st column) or 2 (2nd column) phases at that tile location.</li>
+<li> python loadingPGPBloodType_zygosity.py pgpdatabase.db tiledata.npy pathdata.npy allnames.txt A</li>
+</ul>
+</li>
 
 ** Running Modeling 
 
