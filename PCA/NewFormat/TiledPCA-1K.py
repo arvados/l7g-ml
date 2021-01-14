@@ -28,10 +28,9 @@ namesfile =  "/keep/by_id/su92l-4zz18-e1m1crjllotn2mm/labels.csv"
 # Load Tile Data
 Xtrain = np.load(allfile)
 
-idxN1 = Xtrain >= 0
-idxN2 = Xtrain <= -1 
-Xtrain[idxN1] = Xtrain[idxN1] + 1
-Xtrain[idxN2] = 0
+Xtrain = Xtrain + 1
+idxN1  = Xtrain <= 0 
+Xtrain[idxN1] = 0
 
 # Low Quality Represented by -Variant 
 # Skipped Tiles Represented by 0 
