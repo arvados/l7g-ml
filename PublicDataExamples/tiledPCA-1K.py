@@ -23,14 +23,16 @@ import tileutils as tileutils
 import pgputils as pgputils
 
 allfile = sys.argv[1]
-infofile = sys.arv[2]
+infofile = sys.argv[2]
 namesfile = sys.argv[3]
 ancestryfile = sys.argv[4]
 
 # Load Tile Data
 Xtrain = np.load(allfile)
-Xtrain= Xtrain + 2 
-# Shift to 0 being Low Quality and 1 being Skipped Tiles
+#Xtrain = Xtrain[:200,:]
+Xtrain += Xtrain  
+Xtrain += Xtrain # This will do this in-place and avoid making a copy
+# Shift to 0 being Low Quality and 1 being Skipped Tiles by Adding 2
 
 [m,n] = Xtrain.shape
 pathdata = np.load(infofile)
@@ -40,6 +42,8 @@ idxOP = np.arange(Xtrain.shape[1])
 
 # Quality Cutoff 100% for PCA
 [XtrainPCA, pathdataPCA, idxOPPCA] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,1)
+
+del Xtrain
 
 # Removing Locations With Over 20 Tile Variants
 idxMax = np.nanmax(XtrainPCA,axis=0) <= 20
@@ -52,17 +56,16 @@ idxOPPCA = idxOPPCA[idxMax]
 tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,3)
 np.save("tiledPCA.npy", tiledPCA)
 
-# Loading in Names of Samples
-names_file = open(namesfile, 'r')
-names = []
-for line in names_file:
-    names.append(line[:-1])
+names = np.load(namesfile)
+myfuncdecode = lambda x: x.decode("utf-8")
+names = np.vectorize(myfuncdecode)(names)
+names = names.tolist()
 
 cleannames = pgputils.pgpCleanNames(names)
 pcaNames = pd.DataFrame(np.column_stack([cleannames, names]),columns=['ID','Filename'])
 
 # Setting Up Colors Based On Geographic Ancestries
-ancestry1k = pd.read_csv(ancestryfile,sep='\t')
+ancestry1k = pd.read_csv('igsr_samples.tsv',sep='\t')
 ancestry1k = ancestry1k.rename(columns={'Sample name': 'Sample', 'Population code': 'Population'})
 ancestryMap = ancestry1k[['Sample','Population']]
 ancestryMap['DataSource'] = '1K'
@@ -71,7 +74,7 @@ ancestryMap['Region'] = ancestry1k.Population
 ancestries = ancestryMap[['ID','Region','DataSource']]
 
 z = pcaNames.merge(ancestries, how='left', on='ID')
-z.Region.unique()
+
 z['Color'] = 'black'
 idxAmerica1k = z['Region'].isin(['PUR', 'CLM','MXL','PEL'])
 idxEurope1k = z['Region'].isin(['TSI','IBS','CEU','GBR','FIN'])

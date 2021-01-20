@@ -37,6 +37,8 @@ Ancestry File for 1000 Genomes Samples:
 
 <h2>Analysis Examples</h2>
 
+Note these examples do require a reasonably large amount of memory.  I have verified they can run on a linux machine with 128 GiB of RAM. They may require ~1 hr to run depending on your system.
+
 * Run using docker container created using dockerfile found here: l7g-ml/GLM/Dockerfile  
 
 * Using python libaries for working with Tiled Data located in https://github.com/arvados/l7g-ml/blob/master/tileml/tileutils.py and https://github.com/arvados/l7g-ml/blob/master/pgpml/pgputils.py 
@@ -57,7 +59,6 @@ Ancestry File for 1000 Genomes Samples:
 
 <h3>PCA Example</h3>
 
-* Uses Simons or 1K Genomes Data
+* Uses 1000 Genomes Data
 * Will create a PCA for input data 
-* Step 1: Calculate PCA
-* Step 2: Plot PCA
+* python  
