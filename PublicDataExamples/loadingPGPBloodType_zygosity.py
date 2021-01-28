@@ -32,13 +32,13 @@ Xtrain = np.load(allfile)
 # Add +2 so low quality tiles are represented by 0
 Xtrain += 2 
 pathdata = np.load(infofile)
-names_file = open(namesfile, 'r') 
-names = []
-for line in names_file:
-    names.append(line[:-1])
+
+df = pd.read_csv(namesfile, names=header_list)
+names = df["names"].tolist()
 
 # Clean Names to get HUID
 names = pgputils.pgpCleanNames(names)
+print(names)
 
 # Match tiled genomes with y values by HUID
 [Xtrain,y] = tileutils.syncTiles(dataBloodType,Xtrain,names)
@@ -58,6 +58,11 @@ tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,20)
 
 # Reshaping Matrix to Combine Phases  
 [m,n] = Xtrain.shape
+test = np.equal(Xtrain[:,0:n:2],Xtrain[:,1:n:2])
+print(test)
+count = np.count_nonzero(test)
+print(count)
+quit()
 Xtrain = np.concatenate((Xtrain[:,0:n:2], Xtrain[:,1:n:2]),axis=0)
 pathdata = pathdata[0:n:2]
 idxOP = idxOP[0:n:2]

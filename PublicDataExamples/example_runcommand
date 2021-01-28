@@ -1,1 +1,5 @@
+python TiledPCA-1K.py ../keep/by_id/5006c9ebce3f46f2fa669c6462763edb+54971/all-GrCh38_1K_set1 ../keep/by_id/5006c9ebce3f46f2fa669c6462763edb+54971/all-info-GrCh38_1K_set1 ../keep/by_id/5006c9ebce3f46f2fa669c6462763edb+54971/names-GrCh38_1K_set1 ../PCA/NewFormat/igsr_samples.tsv
+
+python tiledPCA-1K.py ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/all-GrCh38_1k_set2 ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/all-info-GrCh38_1K_set2 ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/names-GrCh38_1K_set2 ../PCA/NewFormat/igsr_samples.tsv
+
 python PGPBloodTypeGLM_zygosity.py ../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/tiledataMerge.npy ../keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/pathdata.npy ../keep/by_id/3be2f1df678736f85a1ec6a8c3beb386+338/allnames.txt A > glm.output 2> glm.error &

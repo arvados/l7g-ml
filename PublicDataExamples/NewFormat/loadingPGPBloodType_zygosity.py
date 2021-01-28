@@ -1,4 +1,4 @@
-#/usr/bin/python
+# usr/bin/python
 
 import numpy as np
 import sqlite3
@@ -29,13 +29,17 @@ dataBloodType = pgputils.yloadBlood(ydatasource,bloodtype)
 
 # Load Tile Data
 Xtrain = np.load(allfile)
-print(Xtrain.shape)
+print(np.amax(Xtrain))
+print(np.amax(Xtrain,axis=0))
 
 # Low Quality Represented by -1 
 # Skipped Tiles Respresented by 0 
-idxNeg = Xtrain < 0
-Xtrain[idxNeg] = -1
-Xtrain = Xtrain + 1
+Xtrain += Xtrain  
+idxN1  = Xtrain <= 0
+Xtrain[idxN1] = 0
+
+print(np.amax(Xtrain))
+print(np.amax(Xtrain,axis=0))
 
 #pathdata = np.load(infofile)
 # Pathdata not available
@@ -44,12 +48,7 @@ Xtrain = Xtrain + 1
 # Placeholder for Locations of Tiles
 pathdata = np.zeros(n)
 
-#names_file = open(namesfile, 'r') 
-#names = []
-#for line in names_file:
-#    names.append(line[:-1])
-
-header_list = ["number","names"]
+header_list = ["number","names","outputname"]
 df = pd.read_csv(namesfile, names=header_list)
 names = df["names"].tolist()
 
@@ -74,6 +73,10 @@ tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,20)
 
 # Reshaping Matrix to Combine Phases  
 [m,n] = Xtrain.shape
+test = np.equal(Xtrain[:,0:n:2],Xtrain[:,1:n:2])
+print(test)
+count = np.count_nonzero(test)
+print(count)
 Xtrain = np.concatenate((Xtrain[:,0:n:2], Xtrain[:,1:n:2]),axis=0)
 pathdata = pathdata[0:n:2]
 idxOP = idxOP[0:n:2]
@@ -82,8 +85,20 @@ idxOP = idxOP[0:n:2]
 [Xtrain, pathdata, idxOP] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,0.90)
 [pathdataOH, idxOPOH, varvals]= tileutils.findTileVars(Xtrain,pathdata,idxOP)
 print(Xtrain.shape)
+print(varvals)
+idxvar = varvals > 2
+print(varvals[idxvar])
+
+quit()
 
 # Calculate OH Representation, Filtered using Pearson Chi2
+print("inputs to zygosity")
+print(Xtrain)
+print(pathdataOH)
+print(varvals)
+print(idxOPOH)
+print(y)
+# (tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
 [Xtrain, pathdataOH, varvals, idxOPOH] = tileutils.chiZygosity(Xtrain,pathdataOH,idxOPOH,varvals,y,5,.02)
 
 print(Xtrain.shape)
