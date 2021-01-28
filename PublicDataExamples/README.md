@@ -59,6 +59,7 @@ Note these examples do require a reasonably large amount of memory.  I have veri
 
 <h3>PCA Example</h3>
 
-* Uses 1000 Genomes Data
-* Will create a PCA for input data 
-* python  
+* This example was build to do the PCA of the 1000 Genomes Data
+* Will caclulate top 3 PCA components and plot them colored by geographic ancestry
+* python tiledPCA-1K.py all-GrCh38_1k_set1 all-info-GrCh38_1K_set2 names-GrCh38_1K_set2 igsr_samples.tsv
+* python tiledPCA-1K.py tileddata tileinfo samplenames geographicalancestryinfo
