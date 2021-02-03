@@ -1,1 +1,2 @@
-python PGPBloodTypeGLM_zygosity.py ../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/tiledataMerge.npy ../keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/pathdata.npy ../keep/by_id/3be2f1df678736f85a1ec6a8c3beb386+338/allnames.txt A > glm.output 2> glm.error &
+python loadingPGPBloodType_zygosity.py ../../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../../keep/by_id/aa62766bc155d371ca24915fb1fde6a7+11097/matrix.npy ../../keep/by_id/aa62766bc155d371ca24915fb1fde6a7+11097/labels.csv A > glm.output 2> glm.error &
+
