@@ -35,6 +35,11 @@ Ancestry File for 1000 Genomes Samples:
 * tsv indicating ancestries and other information about 1000 Genomes samples
 * Location: https://www.internationalgenome.org/data-portal/sample  (click Download List) 
 
+References (Assembly Files):
+* Assembly files are tiling specific files that map each tile location on a reference. 
+* hg38: https://su92l-4zz18-x6f2kzfo8ok5rir.collections.su92l.arvadosapi.com/t=4kqpr8b9avkremkw3sz667x3wi1uta9sm6krnq6rjzu1ck5jc/_/
+* GrCh37: https://su92l-4zz18-fpzdhvygctybb98.collections.su92l.arvadosapi.com/t=2wfv3ygsn8icpfpt02oclwbelxtdd8n9y0o551y6mxtanvpnm5/_/
+
 <h2>Analysis Examples</h2>
 
 Note these examples do require a reasonably large amount of memory.  I have verified they can run on a linux machine with 128 GiB of RAM. They may require ~1 hr to run depending on your system.
@@ -61,7 +66,7 @@ Note these examples do require a reasonably large amount of memory.  I have veri
 * Rscript ../GLM/src/glmnetAdaptive.r filteredtiles_nonzerovals filteredtiles_rows filteredtiles_columns classdata tileinfo oldtileinfo tilevariantvalues bloodtypeforclassification metricforglm
 
 * Step 3: Annotating Tile Variants
-* In the output files from Step2, you will get a path and step and variant for tiles with non-zero coefficents. You can use the following to look up these to get the corresponding HGVS annotation.  If a step and path is marked as NA, it means that it is a PCA component and not a tile. Note: For this you will need to use a different docker container.  The dockerfile located here: /l7g-ml/Dockerfiles/get_hgvs .  It will install everything including placing the needed python code in the usr/bin.  You will need to specify the reference you want to use. You can download hg38 here (need link).  You will also need the tile variant library. Note: If you can not store this library due to storage issues, please let me know and I can give you access to our Arvados cluster and you can access the data stored there directly without downloading.  
+* In the output files from Step2, you will get a path and step and variant for tiles with non-zero coefficents. You can use the following to look up these to get the corresponding HGVS annotation.  If a step and path is marked as NA, it means that it is a PCA component and not a tile. Note: For this you will need to use a different docker container.  The dockerfile located here: /l7g-ml/Dockerfiles/get_hgvs .  It will install everything including placing the needed python code in the usr/bin.   
 
 * python ./usr/bin/tilesearcher.py 0001.00.0000.00b+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz
 * python ./usr/bin/tilesearcher.py TILEID REF TILELIB ASSEMBLY
