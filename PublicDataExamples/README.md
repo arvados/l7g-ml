@@ -56,8 +56,13 @@ Note these examples do require a reasonably large amount of memory.  I have veri
 
 * Step 2: Running Modeling 
 * Will create a GLM model using Adaptive Lasso Regularization X and y data (X data is sparse matrix so given as values and row and column coordinates). Output will be non-zero coefficents and tile location information for "choosen tiles" that correspond to those non-zero coefficents for minimum and std of given metric and related plots
-* Rscript ../GLM/src/ X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
-* Rscript filteredtiles_nonzerovals filteredtiles_rows filteredtiles_columns classdata tileinfo oldtileinfo tilevariantvalues bloodtypeforclassification metricforglm
+* Rscript ../GLM/src/glmnetAdaptive.r X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
+* Rscript ../GLM/src/glmnetAdaptive.r filteredtiles_nonzerovals filteredtiles_rows filteredtiles_columns classdata tileinfo oldtileinfo tilevariantvalues bloodtypeforclassification metricforglm
+
+In the outputfiles, you will get a path and step and variant for tiles with non-zero coefficents.Use can use the following to look up these to get the corresponding HGVS annotation.  Note: For this you will need to use a different docker container.  It is located here: .  It will install everything including placing the needed python code in the usr/bin.  You will need to specify the reference you want to use. You can download hg38 here (need link).  You will also need the tile variant library (https://su92l-4zz18-4g601pj0w917v3s.collections.su92l.arvadosapi.com/t=3cgpa03bn3wo9sjiz5e9o5nd2scz4daor4q2zodrt5ytgdzc8r/_/).  If you can not store this library due to storage issues, please let me know and I can give you access to our Arvados cluster and you can access the data stored there directly without downloading.  
+
+* python ./usr/bin/tilesearcher.py 0001.00.0000.00b+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz
+* python ./usr/bin/tilesearcher.py TILEID REF TILELIB ASSEMBLY
 
 <h3>PCA Example</h3>
 
