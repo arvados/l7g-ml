@@ -32,7 +32,7 @@ Xtrain = np.load(allfile)
 
 # Low Quality Represented by -1 
 # Skipped Tiles Respresented by 0 
-Xtrain += Xtrain  
+Xtrain += 1 
 idxN1  = Xtrain <= 0
 Xtrain[idxN1] = 0
 

@@ -1,0 +1,16 @@
+../../tileml/tileutils.py:203: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhet = pvalhet <= pcutoff
+../../tileml/tileutils.py:208: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhom = pvalhom <= pcutoff
+../../tileml/tileutils.py:203: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhet = pvalhet <= pcutoff
+../../tileml/tileutils.py:208: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhom = pvalhom <= pcutoff
+../../tileml/tileutils.py:203: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhet = pvalhet <= pcutoff
+../../tileml/tileutils.py:208: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhom = pvalhom <= pcutoff
+../../tileml/tileutils.py:203: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhet = pvalhet <= pcutoff
+../../tileml/tileutils.py:208: RuntimeWarning: invalid value encountered in less_equal
+  pidxchunkhom = pvalhom <= pcutoff
