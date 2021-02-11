@@ -30,8 +30,8 @@ ancestryfile = sys.argv[4]
 # Load Tile Data
 Xtrain = np.load(allfile)
 #Xtrain = Xtrain[:200,:]
-Xtrain += Xtrain  
-Xtrain += Xtrain # This will do this in-place and avoid making a copy
+Xtrain += 2  
+# This will do this in-place and avoid making a copy
 # Shift to 0 being Low Quality and 1 being Skipped Tiles by Adding 2
 
 [m,n] = Xtrain.shape

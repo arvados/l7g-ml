@@ -10,8 +10,8 @@ import scipy.sparse
 from scipy.sparse import csr_matrix
 from scipy.sparse import hstack
 
-a = '/data-sdd/cwl_tiling/l7g-ml/tileml'
-b = '/data-sdd/cwl_tiling/l7g-ml/pgpml'
+a = '../tileml'
+b = '../pgpml'
 sys.path.insert(0, a)
 sys.path.insert(0, b)
 
@@ -30,21 +30,26 @@ dataBloodType = pgputils.yloadBlood(ydatasource,bloodtype)
 # Load Tile Data
 Xtrain = np.load(allfile)
 # Add +2 so low quality tiles are represented by 0
-Xtrain += 2 
+Xtrain += 2
+# Shift to 0 being Low Quality and 1 being Skipped Tiles by Adding 2
 pathdata = np.load(infofile)
 
-df = pd.read_csv(namesfile, names=header_list)
-names = df["names"].tolist()
+# Loading in samplenames
+names = np.load(namesfile)
+myfuncdecode = lambda x: x.decode("utf-8")
+names = np.vectorize(myfuncdecode)(names)
+names = names.tolist()
 
 # Clean Names to get HUID
 names = pgputils.pgpCleanNames(names)
-print(names)
 
 # Match tiled genomes with y values by HUID
 [Xtrain,y] = tileutils.syncTiles(dataBloodType,Xtrain,names)
 
 # Create Vector of Original Index of Tile Position
 idxOP = np.arange(Xtrain.shape[1])
+
+np.save('idxcheck.npy',idxOP)
 
 # Remove XYM Chromosomes
 [Xtrain,pathdata,idxOP]  = tileutils.removeXYM(Xtrain,pathdata,idxOP)
@@ -58,11 +63,6 @@ tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,20)
 
 # Reshaping Matrix to Combine Phases  
 [m,n] = Xtrain.shape
-test = np.equal(Xtrain[:,0:n:2],Xtrain[:,1:n:2])
-print(test)
-count = np.count_nonzero(test)
-print(count)
-quit()
 Xtrain = np.concatenate((Xtrain[:,0:n:2], Xtrain[:,1:n:2]),axis=0)
 pathdata = pathdata[0:n:2]
 idxOP = idxOP[0:n:2]
@@ -73,11 +73,6 @@ idxOP = idxOP[0:n:2]
 
 # Calculate OH Representation, Filtered using Pearson Chi2
 [Xtrain, pathdataOH, varvals, idxOPOH] = tileutils.chiZygosity(Xtrain,pathdataOH,idxOPOH,varvals,y,5,.02)
-
-print(Xtrain.shape)
-print(pathdataOH.shape)
-print(varvals.shape)
-print(idxOPOH.shape)
 
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
 tiledPCA = csr_matrix(tiledPCA)

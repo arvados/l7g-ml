@@ -2,6 +2,9 @@ python TiledPCA-1K.py ../keep/by_id/5006c9ebce3f46f2fa669c6462763edb+54971/all-G
 
 python tiledPCA-1K.py ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/all-GrCh38_1k_set2 ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/all-info-GrCh38_1K_set2 ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/names-GrCh38_1K_set2 ../PCA/NewFormat/igsr_samples.tsv
 
-python PGPBloodTypeGLM_zygosity.py ../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/tiledataMerge.npy ../keep/by_id/18155c8d6b821c36dd742b742c5abfc6+30849/pathdata.npy ../keep/by_id/3be2f1df678736f85a1ec6a8c3beb386+338/allnames.txt A > glm.output 2> glm.error &
+python loadingPGPBloodType_zygosity.py ../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../keep/by_id/9bd88ae60f51662f3761755a0e22d2bb+54381/all-human_g1k_v37 ../keep/by_id/9bd88ae60f51662f3761755a0e22d2bb+54381/all-info-human_g1k_v37 ../keep/by_id/9bd88ae60f51662f3761755a0e22d2bb+54381/names-human_g1k_v37 A > glm.output 2> glm.error &
 
 Rscript ../GLM/src/glmnetAdaptive.r X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
+
+python ./usr/bin/tilesearcher.py 0001.00.0000.00b+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz 
+
