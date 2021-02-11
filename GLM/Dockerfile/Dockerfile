@@ -9,11 +9,11 @@ RUN echo "deb http://cloud.r-project.org/bin/linux/debian buster-cran35/" > /etc
 RUN apt-get update && \
     apt-get -y install r-base r-cran-rcpp r-cran-data.table libapt-pkg-dev less \
       wget \
-      python-pip \
-      python-numpy \
-      python-scipy \
-      python-matplotlib \
-      python-pandas && \
+      python3-pip \
+      python3-numpy \
+      python3-scipy \
+      python3-matplotlib \
+      python3-pandas && \
     apt-get clean
 
 RUN R -e "install.packages('Matrix', repos = 'http://cran.us.r-project.org')"
@@ -22,6 +22,7 @@ RUN R -e "install.packages('reticulate', repos = 'http://cran.us.r-project.org')
 RUN R -e "install.packages('foreach', repos = 'http://cran.us.r-project.org')"
 #RUN R -e "install.packages('selectiveInference', repos = 'http://cran.us.r-project.org')"
 
-RUN pip install sklearn
-RUN pip install --upgrade scipy
-RUN pip install seaborn
+RUN pip3 install sklearn
+RUN pip3 install --upgrade scipy
+RUN pip3 install seaborn
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 2
