@@ -21,53 +21,21 @@ sys.path.insert(0, b)
 
 import tileutils as tileutils
 import pgputils as pgputils
+pcafile = "tiledPCA.npy" 
+namesfile =  "/keep/by_id/su92l-4zz18-e1m1crjllotn2mm/labels.csv"
 
-allfile = "/keep/by_id/su92l-4zz18-o3od9ili4ybuwx5/matrix.npy" 
-namesfile =  "/keep/by_id/su92l-4zz18-o3od9ili4ybuwx5/labels.csv"
-
-# Load Tile Data
-Xtrain = np.load(allfile)
-
-Xtrain = Xtrain + 1
-idxN1  = Xtrain <= 0 
-Xtrain[idxN1] = 0
-
-# Low Quality Represented by -Variant 
-# Skipped Tiles Represented by 0 
-# Shift to 0 being Low Quality and 1 being Skipped Tiles
-
-[m,n] = Xtrain.shape
-print(Xtrain.shape)
-
-# Placeholder for Locations of Tiles
-pathdata = np.zeros(n) 
-idxOP = np.arange(Xtrain.shape[1])
-
-print(Xtrain.shape)
-
-# Quality Cutoff 100% for PCA
-[XtrainPCA, pathdataPCA, idxOPPCA] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,1)
-
-print(XtrainPCA.shape)
-
-# Removing Locations With Over 20 Tile Variants
-idxMax = np.nanmax(XtrainPCA,axis=0) <= 20
-XtrainPCA = XtrainPCA[:,idxMax]
-pathdataPCA = pathdataPCA[idxMax]
-idxOPPCA = idxOPPCA[idxMax]
-
-# Calculate Top 3 PCA Components
-[__, __, varvalsPCA]= tileutils.findTileVars(XtrainPCA,pathdataPCA,idxOPPCA)
-tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,3)
+# Load PCA Data
+tiledPCA = np.load(pcafile)
 
 # Loading in Names of Samples
 
-np.save("tiledPCA.npy", tiledPCA)
 header_list = ["number","names","outputname"]
 df = pd.read_csv(namesfile, names=header_list)
 names = df["names"].tolist()
 
+print(names)
 cleannames = pgputils.pgpCleanNames(names)
+
 pcaNames = pd.DataFrame(np.column_stack([cleannames, names]),columns=['ID','Filename'])
 
 print(pcaNames)
@@ -104,4 +72,4 @@ xlabel="PCA Component 1"
 ylabel="PCA Component 2"
 plt.xlabel(xlabel)
 plt.ylabel(ylabel)
-plt.savefig("test1KPCA.png",format='png')                 
+plt.savefig("test1KPCA.png",format='png')
