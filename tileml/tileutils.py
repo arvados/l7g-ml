@@ -118,9 +118,9 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     for i in range(0,nparts-1):
        min_idx = idx[i]
        max_idx = idx[i+1]
-       enc = OneHotEncoder(sparse=True, dtype=np.uint16)
+       enc = OneHotEncoder(sparse=True)
        tiledgenomesOHchunk = enc.fit_transform(tiledgenomes[:,min_idx:max_idx])
-       [chi2val,pval] = chi2(tiledgenomesOHchunk, y)
+       [chi2val,pval] = chi2(tiledgenomesOHchunk.astype(numpy.float), y.astype(numpy.float))
        pidxchunk = pval <= pcutoff 
        tiledgenomesOHchunkfiltered = tiledgenomesOHchunk[:,pidxchunk]
        pidx = np.concatenate((pidx,pidxchunk),axis=0)
@@ -140,7 +140,6 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     to_keep = varvals > 2
     idkTK = np.nonzero(to_keep)
     idkTK = idkTK[0]
-
     tiledgenomesOH = tiledgenomesOH[:,idkTK]
     tileposOH = tileposOH[idkTK]
     varvals = varvals[idkTK]
@@ -156,10 +155,13 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     from scipy.sparse import hstack
     from sklearn.feature_selection import chi2
     from sklearn.preprocessing import OneHotEncoder
+    print('inside zygosity')
 
-    [m,n] = tiledgenomes.shape
-    m = m/2
-    idx = np.linspace(0,n,num=nparts).astype('int')
+    data_shape = tiledgenomes.shape
+    m = int(data_shape[0]/2)
+    n = int(data_shape[1]*2)
+    
+    idx = np.linspace(0,data_shape[1],num=nparts).astype('int')
     tiledgenomesOHhet = csr_matrix(np.empty([m, 0]))
     tiledgenomesOHhom = csr_matrix(np.empty([m, 0]))
     pidxhet = np.empty([0,],dtype='bool')
@@ -173,12 +175,12 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
        max_idx = idx[i+1]
        enc = OneHotEncoder(sparse=True, dtype=np.uint16)
        tiledgenomesOHchunk = enc.fit_transform(tiledgenomes[:,min_idx:max_idx])
-       tiledgenomesOHphasechunk = tiledgenomesOHchunk[0:m,:] + tiledgenomesOHchunk[m:2*m,:]
-
-       idx2 = tiledgenomesOHphasechunk >= 2
+       tiledgenomesOHphasechunk = tiledgenomesOHchunk[0:m,:] + tiledgenomesOHchunk[m:2*m,:] 
        datahom = tiledgenomesOHphasechunk.data
        [rhom,chom] = tiledgenomesOHphasechunk.nonzero()
+       idx2 = tiledgenomesOHphasechunk >=2
        idx3 = datahom == 2
+#       datahom[idx3] = 1
        datahom = datahom[idx3]
        rhom = rhom[idx3]
        chom = chom[idx3]
@@ -196,8 +198,7 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
 
        # creating sparse matrix 1-hot representation of where each tile variant is het
        tiledgenomesOHhetchunk = csr_matrix((datahet, (rhom, chom)), tiledgenomesOHphasechunk.shape)
-
-
+       
        [chi2valhet,pvalhet] = chi2(tiledgenomesOHhetchunk, y)
        pidxchunkhet = pvalhet <= pcutoff
        tiledgenomesOHhetchunkfiltered = tiledgenomesOHhetchunk[:,pidxchunkhet]
@@ -210,7 +211,7 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
 
        tiledgenomesOHhet = hstack([tiledgenomesOHhet,tiledgenomesOHhetchunkfiltered],format='csr')
        tiledgenomesOHhom = hstack([tiledgenomesOHhom,tiledgenomesOHhomchunkfiltered],format='csr')
-
+       
 
     tileposOHhet = tileposOH[pidxhet]
     varvalshet = varvals[pidxhet]
