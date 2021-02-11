@@ -49,9 +49,9 @@ type_measure <- args[9]
 
 #gamma = 2.0
 
-gammamin<-1.5
-gammastep<-.5
-gammamax<-8
+gammamin<-0.5
+gammastep<-0.5
+gammamax<-5
 
 gamma_seq<-seq(gammamin,gammamax,gammastep)
 nzero_seq<-rep(NA, length(gamma_seq)) 
@@ -80,8 +80,6 @@ for (j in gamma_seq){
    print(cvsdclass,digits=3) 
    print(cvmclass,digits=3)
    print(nzeroclass,digits=3)
-
-   nzero_seq[j]<-nzeroclass
 
    }
 
