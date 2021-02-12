@@ -1,0 +1,4 @@
+"nonnzerocoefs_min"	"tile_path_min"	"tile_step_min"	"oldpath_min"	"varvals_min"
+3.39999773982715	452	873	12087930	3
+2.10284845029519	452	905	12087994	3
+1.43857198787622	452	844	12087872	3
