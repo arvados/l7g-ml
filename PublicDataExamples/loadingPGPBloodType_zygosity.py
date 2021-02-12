@@ -49,8 +49,6 @@ names = pgputils.pgpCleanNames(names)
 # Create Vector of Original Index of Tile Position
 idxOP = np.arange(Xtrain.shape[1])
 
-np.save('idxcheck.npy',idxOP)
-
 # Remove XYM Chromosomes
 [Xtrain,pathdata,idxOP]  = tileutils.removeXYM(Xtrain,pathdata,idxOP)
 
@@ -76,14 +74,10 @@ idxOP = idxOP[0:n:2]
 
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
 tiledPCA = csr_matrix(tiledPCA)
-print(tiledPCA.shape)
 Xtrain = hstack([Xtrain,tiledPCA],format='csr')
-print(Xtrain.shape)
 
 [Xr,Xc] = Xtrain.nonzero()
-print(Xr.shape)
 Xtrain = Xtrain.data
-print(Xtrain.shape)
 
 # Save Final Outputs
 np.save('y.npy', y)

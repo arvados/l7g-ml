@@ -10,8 +10,8 @@ import scipy.sparse
 from scipy.sparse import csr_matrix
 from scipy.sparse import hstack
 
-a = '/data-sdd/cwl_tiling/l7g-ml/tileml'
-b = '/data-sdd/cwl_tiling/l7g-ml/pgpml'
+a = '../tileml'
+b = '../pgpml'
 sys.path.insert(0, a)
 sys.path.insert(0, b)
 
@@ -32,10 +32,11 @@ Xtrain = np.load(allfile)
 # Add +2 so low quality tiles are represented by 0
 Xtrain += 2 
 pathdata = np.load(infofile)
-names_file = open(namesfile, 'r') 
-names = []
-for line in names_file:
-    names.append(line[:-1])
+
+names = np.load(namesfile)
+myfuncdecode = lambda x: x.decode("utf-8")
+names = np.vectorize(myfuncdecode)(names)
+names = names.tolist()
 
 # Clean Names to get HUID
 names = pgputils.pgpCleanNames(names)
@@ -68,12 +69,10 @@ tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,20)
 
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
 tiledPCA = csr_matrix(tiledPCA)
-Xtrain = hstack([Xtrain,tileldPCA],format='csr')
+Xtrain = hstack([Xtrain,tiledPCA],format='csr')
 
 [Xr,Xc] = Xtrain.nonzero()
-print(Xr.shape)
 Xtrain = Xtrain.data
-print(Xtrain.shape)
 
 # Save Final Outputs
 np.save('y.npy', y)
@@ -83,4 +82,3 @@ np.save('varvals.npy', varvals)
 np.save("X.npy", Xtrain)
 np.save("Xr.npy", Xr)
 np.save("Xc.npy", Xc)
-
