@@ -56,26 +56,24 @@ w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999
 
 # Adaptive Lasso
 set.seed(999)
-cv.lasso.auc <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='auc', penalty.factor=w3)
 
-cv.lasso.class <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3)
-plotname_class <- paste0('glmnet_lasso_',colorblood,'_class.png')
-png(plotname_class)
-plot(cv.lasso.class)
+cv.lasso.adaptive <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure=type_measure, penalty.factor=w3)
+
+#cv.lasso.auc <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='auc', penalty.factor=w3)
+
+#cv.lasso.class <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3)
+
+plotname_adaptive <- paste0('glmnet_lasso_',colorblood,'_',type_measure,'.png')
+png(plotname_adaptive)
+plot(cv.lasso.adaptive)
 dev.off()
 
-plotname <- paste0('glmnet_lasso_',colorblood,'_auc','.png')
-png(plotname)
-plot(cv.lasso.auc)
-dev.off()
-
-coefVec <- coef(cv.lasso.class, s= "lambda.min")
+coefVec <- coef(cv.lasso.adaptive, s= "lambda.min")
 coefVec <- coefVec[-1]
 idxnzmin <- which(coefVec !=0)
-sizeCoefMin <- length(coef(cv.lasso.class,s="lambda.min"))
+sizeCoefMin <- length(coef(cv.lasso.adaptive,s="lambda.min"))
 nznumbmin <- coefVec[idxnzmin]
 coefPathsMin <- pathdataOH[idxnzmin]
-
 
 # Calculate Path, Step and Phase related to non-zero coefficents 
 tile_path <- as.vector(np$trunc(coefPathsMin/(16**5)))
@@ -94,7 +92,7 @@ dataF_min <- dataF_min[o,]
 write.table(dataF_min, fileConn, sep= "\t", row.names = FALSE)
 close(fileConn)
 
-coefVse <- coef(cv.lasso.class, s="lambda.1se")
+coefVse <- coef(cv.lasso.adaptive, s="lambda.1se")
 coefVse <- coefVse[-1]
 
 idxnzse <- which(coefVse !=0)
