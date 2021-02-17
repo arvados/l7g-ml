@@ -1,0 +1,129 @@
+(1110, 21308286)
+                  ID Region DataSource
+0            HG00171    FIN         1K
+1            HG00176    FIN         1K
+2            HG00183    FIN         1K
+3            HG00188    FIN         1K
+4            HG00190    FIN         1K
+5            HG00234    GBR         1K
+6            HG00239    GBR         1K
+7            HG00121    GBR         1K
+8            HG00126    GBR         1K
+9            HG00133    GBR         1K
+10           HG00138    GBR         1K
+11           HG00102    GBR         1K
+12           HG00107    GBR         1K
+13           HG00114    GBR         1K
+14           HG00119    GBR         1K
+15           HG00246    GBR         1K
+16           HG00253    GBR         1K
+17           HG00258    GBR         1K
+18           HG00260    GBR         1K
+19           HG00140    GBR         1K
+20           HG00145    GBR         1K
+21           HG00152    GBR         1K
+22           HG00157    GBR         1K
+23           HG00099    GBR         1K
+24           HG00479    CHS         1K
+25           HG00501    CHS         1K
+26           HG00513    CHS         1K
+27           HG00178    FIN         1K
+28           HG00525    CHS         1K
+29           HG00180    FIN         1K
+...              ...    ...        ...
+4943       HGDP00737    NaN         1K
+4944       HGDP01191    NaN         1K
+4945       HGDP00597    NaN         1K
+4946        mixe0007    NaN         1K
+4947          Tuba19    NaN         1K
+4948         NA15763    NaN         1K
+4949       HGDP00554    NaN         1K
+4950              K1    NaN         1K
+4951       HGDP00857    NaN         1K
+4952       HGDP00775    NaN         1K
+4953       HGDP01153    NaN         1K
+4954       HGDP00713    NaN         1K
+4955       HGDP00915    NaN         1K
+4956       HGDP01312    NaN         1K
+4957  tdj409_shugnan    NaN         1K
+4958          abh107    NaN         1K
+4959       HGDP01076    NaN         1K
+4960       HGDP00991    NaN         1K
+4961       HGDP01350    NaN         1K
+4962           Esk29    NaN         1K
+4963      Ayodo_430C    NaN         1K
+4964       HGDP00725    NaN         1K
+4965       HGDP00706    NaN         1K
+4966           Ale14    NaN         1K
+4967        mixa0099    NaN         1K
+4968       HGDP01401    NaN         1K
+4969       HGDP01095    NaN         1K
+4970            Nlk1    NaN         1K
+4971       HGDP00232    NaN         1K
+4972    IraqiJew4291    NaN         1K
+
+[4973 rows x 3 columns]
+           ID                       Filename Region DataSource
+0     HG00551  HG00551.haplotypeCalls.er.raw    PUR         1K
+1     HG00553  HG00553.haplotypeCalls.er.raw    PUR         1K
+2     HG00554  HG00554.haplotypeCalls.er.raw    PUR         1K
+3     HG00637  HG00637.haplotypeCalls.er.raw    PUR         1K
+4     HG00638  HG00638.haplotypeCalls.er.raw    PUR         1K
+5     HG00640  HG00640.haplotypeCalls.er.raw    PUR         1K
+6     HG00641  HG00641.haplotypeCalls.er.raw    PUR         1K
+7     HG00734  HG00734.haplotypeCalls.er.raw    PUR         1K
+8     HG00736  HG00736.haplotypeCalls.er.raw    PUR         1K
+9     HG00737  HG00737.haplotypeCalls.er.raw    PUR         1K
+10    HG00739  HG00739.haplotypeCalls.er.raw    PUR         1K
+11    HG00740  HG00740.haplotypeCalls.er.raw    PUR         1K
+12    HG00742  HG00742.haplotypeCalls.er.raw    PUR         1K
+13    HG00743  HG00743.haplotypeCalls.er.raw    PUR         1K
+14    HG01047  HG01047.haplotypeCalls.er.raw    PUR         1K
+15    HG01048  HG01048.haplotypeCalls.er.raw    PUR         1K
+16    HG01049  HG01049.haplotypeCalls.er.raw    PUR         1K
+17    HG01051  HG01051.haplotypeCalls.er.raw    PUR         1K
+18    HG01052  HG01052.haplotypeCalls.er.raw    PUR         1K
+19    HG01054  HG01054.haplotypeCalls.er.raw    PUR         1K
+20    HG01055  HG01055.haplotypeCalls.er.raw    PUR         1K
+21    HG01058  HG01058.haplotypeCalls.er.raw    PUR         1K
+22    HG01060  HG01060.haplotypeCalls.er.raw    PUR         1K
+23    HG01061  HG01061.haplotypeCalls.er.raw    PUR         1K
+24    HG01063  HG01063.haplotypeCalls.er.raw    PUR         1K
+25    HG01064  HG01064.haplotypeCalls.er.raw    PUR         1K
+26    HG01066  HG01066.haplotypeCalls.er.raw    PUR         1K
+27    HG01067  HG01067.haplotypeCalls.er.raw    PUR         1K
+28    HG01069  HG01069.haplotypeCalls.er.raw    PUR         1K
+29    HG01070  HG01070.haplotypeCalls.er.raw    PUR         1K
+...       ...                            ...    ...        ...
+1080  NA20792  NA20792.haplotypeCalls.er.raw    TSI         1K
+1081  NA20795  NA20795.haplotypeCalls.er.raw    TSI         1K
+1082  NA20796  NA20796.haplotypeCalls.er.raw    TSI         1K
+1083  NA20797  NA20797.haplotypeCalls.er.raw    TSI         1K
+1084  NA20798  NA20798.haplotypeCalls.er.raw    TSI         1K
+1085  NA20799  NA20799.haplotypeCalls.er.raw    TSI         1K
+1086  NA20800  NA20800.haplotypeCalls.er.raw    TSI         1K
+1087  NA20801  NA20801.haplotypeCalls.er.raw    TSI         1K
+1088  NA20802  NA20802.haplotypeCalls.er.raw    TSI         1K
+1089  NA20803  NA20803.haplotypeCalls.er.raw    TSI         1K
+1090  NA20804  NA20804.haplotypeCalls.er.raw    TSI         1K
+1091  NA20805  NA20805.haplotypeCalls.er.raw    TSI         1K
+1092  NA20806  NA20806.haplotypeCalls.er.raw    TSI         1K
+1093  NA20807  NA20807.haplotypeCalls.er.raw    TSI         1K
+1094  NA20808  NA20808.haplotypeCalls.er.raw    TSI         1K
+1095  NA20809  NA20809.haplotypeCalls.er.raw    TSI         1K
+1096  NA20810  NA20810.haplotypeCalls.er.raw    TSI         1K
+1097  NA20811  NA20811.haplotypeCalls.er.raw    TSI         1K
+1098  NA20812  NA20812.haplotypeCalls.er.raw    TSI         1K
+1099  NA20813  NA20813.haplotypeCalls.er.raw    TSI         1K
+1100  NA20814  NA20814.haplotypeCalls.er.raw    TSI         1K
+1101  NA20815  NA20815.haplotypeCalls.er.raw    TSI         1K
+1102  NA20818  NA20818.haplotypeCalls.er.raw    TSI         1K
+1103  NA20819  NA20819.haplotypeCalls.er.raw    TSI         1K
+1104  NA20821  NA20821.haplotypeCalls.er.raw    TSI         1K
+1105  NA20822  NA20822.haplotypeCalls.er.raw    TSI         1K
+1106  NA20826  NA20826.haplotypeCalls.er.raw    TSI         1K
+1107  NA20827  NA20827.haplotypeCalls.er.raw    TSI         1K
+1108  NA20828  NA20828.haplotypeCalls.er.raw    TSI         1K
+1109  NA20832  NA20832.haplotypeCalls.er.raw    TSI         1K
+
+[1110 rows x 4 columns]

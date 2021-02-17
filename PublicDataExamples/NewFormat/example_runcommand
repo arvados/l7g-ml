@@ -1,2 +1,7 @@
 python loadingPGPBloodType_zygosity.py ../../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../../keep/by_id/aa62766bc155d371ca24915fb1fde6a7+11097/matrix.npy ../../keep/by_id/aa62766bc155d371ca24915fb1fde6a7+11097/labels.csv A > glm.output 2> glm.error &
 
+Rscript ../GLM/src/glmnetAdaptive.r X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
+
+grep -w 6049438 keep/by_id/su92l-4zz18-8emhira4iafk84k/annotations.csv 
+
+python tiledPCA-1K.py ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/all-GrCh38_1k_set2 ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/all-info-GrCh38_1K_set2 ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/names-GrCh38_1K_set2 ../PCA/NewFormat/igsr_samples.tsv

@@ -22,20 +22,46 @@ sys.path.insert(0, b)
 import tileutils as tileutils
 import pgputils as pgputils
 
-tiledPCA = np.load('tiledPCA.npy')
+allfile = "/keep/by_id/su92l-4zz18-3ckjhxezppmukie/matrix.npy" 
+namesfile = "/keep/by_id/su92l-4zz18-3ckjhxezppmukie/labels.csv"
 
-#header_list = ["number","names","outputname"]
-#df = pd.read_csv(namesfile, names=header_list)
-#names = df["names"].tolist()
-namesfile = "../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/names-GrCh38_1K_set2"
-names = np.load(namesfile)
-print(names)
-myfuncdecode = lambda x: x.decode("utf-8")
-names = np.vectorize(myfuncdecode)(names)
-names = names.tolist()
-print(names)
+# Load Tile Data
+Xtrain = np.load(allfile)
 
-#names = [i.decode('UTF-8') for i in names] 
+Xtrain = Xtrain + 1
+idxN1  = Xtrain <= 0 
+Xtrain[idxN1] = 0
+
+# Low Quality Represented by -Variant 
+# Skipped Tiles Represented by 0 
+# Shift to 0 being Low Quality and 1 being Skipped Tiles
+
+[m,n] = Xtrain.shape
+print(Xtrain.shape)
+
+# Placeholder for Locations of Tiles
+pathdata = np.zeros(n) 
+idxOP = np.arange(Xtrain.shape[1])
+
+# Quality Cutoff 100% for PCA
+[XtrainPCA, pathdataPCA, idxOPPCA] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,1)
+
+# Removing Locations With Over 20 Tile Variants
+idxMax = np.nanmax(XtrainPCA,axis=0) <= 20
+XtrainPCA = XtrainPCA[:,idxMax]
+pathdataPCA = pathdataPCA[idxMax]
+idxOPPCA = idxOPPCA[idxMax]
+
+# Calculate Top 3 PCA Components
+[__, __, varvalsPCA]= tileutils.findTileVars(XtrainPCA,pathdataPCA,idxOPPCA)
+tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,3)
+
+# Loading in Names of Samples
+
+#np.save("tiledPCA.npy", tiledPCA)
+header_list = ["number","names","outputname"]
+df = pd.read_csv(namesfile, names=header_list)
+names = df["names"].tolist()
 
 cleannames = pgputils.pgpCleanNames(names)
 pcaNames = pd.DataFrame(np.column_stack([cleannames, names]),columns=['ID','Filename'])
@@ -48,8 +74,10 @@ ancestryMap['DataSource'] = '1K'
 ancestryMap['ID'] = ancestry1k.Sample
 ancestryMap['Region'] = ancestry1k.Population
 ancestries = ancestryMap[['ID','Region','DataSource']]
+print(ancestries)
 
 z = pcaNames.merge(ancestries, how='left', on='ID')
+print(z)
 
 z['Color'] = 'black'
 idxAmerica1k = z['Region'].isin(['PUR', 'CLM','MXL','PEL'])
@@ -64,10 +92,10 @@ z.Color[idxEastAsia1k] = 'royalblue'
 z.Color[idxSouthAsia1k] = 'blueviolet'
 
 plt.figure
-plt.scatter(tiledPCA[:,0],tiledPCA[:,1],c=z.Color,marker ="o",s=40,alpha = 0.5)
+plt.scatter(tiledPCA[:,0],tiledPCA[:,1],c=z.Color,marker ="o",s=60,alpha = 0.8)
 
 xlabel="PCA Component 1"
 ylabel="PCA Component 2"
 plt.xlabel(xlabel)
 plt.ylabel(ylabel)
-plt.savefig("test1KPCA.png",format='png')
+plt.savefig("test1KPCA.png",format='png')                 
