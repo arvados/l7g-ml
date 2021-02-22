@@ -1,2 +1,0 @@
-"nonnzerocoefs_1se"	"tile_path_1se"	"tile_step_1se"	"oldpath_1se"	"varvals_1se"
-1.05775868848603	452	873	11946588	3
