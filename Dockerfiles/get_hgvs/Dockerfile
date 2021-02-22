@@ -51,7 +51,7 @@ RUN wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9
 
 WORKDIR /
 
-RUN wget https://github.com/arvados/l7g/raw/master/tools/get_hgvs/get_hgvs.py && wget https://github.com/arvados/l7g/raw/master/tools/get_hgvs/tilesearcher.py && mv get_hgvs.py ./usr/bin && mv tilesearcher.py ./usr/bin
+RUN wget https://github.com/arvados/l7g/raw/master/tools/get_hgvs/tilesearcher.py && mv tilesearcher.py ./usr/bin
 
 WORKDIR /
 
