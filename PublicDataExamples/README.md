@@ -53,22 +53,31 @@ Note these examples do require a reasonably large amount of memory.  I have veri
 
 * Uses Harvard PGP Data
 
-* Step 1: Processing/Filtering Data for Model</li>
+* <h4>Step 1: Processing/Filtering Data for Model</h4> </li>
 
 * Will create filtered 1-hot encoded X data and corresponding y data you can use for your modeling work (for a given Blood Type) where in the X matrix each tile variant is represented by 2 columns: if the tile variant is present in 1 (1st column) or 2 (2nd column) phases at that tile location.</li>
 
 * python loadingPGPBloodType_zygosity.py pgpdatabase.db tiledata.npy pathdata.npy allnames.txt A
 * python loadingPGPBloodType_zygosity.py PGPDATABASE TILEDGENOMES TILEINFO SAMPLENAMES BLOODTYPE
 
-* Step 2: Running Modeling 
-* Will create a GLM model using Adaptive Lasso Regularization X and y data (X data is sparse matrix so given as values and row and column coordinates). Output will be non-zero coefficents and tile location information for "choosen tiles" that correspond to those non-zero coefficents for minimum and std of given metric and related plots
+* <h4>Step 2: Running Modeling</h4> 
+* Will create a GLM model using Adaptive Lasso Regularization X and y data (X data is sparse matrix so given as values and row and column coordinates). Output will be non-zero coefficents and tile location information for "chosen tiles" that correspond to those non-zero coefficents for minimum and std of given metric and related plots
 * Rscript ../GLM/src/glmnetAdaptive.r X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
 * Rscript ../GLM/src/glmnetAdaptive.r filteredtiles_nonzerovals filteredtiles_rows filteredtiles_columns classdata tileinfo oldtileinfo tilevariantvalues bloodtypeforclassification metricforglm
 
-* Step 3: Annotating Tile Variants
-* In the output files from Step2, you will get a path and step and variant for tiles with non-zero coefficents. You can use the following to look up these to get the corresponding HGVS annotation.  If a step and path is marked as NA, it means that it is a PCA component and not a tile. Note: For this you will need to use a different docker container.  The dockerfile located here: /l7g-ml/Dockerfiles/get_hgvs .  It will install everything including placing the needed python code in the usr/bin. Tile ID is give by path.00.step.variant+span.  Span is usually1.  The output the Step2 is tile variant + 2 - so subtract 2 before entering into the tile searcher.  We add +2 so that all tile variants are over 0 (originallyskipped tiles are marked with -1 and no call tiles are marked with -2).   
+* <h4>Step 3: Annotating Tile Variants</h4>
+* In the output files from Step2, you will get a path and step and variant for tiles with non-zero coefficents. You can use the following to look up these to get the corresponding HGVS annotation.  You must convert tile and step to the hex representation since that is how they are stored in the tile library. If a step and path is marked as NA, it means that it is a PCA component and not a tile. Note: For this you will need to use a different docker container.  The dockerfile located here: /l7g-ml/Dockerfiles/get_hgvs .  It will install everything including placing the needed python code in the usr/bin. Tile ID is give by path.00.step.variant+span.  Span is usually 1. The output of Step 2 is tile variant +2, so subtract 2 before entering into the tile searcher. We add 2 so that all tile variants are over 0.  
 
-* python ./usr/bin/tilesearcher.py 0001.00.0000.00b+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz
+* python ./usr/bin/tilesearcher.py 01c4.00.0389.000+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz
+NC_000009.12:g.133273813C>T
+root@69e9161a22db:/# python ./usr/bin/tilesearcher.py 01c4.00.0389.001+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz
+
+Ouput may look like the following:
+NC_000009.12:g.133273813C>T   -> HGVS annotation for https://www.ncbi.nlm.nih.gov/snp/rs505922
+
+If Output is empty - it means there is no variant present.  It may indicate variant is on the most common tile and lack of that variant is what it is using.  You can check it by checking the 0th tile variant to see if a variant is present
+NC_000009.12:g.=
+
 * python ./usr/bin/tilesearcher.py TILEID REF TILELIB ASSEMBLY
 
 <h3>PCA Example</h3>
