@@ -68,15 +68,12 @@ Note these examples do require a reasonably large amount of memory.  I have veri
 * <h4>Step 3: Annotating Tile Variants</h4>
 * In the output files from Step2, you will get a path and step and variant for tiles with non-zero coefficents. You can use the following to look up these to get the corresponding HGVS annotation.  You must convert tile and step to the hex representation since that is how they are stored in the tile library. If a step and path is marked as NA, it means that it is a PCA component and not a tile. Note: For this you will need to use a different docker container.  The dockerfile located here: /l7g-ml/Dockerfiles/get_hgvs .  It will install everything including placing the needed python code in the usr/bin. Tile ID is give by path.00.step.variant+span.  Span is usually 1. The output of Step 2 is tile variant +2, so subtract 2 before entering into the tile searcher. We add 2 so that all tile variants are over 0.  
 
-* python ./usr/bin/tilesearcher.py 01c4.00.0389.000+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz
-NC_000009.12:g.133273813C>T
-root@69e9161a22db:/# python ./usr/bin/tilesearcher.py 01c4.00.0389.001+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz
+* python ./usr/bin/tilesearcher.py 01c4.00.0389.000+1 hg38.fa.gz tilelibdirectory /assembly.00.hg38.fw.gz
 
 Ouput may look like the following:
 NC_000009.12:g.133273813C>T   -> HGVS annotation for https://www.ncbi.nlm.nih.gov/snp/rs505922
 
-If Output is empty - it means there is no variant present.  It may indicate variant is on the most common tile and lack of that variant is what it is using.  You can check it by checking the 0th tile variant to see if a variant is present
-NC_000009.12:g.=
+If Output is empty (NC_000009.12:g.=) - it means there is no variant present.  It may indicate variant is on the most common tile and lack of that variant is what it is using.  You can check it by checking the 0th tile variant to see if a variant is present
 
 * python ./usr/bin/tilesearcher.py TILEID REF TILELIB ASSEMBLY
 
