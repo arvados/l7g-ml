@@ -4,10 +4,10 @@ python tiledPCA-1K.py ../keep/by_id/37ff79ce0cb92c340e2354350ff623e2+53461/all-G
 
 python loadingPGPBloodType_zygosity.py ../keep/by_id/04224e0373ca2d2ace61ba231f3147bf+215/untap.db ../keep/by_id/9bd88ae60f51662f3761755a0e22d2bb+54381/all-human_g1k_v37 ../keep/by_id/9bd88ae60f51662f3761755a0e22d2bb+54381/all-info-human_g1k_v37 ../keep/by_id/9bd88ae60f51662f3761755a0e22d2bb+54381/names-human_g1k_v37 A > glm.output 2> glm.error &
 
-Rscript ../GLM/src/glmnetAdaptive.r X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
+Rscript ../GLM/src/glmnetAdaptiveBestGamma.r X.npy Xr.npy Xc.npy y.npy pathdataOH.npy oldpath.npy varvals.npy A class
 
 
-Rscript ../GLM/src/glmnetAdaptive.r ../keep/by_id/su92l-4zz18-d94k15byks94xik/X.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/Xr.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/Xc.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/y.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/pathdataOH.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/oldpath.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/varvals.npy A class
+Rscript ../GLM/src/glmnetAdaptiveBestGamma.r ../keep/by_id/su92l-4zz18-d94k15byks94xik/X.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/Xr.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/Xc.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/y.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/pathdataOH.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/oldpath.npy ../keep/by_id/su92l-4zz18-d94k15byks94xik/varvals.npy A class
 
 python ./usr/bin/tilesearcher.py 0001.00.0000.00b+1 /keep/by_id/ee5b90cf2d5f3573e6d455ab56e15cdf+761/hg38.fa.gz /keep/by_id/25600bbdd87544fd04e678c857c085f5+129096 /keep/by_id/7deca98a5827e1991bf49a96a0087318+233/assembly.00.hg38.fw.gz 
 
