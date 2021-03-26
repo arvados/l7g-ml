@@ -13,6 +13,7 @@ library(foreach)
 suppressMessages(library(glmnet))
 library(reticulate)
 library(methods)
+library("ggplot2")
 
 # Python libraries
 scipy <- import("scipy")
@@ -85,4 +86,10 @@ for (j in gamma_seq){
 
 # Final plots and finding non-zero coefficents and tile locations
 
+gammafits = data.frame("StandardDev" = cvmsdclass, "Minimum" = cvmclass, "NoZero" = nzeroclass, "Gamma" = gamma_seq)
 
+# create a scatter plot of gamma results
+ggplot(gammafits, aes(x = Gamma, y = Minimum)) +
+  theme_minimal()
+
+png('Test.png')

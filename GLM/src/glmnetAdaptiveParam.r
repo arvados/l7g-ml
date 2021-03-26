@@ -20,8 +20,8 @@ np <- import("numpy")
 
 args = commandArgs(trailingOnly=TRUE)
 
-if (length(args) <= 8) {
-  stop("8 arguments must be supplied", call.=FALSE)
+if (length(args) <= 11) {
+  stop("10 arguments must be supplied", call.=FALSE)
 }
 
 # xstr <- "/data-sdd/owebb/keep/by_id/su92l-4zz18-jq2eftdx22eow6s/X.npz"
@@ -46,19 +46,21 @@ oldpath <- as.vector(np$load(args[6]))
 varvals <- as.vector(np$load(args[7]))
 colorblood <- args[8]
 type_measure <- args[9]
+gamma <- args[10]
+nfolds <- args[11]
 
 # Use Adaptive Lasso for regularization
 # Use Ridge Regression to create the Adaptive Weights Vector
 set.seed(999)
-cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=TRUE,intercept = FALSE)
+cv.ridge <- cv.glmnet(Xmat, y, family='binomial', alpha=0, parallel=TRUE, standardize=FALSE)
 w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
-                   [, 1][2:(ncol(Xmat)+1)] ))^4.5 ## Using gamma = 2 
+                   [, 1][2:(ncol(Xmat)+1)] ))^gamma  
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
 
 # Adaptive Lasso
 set.seed(999)
 
-cv.lasso.adaptive <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 10, parallel=TRUE, intercept=FALSE, standardize=TRUE, type.measure=type_measure, penalty.factor=w3)
+cv.lasso.adaptive <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = nfolds, parallel=TRUE, standardize=FALSE, type.measure=type_measure, penalty.factor=w3)
 
 #cv.lasso.auc <- cv.glmnet(Xmat, y, family='binomial', alpha=1, nfolds = 5, parallel=TRUE, standardize=FALSE, type.measure='auc', penalty.factor=w3)
 
