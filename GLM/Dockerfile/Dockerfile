@@ -22,8 +22,9 @@ RUN R -e "install.packages('reticulate', repos = 'http://cran.us.r-project.org')
 RUN R -e "install.packages('foreach', repos = 'http://cran.us.r-project.org')"
 #RUN R -e "install.packages('selectiveInference', repos = 'http://cran.us.r-project.org')"
 RUN R -e "install.packages('ncvreg', repos = 'http://cran.us.r-project.org')"
-RUN R -e "install.packages('picasso', repos = 'http://cran.us.r-project.org')"
-
+RUN R -e "install.packages('ncpen', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('ggplot2', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('caret', repos = 'http://cran.us.r-project.org')"
 
 RUN pip3 install sklearn
 RUN pip3 install --upgrade scipy
