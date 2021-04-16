@@ -62,6 +62,7 @@ def qualCutOff(tiledgenomes,tilepos,idxOP,qual):
     tiledgenomes = tiledgenomes[:, idxKeep]
     tilepos = tilepos[idxKeep]
     idxOP = idxOP[idxKeep]
+    print(tilepos.shape)
 
     return tiledgenomes, tilepos, idxOP
 
@@ -147,7 +148,7 @@ def chiPhased(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
 
     return tiledgenomesOH, tileposOH, varvals, idxOPOH
 
-def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
+def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff, zygosityreturn=False):
     #filter by Pearson chi^2 and return one-hot by tile variant considering zygosity (phases considered together, and 1 column for het tile variant and 1 column for hom tile variant)
     import numpy as np
     import scipy.sparse
@@ -162,10 +163,18 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     n = int(data_shape[1]*2)
     
     idx = np.linspace(0,data_shape[1],num=nparts).astype('int')
-    tiledgenomesOHhet = csr_matrix(np.empty([m, 0]))
-    tiledgenomesOHhom = csr_matrix(np.empty([m, 0]))
+       
+    idxNN = np.logical_not(np.isnan(y))
+    y = y[idxNN] 
+    yshape = y.shape
+    ym = yshape[0]
+
+    tiledgenomesOHhet = csr_matrix(np.empty([ym, 0]))
+    tiledgenomesOHhom = csr_matrix(np.empty([ym, 0]))
     pidxhet = np.empty([0,],dtype='bool')
     pidxhom = np.empty([0,],dtype='bool')
+    zygosity_het = np.empty([0,],dtype='int')
+    zygosity_hom = np.empty([0,],dtype='int')
 
     # calculate in chunks because one-hot calculation hits memory bug when
     # sparse matrix gets too large (also allows user to use smaller memory machine)
@@ -198,19 +207,31 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
 
        # creating sparse matrix 1-hot representation of where each tile variant is het
        tiledgenomesOHhetchunk = csr_matrix((datahet, (rhom, chom)), tiledgenomesOHphasechunk.shape)
+
+       tiledgenomesOHhetchunk = tiledgenomesOHhetchunk[idxNN,:]
+       tiledgenomesOHhomchunk = tiledgenomesOHhomchunk[idxNN,:]
        
        [chi2valhet,pvalhet] = chi2(tiledgenomesOHhetchunk, y)
        pidxchunkhet = pvalhet <= pcutoff
+
        tiledgenomesOHhetchunkfiltered = tiledgenomesOHhetchunk[:,pidxchunkhet]
+       chunkhetsize = np.shape(tiledgenomesOHhetchunkfiltered)
+       zygosity_chunkhet = np.ones((chunkhetsize[1],), dtype=int)
        pidxhet = np.concatenate((pidxhet,pidxchunkhet),axis=0)
 
        [chi2valhom,pvalhom] = chi2(tiledgenomesOHhomchunk, y)
+
        pidxchunkhom = pvalhom <= pcutoff
        tiledgenomesOHhomchunkfiltered = tiledgenomesOHhomchunk[:,pidxchunkhom]
+       chunkhomsize = np.shape(tiledgenomesOHhomchunkfiltered)
+       zygosity_chunkhom = int(2)*np.ones((chunkhomsize[1],), dtype=int)
        pidxhom = np.concatenate((pidxhom,pidxchunkhom),axis=0)
+       
 
        tiledgenomesOHhet = hstack([tiledgenomesOHhet,tiledgenomesOHhetchunkfiltered],format='csr')
        tiledgenomesOHhom = hstack([tiledgenomesOHhom,tiledgenomesOHhomchunkfiltered],format='csr')
+       zygosity_hom = np.concatenate((zygosity_hom,zygosity_chunkhom),axis=0)
+       zygosity_het = np.concatenate((zygosity_het,zygosity_chunkhet),axis=0)
        
 
     tileposOHhet = tileposOH[pidxhet]
@@ -224,6 +245,7 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     tileposOH = np.concatenate((tileposOHhet,tileposOHhom),axis=0)
     varvals = np.concatenate((varvalshet,varvalshom),axis=0)
     idxOPOH = np.concatenate((idxOPOHhet,idxOPOHhom),axis=0)
+    zygosity = np.concatenate((zygosity_het,zygosity_hom),axis=0)
 
     tiledgenomesOH = hstack([tiledgenomesOHhet,tiledgenomesOHhom],format='csr')
     # Remove spanning , no call tile variants, most common tile variant (usually ref) for each position
@@ -238,7 +260,10 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
     varvals = varvals[idkTK]
     idxOPOH = idxOPOH[idkTK]
 
-    return tiledgenomesOH, tileposOH, varvals, idxOPOH
+    if zygosityreturn:
+        return tiledgenomesOH, tileposOH, varvals, idxOPOH, zygosity
+    else:
+        return tiledgenomesOH, tileposOH, varvals, idxOPOH
 
 def pcaComponents(tiledgenomes,varvals,n):  
     #calculate top n PCA from one-hot encoded tiled genomes
