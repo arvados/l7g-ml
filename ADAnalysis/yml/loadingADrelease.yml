@@ -1,0 +1,18 @@
+get_data_file:
+  class: File
+  path: ../loadingAD_zygosity_release.py
+  secondaryFiles:
+    - class: Directory
+      path: /data-sdd/cwl_tiling/l7g-ml/tileml
+    - class: Directory
+      path: /data-sdd/cwl_tiling/l7g-ml/adml
+dbfile:
+  class: File
+  path: keep:2xpu4-4zz18-dir53r5czmhhvq6/ADNI-ADSP_Phenotypes_DS_slim.tsv
+allfile: 
+  class: File
+  path: keep:2xpu4-4zz18-4ip6e4ly30bgx7n/matrix.npy 
+namefile: 
+  class: File
+  path: keep:2xpu4-4zz18-4ip6e4ly30bgx7n/labels.csv
+phenotype: AD 

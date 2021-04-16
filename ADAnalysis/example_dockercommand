@@ -1,0 +1,1 @@
+docker run -ti -v /data-sdd/cwl_tiling/l7g-ml/ADAnalysis:/ADAnalysis -v /data-sdd/cwl_tiling/l7g-ml/GLM:/GLM -v /data-sdd/cwl_tiling/l7g-ml/tileml:/ADAnalysis/tileml -v /data-sdd/cwl_tiling/l7g-ml/adml:/ADAnalysis/adml -v /home/sarah/keep:/keep tileglm
