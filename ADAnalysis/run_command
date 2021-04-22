@@ -1,1 +1,3 @@
 python loadingAD_zygosity.py ../keep/by_id/2xpu4-4zz18-dir53r5czmhhvq6/ADNI-ADSP_Phenotypes_DS_slim.tsv ../keep/by_id/2xpu4-4zz18-4ip6e4ly30bgx7n/matrix.npy ../keep/by_id/2xpu4-4zz18-4ip6e4ly30bgx7n/labels.csv 'AD' 
+
+python loadingAD_PCA.py ../keep/by_id/2xpu4-4zz18-dir53r5czmhhvq6/ADNI-ADSP_Phenotypes_DS_slim.tsv ../keep/by_id/2xpu4-4zz18-m3s4rx770vyf9tx ../keep/by_id/2xpu4-4zz18-m3s4rx770vyf9tx/labels.csv 'AD'
