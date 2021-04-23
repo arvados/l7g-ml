@@ -48,7 +48,7 @@ allXPCA = np.empty([len(names),0])
 allidx = np.empty([0,])
 allpathdataPCA = np.empty([0,])
 
-for file in filelist[:5]:
+for file in filelist:
     Xtrain = np.load(file)
     [m,n] = Xtrain.shape
 
