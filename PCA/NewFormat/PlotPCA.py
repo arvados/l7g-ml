@@ -21,8 +21,8 @@ sys.path.insert(0, b)
 
 import tileutils as tileutils
 import pgputils as pgputils
-pcafile = "tiledPCA.npy" 
-namesfile =  "/keep/by_id/su92l-4zz18-e1m1crjllotn2mm/labels.csv"
+pcafile = "/keep/by_id/2xpu4-4zz18-fy4yjurootb8g6o/tiledPCA.npy" 
+namesfile =  "/keep/by_id/2xpu4-4zz18-fy4yjurootb8g6o/labels.csv"
 
 # Load PCA Data
 tiledPCA = np.load(pcafile)
@@ -66,10 +66,17 @@ z.Color[idxEastAsia1k] = 'royalblue'
 z.Color[idxSouthAsia1k] = 'blueviolet'
 
 plt.figure
-plt.scatter(tiledPCA[:,0],tiledPCA[:,1],c=z.Color,marker ="o",s=60,alpha = 0.8)
-
+plt.scatter(tiledPCA[:,0],tiledPCA[:,1],c=z.Color,marker ="o",s=40,alpha = 0.5)
 xlabel="PCA Component 1"
 ylabel="PCA Component 2"
 plt.xlabel(xlabel)
 plt.ylabel(ylabel)
-plt.savefig("test1KPCA.png",format='png')
+plt.savefig("1KADPCA12.png",format='png')
+
+plt.figure
+plt.scatter(tiledPCA[:,1],tiledPCA[:,2],c=z.Color,marker ="o",s=40,alpha = 0.5)
+xlabel="PCA Component 2"
+ylabel="PCA Component 3"
+plt.xlabel(xlabel)
+plt.ylabel(ylabel)
+plt.savefig("1KADPCA23.png",format='png')
