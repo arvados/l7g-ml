@@ -1,0 +1,25 @@
+ncvreg_file:
+  class: File
+  path: ../src/ncpenReg.r
+X: 
+  class: File
+  path: keep:ef1f29d252e39d0203ff7cfe0be60dd2+1417/X.npy
+Xr:
+  class: File
+  path: keep:ef1f29d252e39d0203ff7cfe0be60dd2+1417/Xr.npy
+Xc:
+  class: File
+  path: keep:ef1f29d252e39d0203ff7cfe0be60dd2+1417/Xc.npy
+y: 
+  class: File
+  path: keep:ef1f29d252e39d0203ff7cfe0be60dd2+1417/y.npy
+pathdataoh: 
+  class: File
+  path: keep:ef1f29d252e39d0203ff7cfe0be60dd2+1417/pathdataOH.npy
+oldpath:
+  class: File
+  path: keep:ef1f29d252e39d0203ff7cfe0be60dd2+1417/oldpath.npy
+varvals:
+  class: File
+  path: keep:ef1f29d252e39d0203ff7cfe0be60dd2+1417/varvals.npy
+colorblood: AD

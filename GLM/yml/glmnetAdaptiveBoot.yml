@@ -1,0 +1,33 @@
+glmnet_file:
+  class: File
+  path: ../src/glmnetAdaptiveBoot.r
+X: 
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/X.npy
+Xr:
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/Xr.npy
+Xc:
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/Xc.npy
+y: 
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/y.npy
+pathdataoh: 
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/pathdataOH.npy
+oldpath:
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/oldpath.npy
+varvals:
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/varvals.npy
+gamma: "2"
+zygosity:
+  class: File
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/zygosity.npy
+colorblood: AD
+type_measure: class
+force_PCA: "true"
+weighted: "true"
+seed: "199" 

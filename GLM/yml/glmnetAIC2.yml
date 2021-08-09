@@ -1,6 +1,6 @@
 glmnet_file:
   class: File
-  path: ../src/glmnetAdaptive.r
+  path: ../src/glmnetIC_CM.r
 X: 
   class: File
   path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/X.npy
@@ -23,4 +23,3 @@ varvals:
   class: File
   path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/varvals.npy
 colorblood: AD
-type_measure: class
