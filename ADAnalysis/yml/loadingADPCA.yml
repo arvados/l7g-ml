@@ -8,11 +8,11 @@ get_data_file:
       path: /data-sdd/cwl_tiling/l7g-ml/adml
 dbfile:
   class: File
-  path: keep:2xpu4-4zz18-dir53r5czmhhvq6/ADNI-ADSP_Phenotypes_DS_slim.tsv
+  path: keep:2xpu4-4zz18-7ovdsorvgy9hrg6/ADNI-ADSP_Phenotypes_DS_2021.02.19_slim.tsv
 allfiledir:
   class: Directory 
-  path: keep:2xpu4-4zz18-m3s4rx770vyf9tx
+  path: keep:2xpu4-4zz18-u7dndgsf7zoyw3c
 namefile:
   class: File
-  path: keep:2xpu4-4zz18-m3s4rx770vyf9tx/labels.csv
+  path: keep:2xpu4-4zz18-u7dndgsf7zoyw3c/labels.csv
 phenotype: AD

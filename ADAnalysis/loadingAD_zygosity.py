@@ -107,9 +107,10 @@ pheno = pheno[idxNN]
 
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
 tiledPCA = csr_matrix(tiledPCA)
+pheno = csr_matrix(pheno)
 print(tiledPCA.shape)
-#Xtrain = hstack([Xtrain,tiledPCA[idxNN,:]],format='csr')
-Xtrain = hstack([Xtrain,pheno],format='csr')
+Xtrain = hstack([Xtrain,tiledPCA[idxNN,:]],format='csr')
+#Xtrain = hstack([Xtrain,pheno],format='csr')
 print(Xtrain.shape)
 [Xr,Xc] = Xtrain.nonzero()
 print(Xr.shape)

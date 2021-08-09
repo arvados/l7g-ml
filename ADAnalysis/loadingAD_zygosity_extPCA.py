@@ -27,6 +27,8 @@ ydatasource = sys.argv[1]
 allfile = sys.argv[2]
 namesfile = sys.argv[3]
 phenotype = sys.argv[4]
+PCAfile = sys.argv[5]
+PCAnamesfile = sys.argv[6]
 
 # Load y Data as Dataframe (Data and IDs) 
 dataAD = adutils.yloadAD(ydatasource)
@@ -36,15 +38,15 @@ dataAD = adutils.yloadAD(ydatasource)
 # Load Tile Data
 Xtrain = np.load(allfile)
 
+# Load External PCA Data
+tiledPCA = np.load(PCAfile)
+
 # Low Quality Represented by -1 
 # Skipped Tiles Respresented by 0 
 Xtrain += 1 
 idxN1  = Xtrain <= 0
 Xtrain[idxN1] = 0
 
-#Xtrain = Xtrain[:500,:]
-
-#pathdata = np.load(infofile)
 # Pathdata not available
 [m,n] = Xtrain.shape
 
@@ -55,11 +57,20 @@ header_list = ["number","names","outputname"]
 df = pd.read_csv(namesfile, names=header_list)
 names = df["names"].tolist()
 
+dfPCA = pd.read_csv(PCAnamesfile, names=header_list)
+PCAnames = dfPCA["names"].tolist()
+
 # Clean Names to get HUID
 names = adutils.cleanNamesAD(names)
+PCAnames = adutils.cleanNamesAD(PCAnames)
+
+print(names)
+print(PCAnames)
 
 # Match tiled genomes with y values by HUID
-[y,pheno] = adutils.syncTilesAD(dataAD,names)
+[y,pheno,tiledPCA] = adutils.syncTilesADwPCA(dataAD,names,PCAnames,tiledPCA)
+
+# Match tile genomes with external PCA values
 
 # Create Vector of Original Index of Tile Position
 idxn = Xtrain.shape[1]/2
@@ -67,23 +78,6 @@ idxrange = np.arange(idxn)
 idxOP = np.empty(Xtrain.shape[1])
 idxOP[0::2] = idxrange
 idxOP[1::2] = idxrange
-
-# Remove XYM Chromosomes
-#[Xtrain,pathdata,idxOP]  = tileutils.removeXYM(Xtrain,pathdata,idxOP)
-
-print("Quality Cutoff 99% for PCA")
-# Quality Cutoff 99% for PCA
-[XtrainPCA, pathdataPCA, idxOPPCA] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,1)
-
-print(XtrainPCA.shape)
-
-print("Calculating PCA")
-# Calculate Top 20 PCA Components
-[__, __, varvalsPCA]= tileutils.findTileVars(XtrainPCA,pathdataPCA,idxOPPCA)
-tiledPCA = tileutils.pcaComponents(XtrainPCA,varvalsPCA,20)
-
-del XtrainPCA
-del varvalsPCA
 
 print("Reshaping Matrix")
 # Reshaping Matrix to Combine Phases  
@@ -104,14 +98,13 @@ idxOP = idxOP[0:n:2]
 idxNN = np.logical_not(np.isnan(y))
 y = y[idxNN]
 pheno = pheno[idxNN]
-df = df[idxNN]
 tiledPCA = tiledPCA[idxNN,:]
 
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
-#tiledPCA = csr_matrix(tiledPCA)
+tiledPCA = csr_matrix(tiledPCA)
 print(tiledPCA.shape)
-#Xtrain = hstack([Xtrain,tiledPCA[idxNN,:]],format='csr')
-#Xtrain = hstack([Xtrain,pheno],format='csr')
+Xtrain = hstack([Xtrain,tiledPCA],format='csr')
+Xtrain = hstack([Xtrain,pheno],format='csr')
 print(Xtrain.shape)
 [Xr,Xc] = Xtrain.nonzero()
 print(Xr.shape)
@@ -121,11 +114,9 @@ print(Xtrain.shape)
 # Save Final Outputs
 np.save('y.npy', y)
 np.save('pathdataOH.npy', pathdataOH)
-np.save('tiletag.npy', idxOPOH)
+np.save('oldpath.npy', idxOPOH)
 np.save('varvals.npy', varvals)
 np.save("X.npy", Xtrain)
 np.save("Xr.npy", Xr)
 np.save("Xc.npy", Xc)
 np.save("zygosity.npy",zygosity)
-np.save("XPCA.npy",tiledPCA)
-df.to_csv("labels.csv",index=False,header=False)
