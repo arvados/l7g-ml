@@ -48,12 +48,7 @@ inputs:
   colorblood:
     type: string
     inputBinding:
-      position: 8
-  type_measure:
-    type: string
-    inputBinding:
-      position: 9
-
+      position: 9 
 outputs: 
   text_file:
     type: File[]

@@ -13,7 +13,7 @@ library(foreach)
 suppressMessages(library(glmnet))
 library(reticulate)
 library(methods)
-library(ggplot2)
+#library(ggplot2)
 
 # Python libraries
 scipy <- import("scipy")
@@ -30,7 +30,7 @@ j <- as.integer(as.vector(np$load(args[3]))) + 1
 
 # Create a new sparse matrix
 Xmat <- sparseMatrix(i,j,x = x)
-#Xmat <- Xmat[,-20]
+Xmat <- Xmat[,-21]
 
 rm(i,j,x)
 
@@ -42,6 +42,10 @@ pathdataOH <- as.vector(np$load(args[5]))
 oldpath <- as.vector(np$load(args[6]))
 varvals <- as.vector(np$load(args[7]))
 colorblood <- args[8]
+
+#PCAlabel = 1000+seq(1, 20)
+#varvals = c(varvals,PCAlabel,99,999)
+
 
 # Use Adaptive Lasso for regularization
 # Use Ridge Regression to create the Adaptive Weights Vector
@@ -68,20 +72,12 @@ aic_obj = dev + 2 * reg.df
 bic_obj = dev + log(n) * reg.df
 ebic_obj = dev + log(n) * reg.df + 4 * gamma.ebic * reg.df * log(p)
 
-lambda.ind = which.min(aic_obj)
+lambda.ind = which.min(bic_obj)
 coef.beta = coef.beta[, lambda.ind]
 lambda = reg.fit$lambda[lambda.ind]
 lamb = reg.fit$lambda
 
-plotname_fit<- paste0('ebicfit_',colorblood,'.png')
-png(plotname_fit)
-
 results <- data.frame(x = lamb, y = bic_obj)
-
-p <- ggplot(results, aes(x = x, y = y)) + geom_point()
-p + scale_x_log10()
-
-dev.off()
 
 coefVec = coef.beta[-1]
 #coefVec = coef.beta

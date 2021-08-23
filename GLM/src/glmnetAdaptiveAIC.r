@@ -52,7 +52,7 @@ type_measure <- args[10]
 
 PCAlabel = 1000+seq(1, 20)
 
-varvals = c(varvals,99,999,PCAlabel)
+varvals = c(varvals,PCAlabel,99,999)
 
 nsample = round(.90*length(y))
 train = sample(seq(length(y)),nsample,replace=FALSE)

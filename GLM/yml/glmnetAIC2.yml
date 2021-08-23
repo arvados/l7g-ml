@@ -1,25 +1,25 @@
 glmnet_file:
   class: File
-  path: ../src/glmnetIC_CM.r
+  path: ../src/glmnetAICBIC.r
 X: 
   class: File
-  path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/X.npy
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/X.npy
 Xr:
   class: File
-  path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/Xr.npy
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/Xr.npy
 Xc:
   class: File
-  path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/Xc.npy
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/Xc.npy
 y: 
   class: File
-  path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/y.npy
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/y.npy
 pathdataoh: 
   class: File
-  path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/pathdataOH.npy
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/pathdataOH.npy
 oldpath:
   class: File
-  path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/oldpath.npy
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/oldpath.npy
 varvals:
   class: File
-  path: keep:5b2e8a60eb4c23352cc4da4382230fd6+735/varvals.npy
+  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/varvals.npy
 colorblood: AD

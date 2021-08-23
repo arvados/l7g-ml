@@ -5,8 +5,8 @@ requirements:
   DockerRequirement:
     dockerPull: glmextra
   ResourceRequirement:
-    coresMin: 16
-    ramMin: 200698
+    coresMin: 2
+    ramMin: 100000
 hints:
   cwltool:LoadListingRequirement: 
     loadListing: deep_listing
@@ -45,15 +45,18 @@ inputs:
     type: File
     inputBinding:
       position: 7
+  zygosity:
+    type: File
+    inputBinding:
+      position: 8
   colorblood:
     type: string
     inputBinding:
-      position: 8
+      position: 9
   type_measure:
     type: string
     inputBinding:
-      position: 9
-
+      position: 10 
 outputs: 
   text_file:
     type: File[]

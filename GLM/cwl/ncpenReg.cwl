@@ -3,17 +3,17 @@ $namespaces:
  cwltool: "http://commonwl.org/cwltool#"
 requirements:
   DockerRequirement:
-    dockerPull: glmextra
+    dockerPull: glmextra 
   ResourceRequirement:
     coresMin: 16
-    ramMin: 200698
+    ramMin: 100000 
 hints:
   cwltool:LoadListingRequirement: 
     loadListing: deep_listing
 cwlVersion: v1.0
 class: CommandLineTool
 inputs: 
-  glmnet_file:
+  ncvreg_file:
     type: File
     inputBinding:
       position: 0
@@ -49,17 +49,8 @@ inputs:
     type: string
     inputBinding:
       position: 8
-  type_measure:
-    type: string
-    inputBinding:
-      position: 9
 
 outputs: 
-  text_file:
-    type: File[]
-    outputBinding:
-      glob: "*.txt"
-
   graph:
     type: File[]
     outputBinding:

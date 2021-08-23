@@ -3,7 +3,7 @@ import numpy as np
 import glob,os
 import math
 
-dirname = '/home/sarah/keep/by_id/2xpu4-4zz18-c1w1wc7un6oq7tf'
+dirname = '/home/sarah/keep/by_id/2xpu4-4zz18-3x5cghmfoaxxl4j'
 
 import glob, os
 os.chdir(dirname)
@@ -49,4 +49,5 @@ print(totalCI)
 
 ccount= totalBoot.apply(lambda x: np.count_nonzero(x))
 idx = ccount >= 25
-ccount.to_csv('/home/sarah/Count.csv',index=True)
+#ccount = ccount[idx]
+ccount.to_csv('/home/sarah/ADNICountAll.csv',index=True)

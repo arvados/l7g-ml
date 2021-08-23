@@ -12,7 +12,6 @@ library(foreach)
 suppressMessages(library(glmnet))
 library(reticulate)
 library(methods)
-library(ggplot2)
 
 # Python libraries
 scipy <- import("scipy")
@@ -42,13 +41,8 @@ oldpath <- as.vector(np$load(args[6]))
 varvals <- as.vector(np$load(args[7]))
 colorblood <- args[8]
 
-varvals = varvals.toString()
-PCAlabel = seq(1, 100).toString()
-PCAlabel = ['PC' + sub for sub in PCAlabel]
-
-varvals += 'Sex'
-varvals += 'Age'
-varvals += PCAlabel
+PCAlabel = 1000+seq(1, 20)
+varvals = c(varvals,PCAlabel,99,999)
 
 nsample = round(.90*length(y))
 train = sample(seq(length(y)),nsample,replace=FALSE)
@@ -60,8 +54,6 @@ set.seed(999)
 #w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
 #                   [, 1][2:(ncol(Xmat)+1)] ))^4.5 ## Using gamma = 2 
 #w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
-
-w3 <- rep(1,ncol(Xmat))
 #w3[(length(w3) - 19):length(w3)] <- 0
 
 # Adaptive Lasso
@@ -90,11 +82,6 @@ plotname_fit<- paste0('aicfit_',colorblood,'.png')
 png(plotname_fit)
 
 results <- data.frame(x = lamb, y = bic_obj)
-
-p <- ggplot(results, aes(x = x, y = y)) + geom_point()
-p + scale_x_log10()
-
-dev.off()
 
 coefVec = coef.beta[-1]
 #coefVec = coef.beta

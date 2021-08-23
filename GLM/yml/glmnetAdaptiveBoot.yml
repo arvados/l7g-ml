@@ -3,31 +3,31 @@ glmnet_file:
   path: ../src/glmnetAdaptiveBoot.r
 X: 
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/X.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/X.npy
 Xr:
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/Xr.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/Xr.npy
 Xc:
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/Xc.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/Xc.npy
 y: 
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/y.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/y.npy
 pathdataoh: 
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/pathdataOH.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/pathdataOH.npy
 oldpath:
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/oldpath.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/oldpath.npy
 varvals:
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/varvals.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/varvals.npy
 gamma: "2"
 zygosity:
   class: File
-  path: keep:0e8224d9340dcbdcacbeaf4a03aad942+2116/zygosity.npy
+  path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/zygosity.npy
 colorblood: AD
 type_measure: class
-force_PCA: "true"
+force_PCA: "false"
 weighted: "true"
-seed: "199" 
+seed: "99" 

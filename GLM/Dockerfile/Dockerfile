@@ -26,6 +26,7 @@ RUN R -e "install.packages('ncpen', repos = 'http://cran.us.r-project.org')"
 RUN R -e "install.packages('ggplot2', repos = 'http://cran.us.r-project.org')"
 RUN R -e "install.packages('caret', repos = 'http://cran.us.r-project.org')"
 
+RUN R -e "install.packages('mpath', repos = 'http://cran.us.r-project.org')"
 RUN pip3 install sklearn
 RUN pip3 install --upgrade scipy
 RUN pip3 install seaborn
