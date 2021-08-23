@@ -1,0 +1,55 @@
+def yloadAD(ydatafile):
+    import numpy as np
+    import sqlite3
+    import pandas as pd
+    import os
+    import sys
+    import re
+
+    dataADStatus = pd.read_csv(ydatafile,sep='\t')
+    dataADStatus['y'] = dataADStatus['AD']
+
+    return dataADStatus
+
+def cleanNamesAD(names):
+    import re
+   
+    names2 = [re.sub('-BL.*','',i) for i in names]
+#    names14 = [re.sub('_.+-portable', '',i) for i in names13]
+    names = names2
+    return names
+
+def syncTilesAD(dfy,names):
+    import numpy as np
+    import pandas as pd
+    import scipy.sparse
+    from scipy.sparse import csr_matrix
+    from scipy.sparse import hstack
+    from sklearn.preprocessing import OneHotEncoder
+
+    dfy.SUBJID = dfy.SUBJID.str.lower()
+    results = []
+
+    for name in names:
+       results.append(name.lower())
+
+    df_names = pd.DataFrame(results,columns={'Sample'})
+    df_names['Number'] = df_names.index
+
+    df2 = df_names.merge(dfy,right_on='SUBJID', left_on='Sample', how='inner')
+    idx = df2['Number'].values
+
+    print(idx.shape)
+
+    #Race  Ethnicity 
+#    All should have a phenotype
+#    tiledgenomes = tiledgenomes[idx,:] 
+    pheno = df2['Race'].values
+    pheno = np.reshape(pheno,(-1, 1))
+    enc = OneHotEncoder(sparse=True)
+    pheno = enc.fit_transform(pheno)   
+ 
+    y = df2['y'].values
+
+    return y,pheno
+
