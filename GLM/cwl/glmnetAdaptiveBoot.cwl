@@ -1,20 +1,17 @@
-$namespaces:
- arv: "http://arvados.org/cwl#"
- cwltool: "http://commonwl.org/cwltool#"
+cwlVersion: v1.1
+class: CommandLineTool
 requirements:
   DockerRequirement:
     dockerPull: glmextra
   ResourceRequirement:
-    coresMin: 2 
+    coresMin: 2
     ramMin: 100000
-hints:
-  cwltool:LoadListingRequirement: 
-    loadListing: deep_listing
-cwlVersion: v1.0
-class: CommandLineTool
 inputs: 
   glmnet_file:
     type: File
+    default:
+      class: File
+      location: ../src/glmnetAdaptiveBoot.r
     inputBinding:
       position: 0
   X:
@@ -50,10 +47,10 @@ inputs:
     inputBinding:
       position: 8
   gamma:
-    type: string 
+    type: float
     inputBinding:
-      position: 9   
-  colorblood:
+      position: 9
+  phenotype:
     type: string
     inputBinding:
       position: 10
@@ -73,16 +70,13 @@ inputs:
     type: string
     inputBinding:
       position: 14
-
-outputs: 
+outputs:
   text_file:
     type: File[]
     outputBinding:
       glob: "*.txt"
-
   graph:
     type: File[]
     outputBinding:
       glob: "*.png"
-
 baseCommand: Rscript

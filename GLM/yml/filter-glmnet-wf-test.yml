@@ -1,0 +1,23 @@
+dbfile:
+  class: File
+  location: keep:2xpu4-4zz18-7ovdsorvgy9hrg6/ADNI-ADSP_Phenotypes_DS_2021.02.19_slim.tsv
+allfile:
+  class: File 
+  location: keep:2xpu4-4zz18-jpcdr2yz98chukc/matrix.npy
+namefile:
+  class: File
+  location: keep:2xpu4-4zz18-jpcdr2yz98chukc/labels.csv
+phenotype: "AD"
+PCAfile:
+  class: File
+  location: keep:2xpu4-4zz18-010bwhw8na18fot/tiledPCA.npy
+PCAnamesfile:
+  class: File
+  location: keep:2xpu4-4zz18-010bwhw8na18fot/labels.csv
+qualcutoff: 0.9
+gamma: 2
+type_measure: class
+force_PCA: "false"
+weighted: "true"
+seedsnumber: 50
+seedslimit: 1000

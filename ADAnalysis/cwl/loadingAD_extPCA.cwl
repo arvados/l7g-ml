@@ -1,21 +1,22 @@
-cwlVersion: v1.0
+cwlVersion: v1.1
 class: CommandLineTool
-$namespaces:
- arv: "http://arvados.org/cwl#"
- cwltool: "http://commonwl.org/cwltool#"
-
 requirements:
   DockerRequirement:
     dockerPull: tileglm 
   ResourceRequirement:
     coresMin: 16
     ramMin: 450000
-
-baseCommand: python
-
 inputs:
   get_data_file:
     type: File
+    default:
+      class: File
+      location: ../loadingAD_zygosity_extPCA.py
+      secondaryFiles:
+        - class: Directory
+          location: ../../tileml
+        - class: Directory
+          location: ../../adml
     inputBinding:
       position: 0
   dbfile:
@@ -42,7 +43,10 @@ inputs:
     type: File
     inputBinding:
       position: 6
-
+  qualcutoff:
+    type: float
+    inputBinding:
+      position: 7
 outputs:
   X:
     type: File
@@ -76,4 +80,4 @@ outputs:
     type: File
     outputBinding:
       glob: zygosity.npy
-    
+baseCommand: python
