@@ -1,5 +1,3 @@
-# usr/bin/python
-
 import numpy as np
 import sqlite3
 import pandas as pd
@@ -11,8 +9,6 @@ import scipy.sparse
 from scipy.sparse import csr_matrix
 from scipy.sparse import hstack
 
-#a = '../tileml'
-#b = '../adml'
 a = './tileml'
 b = './adml'
 sys.path.insert(0, a)
@@ -29,6 +25,10 @@ namesfile = sys.argv[3]
 phenotype = sys.argv[4]
 PCAfile = sys.argv[5]
 PCAnamesfile = sys.argv[6]
+qualcutoff = float(sys.argv[7])
+
+if qualcutoff < 0 or qualcutoff > 1:
+  raise ValueError("Provided quality cutoff {} should be between 0 and 1".format(qualcutoff))
 
 # Load y Data as Dataframe (Data and IDs) 
 dataAD = adutils.yloadAD(ydatasource)
@@ -86,8 +86,8 @@ Xtrain = np.concatenate((Xtrain[:,0:n:2], Xtrain[:,1:n:2]),axis=0)
 pathdata = pathdata[0:n:2]
 idxOP = idxOP[0:n:2]
 
-# Quality Cutoff 90% for Filter and Further ML
-[Xtrain, pathdata, idxOP] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,0.90)
+# Quality Cutoff for Filter and Further ML
+[Xtrain, pathdata, idxOP] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,qualcutoff)
 [pathdataOH, idxOPOH, varvals]= tileutils.findTileVars(Xtrain,pathdata,idxOP)
 
 # Calculate OH Representation, Filtered using Pearson Chi2

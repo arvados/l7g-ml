@@ -1,18 +1,13 @@
-$namespaces:
- arv: "http://arvados.org/cwl#"
- cwltool: "http://commonwl.org/cwltool#"
-
+cwlVersion: v1.1
+class: Workflow
 requirements:
   ScatterFeatureRequirement: {}
 
-cwlVersion: v1.0
-class: Workflow
-
 inputs:
-  Nseeds:
+  seedsnumber:
     type: int
-  glmnet_file:
-    type: File
+  seedslimit:
+    type: int
   X:
     type: File
   Xr:
@@ -30,8 +25,8 @@ inputs:
   zygosity:
     type: File
   gamma:
-    type: string
-  colorblood:
+    type: float
+  phenotype:
     type: string
   type_measure:
     type: string
@@ -41,25 +36,31 @@ inputs:
     type: string
 
 outputs: 
-  coefFiles: 
+  coefFiles:
     type:
       type: array
       items:
         type: array
-        items: File 
+        items: File
     outputSource: glmnetAdaptiveBoot/text_file
-    
+
 steps:
-  generateRandArray:
+  generateSeeds:
     in:
-      Nseeds: Nseeds 
-    out: [randomseed]
-    run: generateArray.cwl
+      seedsnumber: seedsnumber
+      seedslimit: seedslimit
+    out: [seedsstr]
+    run: generateSeeds.cwl
+
+  string-to-array:
+    in:
+      str: generateSeeds/seedsstr
+    out: [randomseeds]
+    run: string-to-array.cwl
 
   glmnetAdaptiveBoot:
     scatter: seed
     in:
-      glmnet_file: glmnet_file
       X: X
       Xr: Xr
       Xc: Xc
@@ -69,10 +70,10 @@ steps:
       varvals: varvals
       zygosity: zygosity
       gamma: gamma
-      colorblood: colorblood
+      phenotype: phenotype
       type_measure: type_measure
       force_PCA: force_PCA
       weighted: weighted
-      seed: generateRandArray/randomseed
+      seed: string-to-array/randomseeds
     run: glmnetAdaptiveBoot.cwl
     out: [text_file,graph]
