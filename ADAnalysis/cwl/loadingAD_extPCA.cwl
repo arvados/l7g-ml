@@ -43,10 +43,6 @@ inputs:
     type: File
     inputBinding:
       position: 6
-  qualcutoff:
-    type: float
-    inputBinding:
-      position: 7
 outputs:
   X:
     type: File
