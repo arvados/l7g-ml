@@ -22,8 +22,7 @@ from adml import adutils as adutils
 ydatasource = sys.argv[1]
 allfile = sys.argv[2]
 namesfile = sys.argv[3]
-phenotype = sys.argv[4]
-annotationsfile = sys.argv[5]
+annotationsfile = sys.argv[4]
 
 # Load y Data as Dataframe (Data and IDs) 
 dataAD = adutils.yloadAD(ydatasource)
@@ -39,6 +38,7 @@ Xtrain[idxN1] = 0
 
 # Determine Shape of Tiled Matrix Chunk
 [m,n] = Xtrain.shape
+print(Xtrain.shape)
 
 # Placeholder Locations of Tiles
 pathdata = np.zeros(n)
@@ -64,7 +64,7 @@ offset = offset[0]
 # Create Vector of Original Index of Tile Position
 idxn = Xtrain.shape[1]/2
 idxrange = np.arange(idxn)
-idxrange = idxrange 
+idxrange = idxrange + offset
 idxOP = np.empty(Xtrain.shape[1])
 idxOP[0::2] = idxrange
 idxOP[1::2] = idxrange
@@ -72,11 +72,16 @@ idxOP[1::2] = idxrange
 # Reshaping Matrix to Combine Phases  
 [m,n] = Xtrain.shape
 Xtrain = np.concatenate((Xtrain[:,0:n:2], Xtrain[:,1:n:2]),axis=0)
+pathdata = pathdata[0:n:2]
 idxOP = idxOP[0:n:2]
-pathdata = idxOP[0:n:2] + offset
 
+print(idxOP.shape)
+print(pathdata.shape)
 # Quality Cutoff 90% for Filter and Further ML
 [Xtrain, pathdata, idxOP] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,0.90)
+print(Xtrain.shape)
+print(pathdata.shape)
+print(idxOP.shape)
 [pathdataOH, idxOPOH, varvals]= tileutils.findTileVars(Xtrain,pathdata,idxOP)
 
 # Calculate OH Representation, Filtered using Pearson Chi2
@@ -86,10 +91,11 @@ pathdata = idxOP[0:n:2] + offset
 # Removing NaN values from y
 idxNN = np.logical_not(np.isnan(y))
 y = y[idxNN]
-
+print(Xtrain.shape)
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
 [Xr,Xc] = Xtrain.nonzero()
 print(Xr.shape)
+print(Xc.shape)
 Xtrain = Xtrain.data
 print(Xtrain.shape)
 print(y.shape)
@@ -104,7 +110,7 @@ yfile = 'y' + chunk + '.npy'
 pathdatafile = 'pathdataOH' + chunk + '.npy'
 oldpathfile = 'oldpath' + chunk + '.npy'
 varvalsfile  = 'varvals' + chunk + '.npy'
-Xfile = 'X' + chunk + '.npy'
+Xfile = 'Xdata' + chunk + '.npy'
 Xrfile = 'Xr' + chunk + '.npy'
 Xcfile = 'Xc' + chunk + '.npy'
 zygosityfile = 'zygosity' + chunk + '.npy'

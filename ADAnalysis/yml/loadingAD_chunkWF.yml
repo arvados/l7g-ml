@@ -1,6 +1,12 @@
+numpydir:
+  class: Directory 
+  path: keep:2xpu4-4zz18-uri2d6sxefxx9op
+annotationdir:
+  class: Directory
+  path: keep:2xpu4-4zz18-uri2d6sxefxx9op
 get_data_file:
   class: File
-  path: ../loadingAD_zygosity_release.py
+  path: ../loadingAD_zygosity_bychunk.py
   secondaryFiles:
     - class: Directory
       path: /data-sdd/cwl_tiling/l7g-ml/tileml
@@ -9,10 +15,7 @@ get_data_file:
 dbfile:
   class: File
   path: keep:2xpu4-4zz18-7ovdsorvgy9hrg6/ADNI-ADSP_Phenotypes_DS_2021.02.19_slim.tsv
-allfile: 
+namefile:
   class: File
-  path: keep:2xpu4-4zz18-j4xi0p1fdc9ite5/matrix.npy 
-namefile: 
-  class: File
-  path: keep:2xpu4-4zz18-j4xi0p1fdc9ite5/labels.csv
-phenotype: AD 
+  path: keep:2xpu4-4zz18-uri2d6sxefxx9op/labels.csv
+

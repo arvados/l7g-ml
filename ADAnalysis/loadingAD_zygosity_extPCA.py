@@ -25,10 +25,10 @@ namesfile = sys.argv[3]
 phenotype = sys.argv[4]
 PCAfile = sys.argv[5]
 PCAnamesfile = sys.argv[6]
-qualcutoff = float(sys.argv[7])
+qualcutoff = .90 #float(sys.argv[7])
 
-if qualcutoff < 0 or qualcutoff > 1:
-  raise ValueError("Provided quality cutoff {} should be between 0 and 1".format(qualcutoff))
+#if qualcutoff < 0 or qualcutoff > 1:
+#  raise ValueError("Provided quality cutoff {} should be between 0 and 1".format(qualcutoff))
 
 # Load y Data as Dataframe (Data and IDs) 
 dataAD = adutils.yloadAD(ydatasource)
@@ -101,6 +101,8 @@ pheno = pheno[idxNN]
 tiledPCA = tiledPCA[idxNN,:]
 
 # Combine Filtered OH Encoded Tiled Genomes and PCA Components
+np.save('XPCAwExt.npy', tiledPCA)
+
 tiledPCA = csr_matrix(tiledPCA)
 print(tiledPCA.shape)
 Xtrain = hstack([Xtrain,tiledPCA],format='csr')

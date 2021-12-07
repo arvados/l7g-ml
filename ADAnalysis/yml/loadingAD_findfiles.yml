@@ -1,0 +1,6 @@
+numpydir:
+  class: Directory 
+  path: keep:2xpu4-4zz18-uri2d6sxefxx9op
+annotationdir:
+  class: Directory
+  path: keep:2xpu4-4zz18-uri2d6sxefxx9op
