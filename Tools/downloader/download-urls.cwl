@@ -1,6 +1,6 @@
 #/usr/bin/env cwl-runner
 
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: CommandLineTool
 label: Downloads files from URL(s)
 
@@ -9,13 +9,22 @@ $namespaces:
   cwltool: "http://commonwl.org/cwltool#"
 
 requirements:
-  - class: DockerRequirement
+  DockerRequirement:
     dockerPull: curii/arvados-download
+  InitialWorkDirRequirement:
+    listing:
+      - entryname: secrets.conf
+        entry: |
+          [default]
+          aws_access_key_id=$(inputs.accessKey)
+          aws_secret_access_key=$(inputs.secretKey)
 
 hints:
   arv:RuntimeConstraints:
     outputDirType: keep_output_dir
-    keep_cache: 4096
+    keep_cache: 1048
+  ResourceRequirement:
+    ramMin: 2048
   arv:APIRequirement: {}
 
 baseCommand: bash
@@ -31,10 +40,12 @@ inputs:
     label: url to download from
     inputBinding:
       position: 2
+  accessKey: string
+  secretKey: string
 
 outputs:
   out1:
     type: File[]
     label: files generated from download and md5sum
     outputBinding:
-      glob: "*"
+      glob: ["*gz","*md5sum","*tbi"]

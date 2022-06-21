@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 
-cwlVersion: v1.0
+cwlVersion: v1.2
 class: Workflow
 label: Downloads files from URL(s)
 
@@ -10,7 +10,7 @@ $namespaces:
 
 requirements:
   - class: DockerRequirement
-    dockerPull: curii/arvados-download
+    dockerPull: cure/awscli-download
   - class: ScatterFeatureRequirement
 
 hints:
@@ -20,6 +20,12 @@ hints:
     enableReuse: false
   arv:IntermediateOutput:
     outputTTL: 86400
+  arv:WorkflowRunnerResources:
+    ramMin: 4096
+    coresMin: 2
+    keep_cache: 2048
+  cwltool:Secrets:
+    secrets: [accessKey,secretKey]
 
 inputs:
   bashScript:
@@ -29,6 +35,9 @@ inputs:
   urlFile:
     type: File
     label: list of URLs to download from
+
+  accessKey: string
+  secretKey: string
 
 outputs:
   out1:
@@ -54,4 +63,6 @@ steps:
     in:
       bashScript: bashScript
       url: get-urls/urls
+      accessKey: accessKey
+      secretKey: secretKey
     out: [out1]
