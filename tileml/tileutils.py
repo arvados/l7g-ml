@@ -211,17 +211,17 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff, zygosit
        tiledgenomesOHhetchunk = tiledgenomesOHhetchunk[idxNN,:]
        tiledgenomesOHhomchunk = tiledgenomesOHhomchunk[idxNN,:]
        
-       [chi2valhet,pvalhet] = chi2(tiledgenomesOHhetchunk, y)
-       pidxchunkhet = pvalhet <= pcutoff
+       [chi2valhet,pvalhetchunk] = chi2(tiledgenomesOHhetchunk, y)
+       pidxchunkhet = pvalhetchunk <= pcutoff
 
        tiledgenomesOHhetchunkfiltered = tiledgenomesOHhetchunk[:,pidxchunkhet]
        chunkhetsize = np.shape(tiledgenomesOHhetchunkfiltered)
        zygosity_chunkhet = np.ones((chunkhetsize[1],), dtype=int)
        pidxhet = np.concatenate((pidxhet,pidxchunkhet),axis=0)
 
-       [chi2valhom,pvalhom] = chi2(tiledgenomesOHhomchunk, y)
+       [chi2valhom,pvalhomchunk] = chi2(tiledgenomesOHhomchunk, y)
 
-       pidxchunkhom = pvalhom <= pcutoff
+       pidxchunkhom = pvalhomchunk <= pcutoff
        tiledgenomesOHhomchunkfiltered = tiledgenomesOHhomchunk[:,pidxchunkhom]
        chunkhomsize = np.shape(tiledgenomesOHhomchunkfiltered)
        zygosity_chunkhom = int(2)*np.ones((chunkhomsize[1],), dtype=int)
@@ -232,20 +232,24 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff, zygosit
        tiledgenomesOHhom = hstack([tiledgenomesOHhom,tiledgenomesOHhomchunkfiltered],format='csr')
        zygosity_hom = np.concatenate((zygosity_hom,zygosity_chunkhom),axis=0)
        zygosity_het = np.concatenate((zygosity_het,zygosity_chunkhet),axis=0)
-       
+       pvalhom = np.concatenate((pvalhom,pvalhomchunk),axis=0) 
+       pvalhet = np.concatenate((pvalhet,pvalhetchunk),axis=0)
 
     tileposOHhet = tileposOH[pidxhet]
     varvalshet = varvals[pidxhet]
     idxOPOHhet = idxOPOH[pidxhet]
+    pvalhet = pvalhet[pidxhet]
 
     tileposOHhom = tileposOH[pidxhom]
     varvalshom = varvals[pidxhom]
     idxOPOHhom = idxOPOH[pidxhom]
+    pvalhom = pvalhom[pidxhom]
 
     tileposOH = np.concatenate((tileposOHhet,tileposOHhom),axis=0)
     varvals = np.concatenate((varvalshet,varvalshom),axis=0)
     idxOPOH = np.concatenate((idxOPOHhet,idxOPOHhom),axis=0)
     zygosity = np.concatenate((zygosity_het,zygosity_hom),axis=0)
+    pval = np.concatenate((pvalhet,pvalhom),axis=0)
 
     tiledgenomesOH = hstack([tiledgenomesOHhet,tiledgenomesOHhom],format='csr')
     # Remove spanning , no call tile variants, most common tile variant (usually ref) for each position
@@ -259,9 +263,11 @@ def chiZygosity(tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff, zygosit
     tileposOH = tileposOH[idkTK]
     varvals = varvals[idkTK]
     idxOPOH = idxOPOH[idkTK]
+    pval = pvals[idxTK]
+    zygosity = zygosity[idxTK]
 
     if zygosityreturn:
-        return tiledgenomesOH, tileposOH, varvals, idxOPOH, zygosity
+        return tiledgenomesOH, tileposOH, varvals, idxOPOH, zygosity, pval
     else:
         return tiledgenomesOH, tileposOH, varvals, idxOPOH
 
@@ -274,12 +280,13 @@ def pcaComponents(tiledgenomes,varvals,n):
     from sklearn.preprocessing import StandardScaler
   
     enc = OneHotEncoder(sparse=True, dtype=np.uint16)
+    print(tilegnomesOH.shape)
 
     tiledgenomesOH = enc.fit_transform(tiledgenomes)
 
-    # Remove spanning and no call tile variants for each position
-    # 0 --> Low Quality Tiles, 1 --> Spanning Tiles
-    to_keepPCA = varvals > 1
+    # Remove spanning, no call tile and ref variants for each position
+    # 0 --> Low Quality Tiles, 1 --> Spanning Tiles, 2 ---> Ref 
+    to_keepPCA = varvals > 2 
 
     idkTKPCA = np.nonzero(to_keepPCA)
     idkTKPCA = idkTKPCA[0]
@@ -287,6 +294,7 @@ def pcaComponents(tiledgenomes,varvals,n):
     tiledgenomesOH = tiledgenomesOH[:,idkTKPCA]
     tiledgenomesOH = tiledgenomesOH.todense()
 
+    print(tilegenomesOH.shape)
     pca = PCA(n_components=n)
     tiledPCA = pca.fit_transform(tiledgenomesOH)
 
