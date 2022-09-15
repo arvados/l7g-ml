@@ -1,0 +1,1 @@
+docker run -ti -v /home/swz/l7g-ml/GLM:GLM  -v /home/swz/keep:/keep glm

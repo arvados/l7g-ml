@@ -1,0 +1,15 @@
+glmnet_file:
+  class: File
+  path: ../src/glmnetIC.r
+
+X: 
+  class: File
+  path: keep:2xpu4-4zz18-kzrctixdhz6pkle/onehot.npy
+
+coldata:
+  class: File
+  path: keep:2xpu4-4zz18-kzrctixdhz6pkle/onehot-columns.npy
+
+sampledata:
+  class: File
+  path: keep:2xpu4-4zz18-kzrctixdhz6pkle/samples.csv

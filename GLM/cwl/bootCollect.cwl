@@ -2,7 +2,7 @@ cwlVersion: v1.1
 class: CommandLineTool
 requirements:
   DockerRequirement:
-    dockerPull: glmextra
+    dockerPull: glm_new
   ResourceRequirement:
     coresMin: 2
     ramMin: 10000

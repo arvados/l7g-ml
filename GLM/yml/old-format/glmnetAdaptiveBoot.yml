@@ -1,6 +1,6 @@
 glmnet_file:
   class: File
-  path: ../src/glmnetAdaptiveBoot.r
+  path: ../src/glmnetBootNewFormat.r
 X: 
   class: File
   path: keep:a2753ccd8fd54fb76a19b2adfc30abfa+2192/X.npy

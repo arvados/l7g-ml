@@ -15,7 +15,7 @@ print(files)
 for file in files:
    bootfile = pd.read_csv(file, delimiter='\t')
    bootfile = bootfile.dropna()
-   bootfile["tilevariant"] = bootfile['oldpath_min'].map(str) + '-' + bootfile['varvals_min'].map(str) + '-' + bootfile['zygosity_min'].map(str)
+   bootfile["tilevariant"] = bootfile['tag'].map(str) + '-' + bootfile['variant'].map(str) + '-' + bootfile['zygosity'].map(str)
 
    bootfileSmall = bootfile[['tilevariant','nonnzerocoefs_min']]
    bootfileSmall = bootfileSmall.set_index('tilevariant')

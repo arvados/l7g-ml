@@ -1,0 +1,23 @@
+glmnet_file:
+  class: File
+  path: ../src/glmnetBootNewFormat.r
+
+X: 
+  class: File
+  path: keep:2xpu4-4zz18-pky2m6373s8fikg/onehot.npy
+
+coldata:
+  class: File
+  path: keep:2xpu4-4zz18-pky2m6373s8fikg/onehot-columns.npy
+
+sampledata:
+  class: File
+  path: keep:2xpu4-4zz18-pky2m6373s8fikg/samples.csv
+
+gamma: 2
+
+weighted: "true"
+
+seedsnumber: 50 
+
+seedslimit: 1000
