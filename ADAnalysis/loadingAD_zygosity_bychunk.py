@@ -86,7 +86,7 @@ print(idxOP.shape)
 
 # Calculate OH Representation, Filtered using Pearson Chi2
 # (tiledgenomes,tileposOH,idxOPOH,varvals,y,nparts,pcutoff):
-[Xtrain, pathdataOH, varvals, idxOPOH, zygosity] = tileutils.chiZygosity(Xtrain,pathdataOH,idxOPOH,varvals,y,4,.05,zygosityreturn=True)
+[Xtrain, pathdataOH, varvals, idxOPOH, zygosity, pval] = tileutils.chiZygosity(Xtrain,pathdataOH,idxOPOH,varvals,y,4,.01,zygosityreturn=True)
 
 # Removing NaN values from y
 idxNN = np.logical_not(np.isnan(y))
@@ -114,6 +114,7 @@ Xfile = 'Xdata' + chunk + '.npy'
 Xrfile = 'Xr' + chunk + '.npy'
 Xcfile = 'Xc' + chunk + '.npy'
 zygosityfile = 'zygosity' + chunk + '.npy'
+pvalfile = 'pval' + chunk + '.npy'
 
 # Save Final Outputs
 np.save(yfile, y)
@@ -124,3 +125,4 @@ np.save(Xfile, Xtrain)
 np.save(Xrfile, Xr)
 np.save(Xcfile, Xc)
 np.save(zygosityfile,zygosity)
+np.save(pvalfile,pval)

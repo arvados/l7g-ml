@@ -1,0 +1,14 @@
+get_data_file:
+  class: File
+  path: ../PCA-only.py
+  secondaryFiles:
+    - class: Directory
+      path: /home/swz/l7g-ml/tileml
+    - class: Directory
+      path: /home/swz/l7g-ml/adml
+allfiledir: 
+  class: Directory 
+  path: keep:2xpu4-4zz18-3gs7yc614j6g3yi/library_full/
+namefile: 
+  class: File
+  path: keep:2xpu4-4zz18-3gs7yc614j6g3yi/library_full/samples.csv

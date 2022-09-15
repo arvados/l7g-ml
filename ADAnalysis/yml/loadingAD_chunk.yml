@@ -3,9 +3,9 @@ get_data_file:
   path: ../loadingAD_zygosity_bychunk.py
   secondaryFiles:
     - class: Directory
-      path: /data-sdd/cwl_tiling/l7g-ml/tileml
+      path: /home/swz/l7g-ml/tileml
     - class: Directory
-      path: /data-sdd/cwl_tiling/l7g-ml/adml
+      path: /home/swz/l7g-ml/adml
 dbfile:
   class: File
   path: keep:2xpu4-4zz18-7ovdsorvgy9hrg6/ADNI-ADSP_Phenotypes_DS_2021.02.19_slim.tsv

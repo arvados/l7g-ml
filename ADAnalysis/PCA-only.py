@@ -22,16 +22,11 @@ from adml import adutils as adutils
 #import tileutils as tileutils
 #import adutils as adutils
 
-ydatasource = sys.argv[1]
-allfiledir = sys.argv[2]
-namesfile = sys.argv[3]
-phenotype = sys.argv[4]
-
-# Load y Data as Dataframe (Data and IDs) 
-dataAD = adutils.yloadAD(ydatasource)
+allfiledir = sys.argv[1]
+namesfile = sys.argv[2]
 
 # Placeholder for Locations of Tiles
-header_list = ["number","names","outputname"]
+header_list = ["number","names","status"]
 df = pd.read_csv(namesfile, names=header_list)
 names = df["names"].tolist()
 
@@ -71,15 +66,18 @@ for file in filelist:
     last_element = idxOP[array_length - 1]
     idxoffset = last_element
 
-    print("Quality Cutoff 99% for PCA")
-    # Quality Cutoff 99% for PCA
+    print("Quality Cutoff 100% for PCA")
+    # Quality Cutoff 100% for PCA
     [XtrainPCA, pathdataPCA, idxOPPCA] = tileutils.qualCutOff(Xtrain,pathdata,idxOP,1)
     allXPCA = np.hstack((allXPCA,XtrainPCA))
     allidx = np.hstack((idxOPPCA,allidx))
     allpathdataPCA = np.hstack((allpathdataPCA,pathdataPCA))
 
-print(allpathdataPCA)
 print("Calculating PCA")
+# Randomize Data
+
+#allXPCA = tileutils.randomizePhase(allXPCA)
+
 # Calculate Top 20 PCA Components
 [__, __, varvalsPCA]= tileutils.findTileVars(allXPCA,allpathdataPCA,allidx)
 tiledPCA = tileutils.pcaComponents(allXPCA,varvalsPCA,20)
