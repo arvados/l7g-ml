@@ -1,0 +1,12 @@
+onehotnpy: 
+  class: File
+  path: keep:2xpu4-4zz18-amsh3l9dsdl5po8/onehot.npy
+onehotcolumnsnpy:
+  class: File
+  path: keep:2xpu4-4zz18-amsh3l9dsdl5po8/onehot-columns.npy
+samplescsv:
+  class: File
+  path: keep:2xpu4-4zz18-amsh3l9dsdl5po8/samples.csv
+gamma: 2
+weighted: "true"
+seed: "99"
