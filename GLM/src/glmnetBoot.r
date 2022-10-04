@@ -45,12 +45,12 @@ print(dim(Xmat))
 rm(row_ind,col_ind,Xdata)
 
 # Load the y array and make into vector in R
-coldata <- np$load(args[2]) 
+coldata <- np$load(args[2])
 coldata <- as.matrix(coldata)
 
 sampledata = read.csv(args[3],header=FALSE)
 sampledata = as.matrix(sampledata)
-		      
+
 y <- as.numeric(sampledata[,3])
 y <- as.matrix(y)
 
@@ -150,7 +150,7 @@ dataF_1se <- data.frame("nonnzerocoefs_1se" = nznumbse, "tag" = tags[idxnzse], "
 o_1se <- order(abs(dataF_1se$nonnzerocoefs_1se), decreasing = TRUE)
 dataF_1se <- dataF_1se[o_1se,]
 
-filename1 <- paste0('glmnet_lasso_1se.txt' )
+filename1 <- paste0('glmnet_lasso_1se.txt')
 fileConn1 <- file(filename1, "w")
 write.table(dataF_1se, fileConn1, sep= "\t", row.names = FALSE)
 close(fileConn1)
