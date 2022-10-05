@@ -106,7 +106,7 @@ if (weighted == TRUE) {
 
 cv.ridge <- cv.glmnet(Xtrain, ytrain, family='binomial', alpha=0, parallel=TRUE, standardize=FALSE,intercept = TRUE, weights=wtrain)
 w3 <- 1/abs(matrix(coef(cv.ridge, s=cv.ridge$lambda.min)
-                   [, 1][2:(ncol(Xmat)+1)] ))^gamma ## Using gamma = 2 
+                   [, 1][2:(ncol(Xmat)+1)] ))^gamma ## Using gamma = 2
 w3[w3[,1] == Inf] <- 999999999 ## Replacing values estimated as Infinite for 999999999
 
 if (forcePCA == TRUE) {
