@@ -49,6 +49,4 @@ print(totalCI)
 #totalCI.to_csv('CI.csv', index=True)
 
 ccount= totalBoot.apply(lambda x: np.count_nonzero(x))
-idx = ccount >= 25
-#ccount = ccount[idx]
 ccount.to_csv(outcsv, index=True)
