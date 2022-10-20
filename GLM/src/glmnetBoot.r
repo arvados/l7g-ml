@@ -40,8 +40,8 @@ Xdata <- as.numeric(Xdata)
 #row_ind <- as.numeric(row_ind)
 #col_ind <- as.numeric(col_ind)
 
-Xmat <- sparseMatrix(row_ind,col_ind,x = Xdata)
-print(dim(Xmat))
+Xmatfull <- sparseMatrix(row_ind,col_ind,x = Xdata)
+print(dim(Xmatfull))
 rm(row_ind,col_ind,Xdata)
 
 # Load the y array and make into vector in R
@@ -49,10 +49,15 @@ coldata <- np$load(args[2])
 coldata <- as.matrix(coldata)
 
 sampledata = read.csv(args[3],header=FALSE)
-sampledata = as.matrix(sampledata)
+training_ind <- sampledata[sampledata[4]=='training',][,1] + 1
 
-y <- as.numeric(sampledata[,3])
+y <- as.numeric(sampledata[sampledata[4]=='training',][,3])
 y <- as.matrix(y)
+
+# Extract training set of the sparse matrix
+Xmat = Xmatfull[training_ind,]
+print(dim(Xmat))
+rm(Xmatfull)
 
 tags <- as.matrix(as.numeric(coldata[1,]))
 varvals <- as.matrix(as.numeric(coldata[2,]))
