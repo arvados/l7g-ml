@@ -6,8 +6,9 @@ onehotcolumnsnpy:
   path: keep:2xpu4-4zz18-amsh3l9dsdl5po8/onehot-columns.npy
 samplescsv:
   class: File
-  path: keep:2xpu4-4zz18-amsh3l9dsdl5po8/samples.csv
+  path: keep:79ea4c0849c92ff4f8fedf40a7bab2e3+63/samples.csv
 gamma: 2
 weighted: "true"
-seedsnumber: 50 
+seedsnumber: 50
 seedslimit: 1000
+threshold: 25

@@ -8,18 +8,8 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.linear_model import LogisticRegression
 
-def filter_row_column(row_column, row_indices, column_indices):
-  row = row_column[0]
-  column = row_column[1]
-  row_pass = np.isin(row, row_indices)
-  column_pass = np.isin(column, column_indices)
-  both_pass = row_pass & column_pass
-  row_filtered = row[both_pass]
-  column_filtered = column[both_pass]
-  row_column_filtered = np.array([row_filtered, column_filtered])
-  return row_column_filtered
-
 def extract_tilevars(countfile, threshold):
+  """Extract the set of tile variants that exceed given threshold."""
   tilevars = set([])
   with open(countfile) as f:
     for line in f:
@@ -31,6 +21,7 @@ def extract_tilevars(countfile, threshold):
   return tilevars
 
 def get_column_indices(onehot_columns, tilevars):
+  """Get tile varians indices in onehot columns."""
   column_sublist = []
   ct = onehot_columns.transpose()
   for i in range(len(ct)):
@@ -41,28 +32,39 @@ def get_column_indices(onehot_columns, tilevars):
   return column_indices
 
 def make_matrix(row_column):
+  """Make sparse matrix from row/column numpy."""
   data = np.ones(row_column.shape[1])
   row = row_column[0]
   column = row_column[1]
   matrix = sc.sparse.csr_matrix((data, (row, column)))
   return matrix
 
+def extract_submatrix(matrix, row_indices, column_indices):
+  """Extract submatrix from full matrix given row indices and column indices."""
+  matrixarray = matrix.toarray()
+  submatrix = matrixarray.take(row_indices, axis=0).take(column_indices, axis=1)
+  matrix = sc.sparse.csr_matrix(submatrix)
+  return matrix
+
 def make_labels(samplesfile):
+  """Make labels of training indices and AD status and
+  validation indices and AD status."""
   labels = {}
-  indices = []
-  ads = []
+  training_indices = []
+  training_ads = []
+  validation_indices = []
+  validation_ads = []
   with open(samplesfile) as f:
     for line in f:
       index = int(line.strip().split(',')[0])
       ad = int(line.strip().split(',')[2])
-      indices.append(index)
-      ads.append(ad)
-  # this is subject to change
-  training_len = int(0.8*len(indices))
-  training_indices = indices[:training_len]
-  training_ads = ads[:training_len]
-  validation_indices = indices[training_len:]
-  validation_ads = ads[training_len:]
+      status = line.strip().split(',')[3]
+      if status == "training":
+        training_indices.append(index)
+        training_ads.append(ad)
+      elif status == "validation":
+        validation_indices.append(index)
+        validation_ads.append(ad)
   labels["training"] = np.array([training_indices, training_ads])
   labels["validation"] = np.array([validation_indices, validation_ads])
   return labels
@@ -70,6 +72,7 @@ def make_labels(samplesfile):
 def main():
   onehotfile, onehotcolumnfile, samplesfile, countfile, threshold = sys.argv[1:]
   row_column = np.load(onehotfile)
+  full_matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
   threshold = int(threshold)
   labels = make_labels(samplesfile)
@@ -79,12 +82,11 @@ def main():
   validation_ads = labels["validation"][1]
   tilevars = extract_tilevars(countfile, threshold)
   column_indices = get_column_indices(onehot_columns, tilevars)
-  training_row_column = filter_row_column(row_column, training_indices, column_indices)
-  training_matrix = make_matrix(training_row_column)
-  clf = LogisticRegression(penalty='none', max_iter=500).fit(training_matrix, training_ads)
-  validation_row_column = filter_row_column(row_column, validation_indices, column_indices)
-  validation_matrix = make_matrix(validation_row_column)
-  prediction = np.take(clf.predict(validation_matrix), validation_indices)
+  training_matrix = extract_submatrix(full_matrix, training_indices, column_indices)
+  validation_matrix = extract_submatrix(full_matrix, validation_indices, column_indices)
+  # logitstic regression training with balanced weights
+  clf = LogisticRegression(penalty='none', class_weight='balanced', max_iter=500).fit(training_matrix, training_ads)
+  prediction = clf.predict(validation_matrix)
   score = sk.metrics.accuracy_score(validation_ads, prediction)
   print(score)
   cm = confusion_matrix(validation_ads, prediction)

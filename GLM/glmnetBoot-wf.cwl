@@ -5,25 +5,25 @@ requirements:
   StepInputExpressionRequirement: {}
 
 inputs:
-  seedsnumber:
-    type: int
-  seedslimit:
-    type: int
-  onehotnpy:
-    type: File
-  onehotcolumnsnpy:
-    type: File
-  samplescsv:
-    type: File
-  gamma:
-    type: float
-  weighted:
-    type: string
+  seedsnumber: int
+  seedslimit: int
+  onehotnpy: File
+  onehotcolumnsnpy: File
+  samplescsv: File
+  gamma: float
+  weighted: string
+  threshold: int
 
 outputs:
   csv: 
     type: File 
     outputSource: bootCollect/csv
+  stats:
+    type: File
+    outputSource: validate/stats
+  graph:
+    type: File
+    outputSource: validate/graph
 
 steps:
   generateSeeds:
@@ -64,3 +64,13 @@ steps:
     in:
       txtdir: filearray-to-dir/dir
     out: [csv]
+
+  validate:
+    run: validate.cwl
+    in:
+      onehotnpy: onehotnpy
+      onehotcolumnsnpy: onehotcolumnsnpy
+      samplescsv: samplescsv
+      count: bootCollect/csv
+      threshold: threshold
+    out: [stats, graph]
