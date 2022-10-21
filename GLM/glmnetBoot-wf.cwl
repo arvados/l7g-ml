@@ -10,6 +10,7 @@ inputs:
   onehotnpy: File
   onehotcolumnsnpy: File
   samplescsv: File
+  phenotypedir: Directory
   gamma: float
   weighted: string
   threshold: int
@@ -71,6 +72,7 @@ steps:
       onehotnpy: onehotnpy
       onehotcolumnsnpy: onehotcolumnsnpy
       samplescsv: samplescsv
+      phenotypedir: phenotypedir
       count: bootCollect/csv
       threshold: threshold
     out: [stats, graph]

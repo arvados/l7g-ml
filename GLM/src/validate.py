@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 
 import numpy as np
+import pandas as pd
 import scipy as sc
 import sklearn as sk
 import sys
+import os
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 
 def extract_tilevars(countfile, threshold):
   """Extract the set of tile variants that exceed given threshold."""
@@ -39,51 +42,40 @@ def make_matrix(row_column):
   matrix = sc.sparse.csr_matrix((data, (row, column)))
   return matrix
 
-def extract_submatrix(matrix, row_indices, column_indices):
-  """Extract submatrix from full matrix given row indices and column indices."""
-  matrixarray = matrix.toarray()
-  submatrix = matrixarray.take(row_indices, axis=0).take(column_indices, axis=1)
-  matrix = sc.sparse.csr_matrix(submatrix)
-  return matrix
-
-def make_labels(samplesfile):
-  """Make labels of training indices and AD status and
-  validation indices and AD status."""
-  labels = {}
-  training_indices = []
-  training_ads = []
-  validation_indices = []
-  validation_ads = []
-  with open(samplesfile) as f:
-    for line in f:
-      index = int(line.strip().split(',')[0])
-      ad = int(line.strip().split(',')[2])
-      status = line.strip().split(',')[3]
-      if status == "training":
-        training_indices.append(index)
-        training_ads.append(ad)
-      elif status == "validation":
-        validation_indices.append(index)
-        validation_ads.append(ad)
-  labels["training"] = np.array([training_indices, training_ads])
-  labels["validation"] = np.array([validation_indices, validation_ads])
-  return labels
+def make_dataframe(samplesfile, phenotypedir):
+  """Make dataframe with phenotype data."""
+  df_samples = pd.read_csv(samplesfile, names=["index", "SampleID", "AD", "status"], header=None)
+  phenotype_dfs = []
+  for root, dirs, files in os.walk(phenotypedir):
+    for name in files:
+      phenotype_file = os.path.join(root, name)
+      df = pd.read_csv(phenotype_file, sep='\t')[["SampleID", "Sex", "Age_baseline"]]
+      phenotype_dfs.append(df)
+  df_phenotype = pd.concat(phenotype_dfs)
+  dfm = pd.merge(df_samples, df_phenotype, on="SampleID", how="left")
+  dfm["Age_normalized"] = dfm["Age_baseline"].replace("90+", "90").astype("double")
+  dfm["Age_normalized"] = dfm["Age_normalized"].fillna(value=dfm["Age_normalized"].mean())
+  dfm["Age_normalized"] = StandardScaler().fit_transform(dfm[["Age_normalized"]])
+  return dfm
 
 def main():
-  onehotfile, onehotcolumnfile, samplesfile, countfile, threshold = sys.argv[1:]
+  onehotfile, onehotcolumnfile, samplesfile, phenotypedir, countfile, threshold = sys.argv[1:]
   row_column = np.load(onehotfile)
-  full_matrix = make_matrix(row_column)
+  matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
   threshold = int(threshold)
-  labels = make_labels(samplesfile)
-  training_indices = labels["training"][0]
-  training_ads = labels["training"][1]
-  validation_indices = labels["validation"][0]
-  validation_ads = labels["validation"][1]
+  df = make_dataframe(samplesfile, phenotypedir)
+  training_indices = df[df["status"]=="training"]["index"].to_numpy()
+  training_ads = df[df["status"]=="training"]["AD"].to_numpy()
+  training_phenotypes = df[df["status"]=="training"][["Sex", "Age_normalized"]].to_numpy()
+  validation_indices = df[df["status"]=="validation"]["index"].to_numpy()
+  validation_ads = df[df["status"]=="validation"]["AD"].to_numpy()
+  validation_phenotypes = df[df["status"]=="validation"][["Sex", "Age_normalized"]].to_numpy()
   tilevars = extract_tilevars(countfile, threshold)
   column_indices = get_column_indices(onehot_columns, tilevars)
-  training_matrix = extract_submatrix(full_matrix, training_indices, column_indices)
-  validation_matrix = extract_submatrix(full_matrix, validation_indices, column_indices)
+  # horizontally stack phenotype matrix (sex and age) with training/validation submatrix
+  training_matrix = sc.sparse.hstack((training_phenotypes, matrix[training_indices][:, column_indices]))
+  validation_matrix = sc.sparse.hstack((validation_phenotypes, matrix[validation_indices][:, column_indices]))
   # logitstic regression training with balanced weights
   clf = LogisticRegression(penalty='none', class_weight='balanced', max_iter=500).fit(training_matrix, training_ads)
   prediction = clf.predict(validation_matrix)

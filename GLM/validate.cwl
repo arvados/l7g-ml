@@ -15,6 +15,7 @@ inputs:
   onehotnpy: File
   onehotcolumnsnpy: File
   samplescsv: File
+  phenotypedir: Directory
   count: File
   threshold: int
 outputs: 
@@ -30,6 +31,7 @@ arguments:
   - $(inputs.onehotnpy)
   - $(inputs.onehotcolumnsnpy)
   - $(inputs.samplescsv)
+  - $(inputs.phenotypedir)
   - $(inputs.count)
   - $(inputs.threshold)
 stdout: stats.txt
