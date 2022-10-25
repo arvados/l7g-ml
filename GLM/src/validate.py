@@ -59,11 +59,13 @@ def make_dataframe(samplesfile, phenotypedir):
   return dfm
 
 def main():
-  onehotfile, onehotcolumnfile, samplesfile, phenotypedir, countfile, threshold = sys.argv[1:]
+  onehotfile, onehotcolumnfile, samplesfile, phenotypedir, countfile, seedsnumber, thresholdratio = sys.argv[1:]
   row_column = np.load(onehotfile)
   matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
-  threshold = int(threshold)
+  seedsnumber = int(seedsnumber)
+  thresholdratio = float(thresholdratio)
+  threshold = int(thresholdratio * seedsnumber)
   df = make_dataframe(samplesfile, phenotypedir)
   training_indices = df[df["status"]=="training"]["index"].to_numpy()
   training_ads = df[df["status"]=="training"]["AD"].to_numpy()
@@ -79,8 +81,14 @@ def main():
   # logitstic regression training with balanced weights
   clf = LogisticRegression(penalty='none', class_weight='balanced', max_iter=500).fit(training_matrix, training_ads)
   prediction = clf.predict(validation_matrix)
+  coef = clf.coef_.flatten()
   score = sk.metrics.accuracy_score(validation_ads, prediction)
-  print(score)
+  print("Accuracy = {}".format(score))
+  print("Feature: Coefficient")
+  print("Sex: {}".format(coef[0]))
+  print("Age_normalized: {}".format(coef[1]))
+  for i, v in enumerate(column_indices):
+    print("{}-{}-{}: {}".format(onehot_columns[0,v], onehot_columns[1,v], onehot_columns[2,v], coef[i+2]))
   cm = confusion_matrix(validation_ads, prediction)
   disp = ConfusionMatrixDisplay(confusion_matrix=cm)
   disp.plot()

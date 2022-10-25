@@ -17,7 +17,8 @@ inputs:
   samplescsv: File
   phenotypedir: Directory
   count: File
-  threshold: int
+  seedsnumber: int
+  thresholdratio: float
 outputs: 
   stats:
     type: stdout
@@ -33,5 +34,6 @@ arguments:
   - $(inputs.samplescsv)
   - $(inputs.phenotypedir)
   - $(inputs.count)
-  - $(inputs.threshold)
+  - $(inputs.seedsnumber)
+  - $(inputs.thresholdratio)
 stdout: stats.txt

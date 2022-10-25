@@ -13,7 +13,7 @@ inputs:
   phenotypedir: Directory
   gamma: float
   weighted: string
-  threshold: int
+  thresholdratio: float
 
 outputs:
   csv: 
@@ -74,5 +74,6 @@ steps:
       samplescsv: samplescsv
       phenotypedir: phenotypedir
       count: bootCollect/csv
-      threshold: threshold
+      seedsnumber: seedsnumber
+      thresholdratio: thresholdratio
     out: [stats, graph]
