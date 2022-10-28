@@ -42,31 +42,15 @@ def make_matrix(row_column):
   matrix = sc.sparse.csr_matrix((data, (row, column)))
   return matrix
 
-def make_dataframe(samplesfile, phenotypedir):
-  """Make dataframe with phenotype data."""
-  df_samples = pd.read_csv(samplesfile, names=["index", "SampleID", "AD", "status"], header=None)
-  phenotype_dfs = []
-  for root, dirs, files in os.walk(phenotypedir):
-    for name in files:
-      phenotype_file = os.path.join(root, name)
-      df = pd.read_csv(phenotype_file, sep='\t')[["SampleID", "Sex", "Age_baseline"]]
-      phenotype_dfs.append(df)
-  df_phenotype = pd.concat(phenotype_dfs)
-  dfm = pd.merge(df_samples, df_phenotype, on="SampleID", how="left")
-  dfm["Age_normalized"] = dfm["Age_baseline"].replace("90+", "90").astype("double")
-  dfm["Age_normalized"] = dfm["Age_normalized"].fillna(value=dfm["Age_normalized"].mean())
-  dfm["Age_normalized"] = StandardScaler().fit_transform(dfm[["Age_normalized"]])
-  return dfm
-
 def main():
-  onehotfile, onehotcolumnfile, samplesfile, phenotypedir, countfile, seedsnumber, thresholdratio = sys.argv[1:]
+  onehotfile, onehotcolumnfile, samplesphenotypefile, countfile, seedsnumber, thresholdratio = sys.argv[1:]
   row_column = np.load(onehotfile)
   matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
   seedsnumber = int(seedsnumber)
   thresholdratio = float(thresholdratio)
   threshold = int(thresholdratio * seedsnumber)
-  df = make_dataframe(samplesfile, phenotypedir)
+  df = pd.read_table(samplesphenotypefile)
   training_indices = df[df["status"]=="training"]["index"].to_numpy()
   training_ads = df[df["status"]=="training"]["AD"].to_numpy()
   training_phenotypes = df[df["status"]=="training"][["Sex", "Age_normalized"]].to_numpy()
@@ -84,11 +68,11 @@ def main():
   coef = clf.coef_.flatten()
   score = sk.metrics.accuracy_score(validation_ads, prediction)
   print("Accuracy = {}".format(score))
-  print("Feature: Coefficient")
-  print("Sex: {}".format(coef[0]))
-  print("Age_normalized: {}".format(coef[1]))
-  for i, v in enumerate(column_indices):
-    print("{}-{}-{}: {}".format(onehot_columns[0,v], onehot_columns[1,v], onehot_columns[2,v], coef[i+2]))
+  dict_output = {"Feature": ["{}-{}-{}".format(onehot_columns[0,i], onehot_columns[1,i], onehot_columns[2,i]) for i in column_indices],
+                 "Coefficient": coef[2:]} # skip sex and age
+  df_output = pd.DataFrame(dict_output)
+  df_output = df_output.reindex(df_output["Coefficient"].abs().sort_values(ascending=False).index)
+  print(df_output.to_string(index=False))
   cm = confusion_matrix(validation_ads, prediction)
   disp = ConfusionMatrixDisplay(confusion_matrix=cm)
   disp.plot()

@@ -48,5 +48,5 @@ totalCI = pd.concat([CIrobust1, meanrobust, CI2robust], axis=1)
 print(totalCI)
 #totalCI.to_csv('CI.csv', index=True)
 
-ccount= totalBoot.apply(lambda x: np.count_nonzero(x))
+ccount = totalBoot.apply(lambda x: np.count_nonzero(x))
 ccount.to_csv(outcsv, index=True)

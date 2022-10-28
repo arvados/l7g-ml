@@ -22,7 +22,7 @@ inputs:
     type: File
     inputBinding:
       position: 2
-  samplescsv:
+  samplesphenotype:
     type: File
     inputBinding:
       position: 3
@@ -38,7 +38,7 @@ inputs:
     type: string
     inputBinding:
       position: 6
-outputs: 
+outputs:
   txt:
     type: File
     outputBinding:

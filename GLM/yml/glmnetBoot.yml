@@ -7,6 +7,9 @@ onehotcolumnsnpy:
 samplescsv:
   class: File
   path: keep:79ea4c0849c92ff4f8fedf40a7bab2e3+63/samples.csv
+phenotypedir:
+  class: Directory
+  location: keep:8508667def6057f0bbf0ab4f751d8b05+205
 gamma: 2
 weighted: "true"
 seed: "99"

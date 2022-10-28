@@ -48,14 +48,17 @@ rm(row_ind,col_ind,Xdata)
 coldata <- np$load(args[2])
 coldata <- as.matrix(coldata)
 
-sampledata = read.csv(args[3],header=FALSE)
-training_ind <- sampledata[sampledata[4]=='training',][,1] + 1
+sampledata <- read.csv(args[3], sep="\t", stringsAsFactors=FALSE)
+training_ind <- sampledata$index[sampledata$status == "training"] + 1
 
-y <- as.numeric(sampledata[sampledata[4]=='training',][,3])
+y <- as.numeric(sampledata$AD[sampledata$status == "training"])
 y <- as.matrix(y)
 
-# Extract training set of the sparse matrix
-Xmat = Xmatfull[training_ind,]
+# Load phenotype matrix
+Xphenotype = as.matrix(sampledata[sampledata$status == "training",][c("Sex", "Age_normalized")])
+
+# Extract training set of the sparse matrix and combine with phenotype matrix
+Xmat = cbind(Xphenotype, Xmatfull[training_ind,])
 print(dim(Xmat))
 rm(Xmatfull)
 
@@ -127,12 +130,13 @@ plot(cv.lasso.adaptive)
 dev.off()
 
 # Output model params minimum lambda
-coefVec <- coef(cv.lasso.adaptive, s= "lambda.min")
-coefVec <- coefVec[-1]
+coefVec <- coef(cv.lasso.adaptive, s="lambda.min")
+# Skip first three elements: first element is intercept, second element is sex, third element is age
+coefVec <- coefVec[-3]
 idxnzmin <- which(coefVec !=0)
 nznumbmin <- coefVec[idxnzmin]
 
-filename <- paste0('glmnet_lasso_min.txt' )
+filename <- paste0('glmnet_lasso_min.txt')
 fileConn <- file(filename, "w")
 
 dataF_min <- data.frame("nonnzerocoefs_min" = nznumbmin,  "tag" = tags[idxnzmin], "variant" = varvals[idxnzmin],"zygosity"=zygosity[idxnzmin])
@@ -145,7 +149,8 @@ close(fileConn)
 # Output model params for 1std lambda
 
 coefVse <- coef(cv.lasso.adaptive, s="lambda.1se")
-coefVse <- coefVse[-1]
+# Skip first three elements: first element is intercept, second element is sex, third element is age
+coefVse <- coefVse[-3]
 
 idxnzse <- which(coefVse !=0)
 nznumbse <- coefVse[idxnzse]

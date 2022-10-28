@@ -14,12 +14,11 @@ inputs:
       location: src/validate.py
   onehotnpy: File
   onehotcolumnsnpy: File
-  samplescsv: File
-  phenotypedir: Directory
+  samplesphenotype: File
   count: File
   seedsnumber: int
   thresholdratio: float
-outputs: 
+outputs:
   stats:
     type: stdout
   graph:
@@ -31,8 +30,7 @@ arguments:
   - $(inputs.script)
   - $(inputs.onehotnpy)
   - $(inputs.onehotcolumnsnpy)
-  - $(inputs.samplescsv)
-  - $(inputs.phenotypedir)
+  - $(inputs.samplesphenotype)
   - $(inputs.count)
   - $(inputs.seedsnumber)
   - $(inputs.thresholdratio)

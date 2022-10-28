@@ -40,13 +40,20 @@ steps:
       str: generateSeeds/seedsstr
     out: [randomseeds]
 
+  makesamplesphenotype:
+    run: makesamplesphenotype.cwl
+    in:
+      samplescsv: samplescsv
+      phenotypedir: phenotypedir
+    out: [samplesphenotype]
+
   glmnetBoot:
     run: glmnetBoot.cwl
     scatter: seed
     in:
       onehotnpy: onehotnpy
       onehotcolumnsnpy: onehotcolumnsnpy
-      samplescsv: samplescsv
+      samplesphenotype: makesamplesphenotype/samplesphenotype
       gamma: gamma
       weighted: weighted
       seed: string-to-array/randomseeds
@@ -71,8 +78,7 @@ steps:
     in:
       onehotnpy: onehotnpy
       onehotcolumnsnpy: onehotcolumnsnpy
-      samplescsv: samplescsv
-      phenotypedir: phenotypedir
+      samplesphenotype: makesamplesphenotype/samplesphenotype
       count: bootCollect/csv
       seedsnumber: seedsnumber
       thresholdratio: thresholdratio
