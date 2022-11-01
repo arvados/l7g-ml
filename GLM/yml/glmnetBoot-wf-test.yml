@@ -14,4 +14,4 @@ gamma: 2
 weighted: "true"
 seedsnumber: 50
 seedslimit: 1000
-thresholdratio: 0.5
+fractionthreshold: 0.5

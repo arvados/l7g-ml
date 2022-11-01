@@ -16,8 +16,7 @@ inputs:
   onehotcolumnsnpy: File
   samplesphenotype: File
   count: File
-  seedsnumber: int
-  thresholdratio: float
+  fractionthreshold: float
 outputs:
   stats:
     type: stdout
@@ -32,6 +31,5 @@ arguments:
   - $(inputs.onehotcolumnsnpy)
   - $(inputs.samplesphenotype)
   - $(inputs.count)
-  - $(inputs.seedsnumber)
-  - $(inputs.thresholdratio)
+  - $(inputs.fractionthreshold)
 stdout: stats.txt
