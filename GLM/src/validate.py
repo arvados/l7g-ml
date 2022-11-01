@@ -11,13 +11,13 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
-def extract_tilevars(countfile, threshold):
+def extract_tilevars(countfile, fractionthreshold):
   """Extract the set of tile variants that exceed given threshold."""
   tilevars = set([])
   with open(countfile) as f:
     for line in f:
-      count = int(line.split(',')[1])
-      if count >= threshold:
+      fraction = float(line.split(',')[1])
+      if fraction >= fractionthreshold:
         tilevarstr = line.split(',')[0]
         tilevar = tuple(int(a) for a in tilevarstr.split('-'))
         tilevars.add(tilevar)
@@ -43,13 +43,11 @@ def make_matrix(row_column):
   return matrix
 
 def main():
-  onehotfile, onehotcolumnfile, samplesphenotypefile, countfile, seedsnumber, thresholdratio = sys.argv[1:]
+  onehotfile, onehotcolumnfile, samplesphenotypefile, countfile, fractionthreshold = sys.argv[1:]
   row_column = np.load(onehotfile)
   matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
-  seedsnumber = int(seedsnumber)
-  thresholdratio = float(thresholdratio)
-  threshold = int(thresholdratio * seedsnumber)
+  fractionthreshold = float(fractionthreshold)
   df = pd.read_table(samplesphenotypefile)
   training_indices = df[df["status"]=="training"]["index"].to_numpy()
   training_ads = df[df["status"]=="training"]["AD"].to_numpy()
@@ -57,7 +55,7 @@ def main():
   validation_indices = df[df["status"]=="validation"]["index"].to_numpy()
   validation_ads = df[df["status"]=="validation"]["AD"].to_numpy()
   validation_phenotypes = df[df["status"]=="validation"][["Sex", "Age_normalized"]].to_numpy()
-  tilevars = extract_tilevars(countfile, threshold)
+  tilevars = extract_tilevars(countfile, fractionthreshold)
   column_indices = get_column_indices(onehot_columns, tilevars)
   # horizontally stack phenotype matrix with training/validation submatrix
   training_matrix = sc.sparse.hstack((training_phenotypes, matrix[training_indices][:, column_indices]))

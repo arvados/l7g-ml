@@ -13,7 +13,7 @@ inputs:
   phenotypedir: Directory
   gamma: float
   weighted: string
-  thresholdratio: float
+  fractionthreshold: float
 
 outputs:
   csv: 
@@ -80,6 +80,5 @@ steps:
       onehotcolumnsnpy: onehotcolumnsnpy
       samplesphenotype: makesamplesphenotype/samplesphenotype
       count: bootCollect/csv
-      seedsnumber: seedsnumber
-      thresholdratio: thresholdratio
+      fractionthreshold: fractionthreshold
     out: [stats, graph]
