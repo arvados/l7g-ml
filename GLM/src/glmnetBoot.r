@@ -131,8 +131,8 @@ dev.off()
 
 # Output model params minimum lambda
 coefVec <- coef(cv.lasso.adaptive, s="lambda.min")
-# Skip first three elements: first element is intercept, second element is sex, third element is age
-coefVec <- coefVec[-3]
+# Skip first two elements: first element is intercept, second element is sex, third element is age
+coefVec <- coefVec[-(1:3)]
 idxnzmin <- which(coefVec !=0)
 nznumbmin <- coefVec[idxnzmin]
 
@@ -149,8 +149,8 @@ close(fileConn)
 # Output model params for 1std lambda
 
 coefVse <- coef(cv.lasso.adaptive, s="lambda.1se")
-# Skip first three elements: first element is intercept, second element is sex, third element is age
-coefVse <- coefVse[-3]
+# Skip first two elements: first element is intercept, second element is sex, third element is age
+coefVse <- coefVse[-(1:3)]
 
 idxnzse <- which(coefVse !=0)
 nznumbse <- coefVse[idxnzse]
