@@ -59,7 +59,7 @@ def main():
   validation_phenotypes = df[df["status"]=="validation"][["Sex", "Age_normalized"]].to_numpy()
   tilevars = extract_tilevars(countfile, threshold)
   column_indices = get_column_indices(onehot_columns, tilevars)
-  # horizontally stack phenotype matrix (sex and age) with training/validation submatrix
+  # horizontally stack phenotype matrix with training/validation submatrix
   training_matrix = sc.sparse.hstack((training_phenotypes, matrix[training_indices][:, column_indices]))
   validation_matrix = sc.sparse.hstack((validation_phenotypes, matrix[validation_indices][:, column_indices]))
   # logitstic regression training with balanced weights
