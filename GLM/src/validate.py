@@ -66,8 +66,9 @@ def main():
   coef = clf.coef_.flatten()
   score = sk.metrics.accuracy_score(validation_ads, prediction)
   print("Accuracy = {}".format(score))
-  dict_output = {"Feature": ["{}-{}-{}".format(onehot_columns[0,i], onehot_columns[1,i], onehot_columns[2,i]) for i in column_indices],
-                 "Coefficient": coef[2:]} # skip sex and age
+  dict_output = {"Feature": ["Sex", "Age_normalized"] +
+                            ["{}-{}-{}".format(onehot_columns[0,i], onehot_columns[1,i], onehot_columns[2,i]) for i in column_indices],
+                 "Coefficient": coef}
   df_output = pd.DataFrame(dict_output)
   df_output = df_output.reindex(df_output["Coefficient"].abs().sort_values(ascending=False).index)
   print(df_output.to_string(index=False))
