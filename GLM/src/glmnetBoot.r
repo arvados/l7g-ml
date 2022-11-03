@@ -139,7 +139,7 @@ nznumbmin <- coefVec[idxnzmin]
 filename <- paste0('glmnet_lasso_min.txt')
 fileConn <- file(filename, "w")
 
-dataF_min <- data.frame("nonnzerocoefs_min" = nznumbmin,  "tag" = tags[idxnzmin], "variant" = varvals[idxnzmin],"zygosity"=zygosity[idxnzmin])
+dataF_min <- data.frame("nonnzerocoefs_min" = nznumbmin,  "tag" = tags[idxnzmin], "variant" = varvals[idxnzmin], "zygosity"=zygosity[idxnzmin])
 o <- order(abs(dataF_min$nonnzerocoefs_min), decreasing = TRUE)
 dataF_min <- dataF_min[o,]
 
@@ -155,7 +155,7 @@ coefVse <- coefVse[-(1:3)]
 idxnzse <- which(coefVse !=0)
 nznumbse <- coefVse[idxnzse]
 
-dataF_1se <- data.frame("nonnzerocoefs_1se" = nznumbse, "tag" = tags[idxnzse], "variant" = varvals[idxnzse],"zygosity"=zygosity[idxnzse])
+dataF_1se <- data.frame("nonnzerocoefs_1se" = nznumbse, "tag" = tags[idxnzse], "variant" = varvals[idxnzse], "zygosity"=zygosity[idxnzse])
 
 o_1se <- order(abs(dataF_1se$nonnzerocoefs_1se), decreasing = TRUE)
 dataF_1se <- dataF_1se[o_1se,]
