@@ -4,12 +4,9 @@ onehotnpy:
 onehotcolumnsnpy:
   class: File
   path: keep:2xpu4-4zz18-amsh3l9dsdl5po8/onehot-columns.npy
-samplescsv:
+samplesphenotype:
   class: File
-  path: keep:79ea4c0849c92ff4f8fedf40a7bab2e3+63/samples.csv
-phenotypedir:
-  class: Directory
-  location: keep:8508667def6057f0bbf0ab4f751d8b05+205
+  path: keep:c912957fa29ef0ddcb08107ede2c66a2+72/samplesphenotype.tsv
 gamma: 2
 weighted: "true"
 seed: "99"

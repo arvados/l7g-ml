@@ -11,17 +11,23 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
-def extract_tilevars(countfile, fractionthreshold):
-  """Extract the set of tile variants that exceed given threshold."""
+def extract_tilevars(countfile, allphenotypes, fractionthreshold):
+  """Extract the set of tile variants and phenotypes that exceed given
+  fraction threshold."""
   tilevars = set([])
+  phenotypes = []
   with open(countfile) as f:
     for line in f:
-      fraction = float(line.split(',')[1])
-      if fraction >= fractionthreshold:
-        tilevarstr = line.split(',')[0]
-        tilevar = tuple(int(a) for a in tilevarstr.split('-'))
+      fraction = float(line.strip().split(',')[1])
+      if fraction < fractionthreshold:
+        continue
+      feature = line.strip().split(',')[0]
+      if feature in allphenotypes:
+        phenotypes.append(feature)
+      else:
+        tilevar = tuple(int(a) for a in feature.split('-'))
         tilevars.add(tilevar)
-  return tilevars
+  return (tilevars, phenotypes)
 
 def get_column_indices(onehot_columns, tilevars):
   """Get tile varians indices in onehot columns."""
@@ -48,14 +54,15 @@ def main():
   matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
   fractionthreshold = float(fractionthreshold)
+  allphenotypes = ["Sex", "Age_normalized", "Sex", "Age_normalized", "Ethnicity", "American_Indian_Alaska_Native", "Asian",	"Native_Hawaiian_or_Other_Pacific_Islander", "Black_or_African_American", "White", "Other"]
+  tilevars, phenotypes = extract_tilevars(countfile, allphenotypes, fractionthreshold)
   df = pd.read_table(samplesphenotypefile)
   training_indices = df[df["status"]=="training"]["index"].to_numpy()
   training_ads = df[df["status"]=="training"]["AD"].to_numpy()
-  training_phenotypes = df[df["status"]=="training"][["Sex", "Age_normalized"]].to_numpy()
+  training_phenotypes = df[df["status"]=="training"][phenotypes].to_numpy()
   validation_indices = df[df["status"]=="validation"]["index"].to_numpy()
   validation_ads = df[df["status"]=="validation"]["AD"].to_numpy()
-  validation_phenotypes = df[df["status"]=="validation"][["Sex", "Age_normalized"]].to_numpy()
-  tilevars = extract_tilevars(countfile, fractionthreshold)
+  validation_phenotypes = df[df["status"]=="validation"][phenotypes].to_numpy()
   column_indices = get_column_indices(onehot_columns, tilevars)
   # horizontally stack phenotype matrix with training/validation submatrix
   training_matrix = sc.sparse.hstack((training_phenotypes, matrix[training_indices][:, column_indices]))
@@ -64,13 +71,14 @@ def main():
   clf = LogisticRegression(penalty='none', class_weight='balanced', max_iter=500).fit(training_matrix, training_ads)
   prediction = clf.predict(validation_matrix)
   coef = clf.coef_.flatten()
+  print("intercept = {}".format(clf.intercept_[0]))
   score = sk.metrics.accuracy_score(validation_ads, prediction)
-  print("Accuracy = {}".format(score))
-  dict_output = {"Feature": ["Sex", "Age_normalized"] +
+  print("accuracy = {}".format(score))
+  dict_output = {"feature": phenotypes +
                             ["{}-{}-{}".format(onehot_columns[0,i], onehot_columns[1,i], onehot_columns[2,i]) for i in column_indices],
-                 "Coefficient": coef}
+                 "coefficient": coef}
   df_output = pd.DataFrame(dict_output)
-  df_output = df_output.reindex(df_output["Coefficient"].abs().sort_values(ascending=False).index)
+  df_output = df_output.reindex(df_output["coefficient"].abs().sort_values(ascending=False).index)
   print(df_output.to_string(index=False))
   cm = confusion_matrix(validation_ads, prediction)
   disp = ConfusionMatrixDisplay(confusion_matrix=cm)
