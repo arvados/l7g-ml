@@ -55,7 +55,8 @@ y <- as.numeric(sampledata$AD[sampledata$status == "training"])
 y <- as.matrix(y)
 
 # Load phenotype matrix
-Xphenotype = as.matrix(sampledata[sampledata$status == "training",][c("Sex", "Age_normalized")])
+phenotypes <- c("Sex", "Age_normalized", "Ethnicity", "American_Indian_Alaska_Native", "Asian",	"Native_Hawaiian_or_Other_Pacific_Islander", "Black_or_African_American", "White", "Other")
+Xphenotype = as.matrix(sampledata[sampledata$status == "training",][phenotypes])
 
 # Extract training set of the sparse matrix and combine with phenotype matrix
 Xmat = cbind(Xphenotype, Xmatfull[training_ind,])
@@ -121,7 +122,7 @@ if (forcePCA == TRUE) {
   w3[(length(w3) - 21):length(w3),1] <- 0
 }
 
-cv.lasso.adaptive <- cv.glmnet(Xtrain, ytrain, family='binomial', alpha=1, nfolds = 10, parallel=TRUE, intercept=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3,weights=wtrain)
+cv.lasso.adaptive <- cv.glmnet(Xtrain, ytrain, family='binomial', alpha=1, nfolds = 10, parallel=TRUE, intercept=TRUE, standardize=FALSE, type.measure='class', penalty.factor=w3, weights=wtrain)
 
 # Plotting CV,Lambda plot
 plotname_adaptive <- paste0('glmnet_lasso.png')
@@ -129,38 +130,26 @@ png(plotname_adaptive)
 plot(cv.lasso.adaptive)
 dev.off()
 
-# Output model params minimum lambda
-coefVec <- coef(cv.lasso.adaptive, s="lambda.min")
-# Skip first two elements: first element is intercept, second element is sex, third element is age
-coefVec <- coefVec[-(1:3)]
-idxnzmin <- which(coefVec !=0)
-nznumbmin <- coefVec[idxnzmin]
+output_model_params <- function(modeltype) {
+  coef <- coef(cv.lasso.adaptive, s=paste0("lambda.",modeltype))
+  print(paste("lasso", modeltype, "intercept:", coef[1]))
+  coefPheno <- coef[2:length(phenotypes)+1]
+  coefTilevar <- coef[-(1:length(phenotypes)+1)]
+  idxPheno <- which(coefPheno !=0)
+  idxTilevar <- which(coefTilevar !=0)
 
-filename <- paste0('glmnet_lasso_min.txt')
-fileConn <- file(filename, "w")
+  filename <- paste0("glmnet_lasso_", modeltype, ".txt")
+  fileConn <- file(filename, "w")
 
-dataF_min <- data.frame("nonnzerocoefs_min" = nznumbmin,  "tag" = tags[idxnzmin], "variant" = varvals[idxnzmin], "zygosity"=zygosity[idxnzmin])
-o <- order(abs(dataF_min$nonnzerocoefs_min), decreasing = TRUE)
-dataF_min <- dataF_min[o,]
+  dfPheno <- data.frame("nonnzerocoef" = coefPheno[idxPheno], "feature" = phenotypes[idxPheno])
+  dfTilevar <- data.frame("nonnzerocoef" = coefTilevar[idxTilevar],  "feature" = paste0(tags[idxTilevar], "-", varvals[idxTilevar], "-", zygosity[idxTilevar]))
+  dfAll <- rbind(dfPheno, dfTilevar)
+  o <- order(abs(dfAll$nonnzerocoef), decreasing = TRUE)
+  dfAll <- dfAll[o,]
 
-write.table(dataF_min, fileConn, sep= "\t", row.names = FALSE)
-close(fileConn)
+  write.table(dfAll, fileConn, sep= "\t", row.names = FALSE, quote=FALSE)
+  close(fileConn)
+}
 
-# Output model params for 1std lambda
-
-coefVse <- coef(cv.lasso.adaptive, s="lambda.1se")
-# Skip first two elements: first element is intercept, second element is sex, third element is age
-coefVse <- coefVse[-(1:3)]
-
-idxnzse <- which(coefVse !=0)
-nznumbse <- coefVse[idxnzse]
-
-dataF_1se <- data.frame("nonnzerocoefs_1se" = nznumbse, "tag" = tags[idxnzse], "variant" = varvals[idxnzse], "zygosity"=zygosity[idxnzse])
-
-o_1se <- order(abs(dataF_1se$nonnzerocoefs_1se), decreasing = TRUE)
-dataF_1se <- dataF_1se[o_1se,]
-
-filename1 <- paste0('glmnet_lasso_1se.txt')
-fileConn1 <- file(filename1, "w")
-write.table(dataF_1se, fileConn1, sep= "\t", row.names = FALSE)
-close(fileConn1)
+output_model_params("min") # minimum lambda
+output_model_params("1se") # 1std lambda
