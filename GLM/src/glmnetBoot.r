@@ -133,8 +133,8 @@ dev.off()
 output_model_params <- function(modeltype) {
   coef <- coef(cv.lasso.adaptive, s=paste0("lambda.",modeltype))
   print(paste("lasso", modeltype, "intercept:", coef[1]))
-  coefPheno <- coef[2:length(phenotypes)+1]
-  coefTilevar <- coef[-(1:length(phenotypes)+1)]
+  coefPheno <- coef[2:(length(phenotypes)+1)]
+  coefTilevar <- coef[-(1:(length(phenotypes)+1))]
   idxPheno <- which(coefPheno !=0)
   idxTilevar <- which(coefTilevar !=0)
 
