@@ -55,7 +55,7 @@ y <- as.numeric(sampledata$AD[sampledata$status == "training"])
 y <- as.matrix(y)
 
 # Load phenotype matrix
-phenotypes <- c("Sex", "Age_normalized", "Ethnicity", "American_Indian_Alaska_Native", "Asian",	"Native_Hawaiian_or_Other_Pacific_Islander", "Black_or_African_American", "White", "Other")
+phenotypes <- names(sampledata)[-(1:4)]
 Xphenotype = as.matrix(sampledata[sampledata$status == "training",][phenotypes])
 
 # Extract training set of the sparse matrix and combine with phenotype matrix
@@ -141,10 +141,10 @@ output_model_params <- function(modeltype) {
   filename <- paste0("glmnet_lasso_", modeltype, ".txt")
   fileConn <- file(filename, "w")
 
-  dfPheno <- data.frame("nonnzerocoef" = coefPheno[idxPheno], "feature" = phenotypes[idxPheno])
-  dfTilevar <- data.frame("nonnzerocoef" = coefTilevar[idxTilevar],  "feature" = paste0(tags[idxTilevar], "-", varvals[idxTilevar], "-", zygosity[idxTilevar]))
+  dfPheno <- data.frame("feature" = phenotypes[idxPheno], "coef" = coefPheno[idxPheno])
+  dfTilevar <- data.frame("feature" = paste0(tags[idxTilevar], "-", varvals[idxTilevar], "-", zygosity[idxTilevar]), "coef" = coefTilevar[idxTilevar])
   dfAll <- rbind(dfPheno, dfTilevar)
-  o <- order(abs(dfAll$nonnzerocoef), decreasing = TRUE)
+  o <- order(abs(dfAll$coef), decreasing = TRUE)
   dfAll <- dfAll[o,]
 
   write.table(dfAll, fileConn, sep= "\t", row.names = FALSE, quote=FALSE)

@@ -14,6 +14,7 @@ inputs:
   gamma: float
   weighted: string
   fractionthreshold: float
+  annotationvcf: File
 
 outputs:
   csv: 
@@ -25,6 +26,12 @@ outputs:
   graph:
     type: File
     outputSource: validate/graph
+  tsv:
+    type: File
+    outputSource: validate/tsv
+  annotatedtsv:
+    type: File
+    outputSource: getanno/tsv
 
 steps:
   generateSeeds:
@@ -81,4 +88,11 @@ steps:
       samplesphenotype: makesamplesphenotype/samplesphenotype
       count: bootCollect/csv
       fractionthreshold: fractionthreshold
-    out: [stats, graph]
+    out: [stats, graph, tsv]
+
+  getanno:
+    run: getanno.cwl
+    in:
+      featurecoef: validate/tsv
+      annotationvcf: annotationvcf
+    out: [tsv]
