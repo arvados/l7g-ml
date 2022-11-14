@@ -1,0 +1,6 @@
+featurecoef:
+  class: File
+  location: keep:eeaa2996e4d7d970fa04381968191e7a+343/feature_coef.tsv
+annotationvcf:
+  class: File
+  location: keep:0440c9e68e1c800a067be77b218e4794+430031/GRCh38.86_library_annotation/GRCh38.86_library_snpeff_dbsnp_gnomad.vcf.gz

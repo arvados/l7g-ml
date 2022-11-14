@@ -54,9 +54,9 @@ def main():
   matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
   fractionthreshold = float(fractionthreshold)
-  allphenotypes = ["Sex", "Age_normalized", "Sex", "Age_normalized", "Ethnicity", "American_Indian_Alaska_Native", "Asian",	"Native_Hawaiian_or_Other_Pacific_Islander", "Black_or_African_American", "White", "Other"]
-  tilevars, phenotypes = extract_tilevars(countfile, allphenotypes, fractionthreshold)
   df = pd.read_table(samplesphenotypefile)
+  allphenotypes = df.columns.values.tolist()[4:]
+  tilevars, phenotypes = extract_tilevars(countfile, allphenotypes, fractionthreshold)
   training_indices = df[df["status"]=="training"]["index"].to_numpy()
   training_ads = df[df["status"]=="training"]["AD"].to_numpy()
   training_phenotypes = df[df["status"]=="training"][phenotypes].to_numpy()
@@ -76,10 +76,10 @@ def main():
   print("accuracy = {}".format(score))
   dict_output = {"feature": phenotypes +
                             ["{}-{}-{}".format(onehot_columns[0,i], onehot_columns[1,i], onehot_columns[2,i]) for i in column_indices],
-                 "coefficient": coef}
+                 "coef": coef}
   df_output = pd.DataFrame(dict_output)
-  df_output = df_output.reindex(df_output["coefficient"].abs().sort_values(ascending=False).index)
-  print(df_output.to_string(index=False))
+  df_output = df_output.reindex(df_output["coef"].abs().sort_values(ascending=False).index)
+  df_output.to_csv("feature_coef.tsv", sep='\t', index=False)
   cm = confusion_matrix(validation_ads, prediction)
   disp = ConfusionMatrixDisplay(confusion_matrix=cm)
   disp.plot()

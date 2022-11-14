@@ -10,6 +10,9 @@ samplescsv:
 phenotypedir:
   class: Directory
   location: keep:8508667def6057f0bbf0ab4f751d8b05+205
+annotationvcf:
+  class: File
+  location: keep:0440c9e68e1c800a067be77b218e4794+430031/GRCh38.86_library_annotation/GRCh38.86_library_snpeff_dbsnp_gnomad.vcf.gz
 gamma: 2
 weighted: "true"
 seedsnumber: 50

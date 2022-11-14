@@ -24,6 +24,10 @@ outputs:
     type: File
     outputBinding:
       glob: "*.png"
+  tsv:
+    type: File
+    outputBinding:
+      glob: "*.tsv"
 baseCommand: python3
 arguments:
   - $(inputs.script)
