@@ -25,8 +25,8 @@ def make_extendedpattern(df):
 def annotate_feature(feature, annotation):
   """Look for a feature in the annotation string.
   For example, if 9559125-3 is not found, then look for 9559125-2, 9559125-1,
-  until a feature is found."""
-  annodict = {"hgvs": "", "rsid": "", "af": ""}
+  until a feature is found, that feature is recorded as 'annosource'."""
+  annodict = {"annosource": "", "hgvs": "", "rsid": "", "gene": ""}
   tilevarpattern = r"\d+-\d+-[01]"
   if not re.match(tilevarpattern, feature):
     return annodict
@@ -37,9 +37,10 @@ def annotate_feature(feature, annotation):
     lines = re.findall(pattern, annotation)
     if len(lines) == 0:
       continue
+    annodict["annosource"] = "{}-{}".format(pos, i)
     hgvslist = []
     rsidlist = []
-    aflist = []
+    genelist = []
     for line in lines:
       fields = line.split("\t")
       hgvs = fields[2].split(";")[0]
@@ -49,33 +50,32 @@ def annotate_feature(feature, annotation):
       else:
         rsid = ""
       rsidlist.append(rsid)
-      last = fields[-1].split("|")[-1]
-      if "AC=" in last:
-        af = "AC="+last.split("AC=")[1]
-      else:
-        af = ""
-      aflist.append(af)
+      gene = "ANN="+ fields[-1].split(",;ANN=")[1]
+      genelist.append(gene)
     annodict["hgvs"] = "|".join(hgvslist)
     annodict["rsid"] = "|".join(rsidlist)
-    annodict["af"] = "|".join(aflist)
+    annodict["gene"] = "|".join(genelist)
     break
   return annodict
 
 def annotate_dataframe(df, annotation):
   """Annotate dataframe given annotation lines found in annotation vcf.
-  Adding HGVS, RSID, AF (allele frequency) fields."""
+  Adding HGVS, RSID, GENE fields."""
   features = df["feature"].to_list()
+  annosourcelist = []
   hgvslist = []
   rsidlist = []
-  aflist = []
+  genelist = []
   for feature in features:
     annodict = annotate_feature(feature, annotation)
+    annosourcelist.append(annodict["annosource"])
     hgvslist.append(annodict["hgvs"])
     rsidlist.append(annodict["rsid"])
-    aflist.append(annodict["af"])
+    genelist.append(annodict["gene"])
+  df["annosource"] = annosourcelist
   df["hgvs"] = hgvslist
   df["rsid"] = rsidlist
-  df["af"] = aflist
+  df["gene"] = genelist
 
 def main():
   featurecoeffile, annoationvcf = sys.argv[1:]
