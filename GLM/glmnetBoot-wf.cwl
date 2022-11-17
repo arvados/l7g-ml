@@ -23,9 +23,6 @@ outputs:
   stats:
     type: File
     outputSource: validate/stats
-  graph:
-    type: File
-    outputSource: validate/graph
   tsv:
     type: File
     outputSource: validate/tsv
@@ -88,7 +85,7 @@ steps:
       samplesphenotype: makesamplesphenotype/samplesphenotype
       count: bootCollect/csv
       fractionthreshold: fractionthreshold
-    out: [stats, graph, tsv]
+    out: [stats, tsv]
 
   getanno:
     run: getanno.cwl

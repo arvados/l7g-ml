@@ -20,10 +20,6 @@ inputs:
 outputs:
   stats:
     type: stdout
-  graph:
-    type: File
-    outputBinding:
-      glob: "*.png"
   tsv:
     type: File
     outputBinding:
