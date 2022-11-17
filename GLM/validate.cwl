@@ -5,7 +5,7 @@ requirements:
     dockerPull: glm
   ResourceRequirement:
     coresMin: 2
-    ramMin: 100000
+    ramMin: 10000
 inputs: 
   script:
     type: File
