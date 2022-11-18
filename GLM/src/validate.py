@@ -65,7 +65,7 @@ def train_validate(phenotypes, column_indices, df, matrix, onehot_columns):
   coef = clf.coef_.flatten()
   accuracy = sk.metrics.accuracy_score(validation_ads, prediction)
   roc_auc = roc_auc_score(validation_ads, clf.predict_proba(validation_matrix)[:,1])
-  log_likelihood = -log_loss(validation_ads, clf.predict_proba(validation_matrix))
+  log_likelihood = -log_loss(validation_ads, clf.predict_proba(validation_matrix), normalize=False)
   dict_output = {"feature": phenotypes +
                             ["{}-{}-{}".format(onehot_columns[0,i], onehot_columns[1,i], onehot_columns[2,i]) for i in column_indices],
                  "coef": coef}
