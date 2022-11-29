@@ -126,7 +126,7 @@ def main():
     if model in comparisonmodels:
       degrees_of_freedom = np.abs(len(phenotypes_dict[model]) + len(column_indices_dict[model])
         - len(phenotypes_dict["glmnetboot_features"]) - len(column_indices_dict["glmnetboot_features"]))
-      pvalue = 1-sc.stats.chi2.cdf(-2*(log_likelihood_dict[model] - log_likelihood_dict["glmnetboot_features"]), degrees_of_freedom)
+      pvalue = sc.stats.chi2.sf(-2*(log_likelihood_dict[model] - log_likelihood_dict["glmnetboot_features"]), degrees_of_freedom)
       print("pvalue comparing to glmnetboot_features: {}".format(pvalue))
     print(df_output_dict[model].to_string(index=False))
     print()
