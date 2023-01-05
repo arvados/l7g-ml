@@ -1,8 +1,13 @@
+$namespaces:
+  arv: "http://arvados.org/cwl#"
 cwlVersion: v1.2
 class: Workflow
 requirements:
   ScatterFeatureRequirement: {}
   StepInputExpressionRequirement: {}
+hints:
+  arv:UsePreemptible:
+    usePreemptible: true
 
 inputs:
   seedsnumber: int
@@ -11,6 +16,7 @@ inputs:
   onehotcolumnsnpy: File
   samplescsv: File
   phenotypedir: Directory
+  pcanpy: File
   gamma: float
   weighted: string
   fractionthreshold: float
@@ -44,12 +50,13 @@ steps:
       str: generateSeeds/seedsstr
     out: [randomseeds]
 
-  makesamplesphenotype:
-    run: makesamplesphenotype.cwl
+  makesamplesauxiliary:
+    run: makesamplesauxiliary.cwl
     in:
       samplescsv: samplescsv
       phenotypedir: phenotypedir
-    out: [samplesphenotype]
+      pcanpy: pcanpy
+    out: [samplesauxiliary]
 
   glmnetBoot:
     run: glmnetBoot.cwl
@@ -57,7 +64,7 @@ steps:
     in:
       onehotnpy: onehotnpy
       onehotcolumnsnpy: onehotcolumnsnpy
-      samplesphenotype: makesamplesphenotype/samplesphenotype
+      samplesauxiliary: makesamplesauxiliary/samplesauxiliary
       gamma: gamma
       weighted: weighted
       seed: string-to-array/randomseeds
@@ -82,7 +89,7 @@ steps:
     in:
       onehotnpy: onehotnpy
       onehotcolumnsnpy: onehotcolumnsnpy
-      samplesphenotype: makesamplesphenotype/samplesphenotype
+      samplesauxiliary: makesamplesauxiliary/samplesauxiliary
       count: bootCollect/csv
       fractionthreshold: fractionthreshold
     out: [stats, tsv]

@@ -14,7 +14,7 @@ inputs:
       location: src/validate.py
   onehotnpy: File
   onehotcolumnsnpy: File
-  samplesphenotype: File
+  samplesauxiliary: File
   count: File
   fractionthreshold: float
 outputs:
@@ -29,7 +29,7 @@ arguments:
   - $(inputs.script)
   - $(inputs.onehotnpy)
   - $(inputs.onehotcolumnsnpy)
-  - $(inputs.samplesphenotype)
+  - $(inputs.samplesauxiliary)
   - $(inputs.count)
   - $(inputs.fractionthreshold)
 stdout: stats.txt
