@@ -22,7 +22,7 @@ inputs:
     type: File
     inputBinding:
       position: 2
-  samplesphenotype:
+  samplesauxiliary:
     type: File
     inputBinding:
       position: 3

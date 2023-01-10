@@ -49,17 +49,17 @@ coldata <- np$load(args[2])
 coldata <- as.matrix(coldata)
 
 sampledata <- read.csv(args[3], sep="\t", stringsAsFactors=FALSE)
-training_ind <- sampledata$index[sampledata$status == "training"] + 1
+training_ind <- sampledata$Index[!is.na(sampledata$TrainingValidation) & sampledata$TrainingValidation == 1] + 1
 
-y <- as.numeric(sampledata$AD[sampledata$status == "training"])
+y <- as.numeric(sampledata$CaseControl[!is.na(sampledata$TrainingValidation) & sampledata$TrainingValidation == 1])
 y <- as.matrix(y)
 
-# Load phenotype matrix
-phenotypes <- names(sampledata)[-(1:4)]
-Xphenotype = as.matrix(sampledata[sampledata$status == "training",][phenotypes])
+# Load auxiliary matrix
+auxiliaries <- names(sampledata)[-(1:4)]
+Xauxiliary = as.matrix(sampledata[!is.na(sampledata$TrainingValidation) & sampledata$TrainingValidation == 1,][auxiliaries])
 
-# Extract training set of the sparse matrix and combine with phenotype matrix
-Xmat = cbind(Xphenotype, Xmatfull[training_ind,])
+# Extract training set of the sparse matrix and combine with auxiliary matrix
+Xmat = cbind(Xauxiliary, Xmatfull[training_ind,])
 print(dim(Xmat))
 rm(Xmatfull)
 
@@ -133,17 +133,17 @@ dev.off()
 output_model_params <- function(modeltype) {
   coef <- coef(cv.lasso.adaptive, s=paste0("lambda.",modeltype))
   print(paste("lasso", modeltype, "intercept:", coef[1]))
-  coefPheno <- coef[2:(length(phenotypes)+1)]
-  coefTilevar <- coef[-(1:(length(phenotypes)+1))]
-  idxPheno <- which(coefPheno !=0)
+  coefAux <- coef[2:(length(auxiliaries)+1)]
+  coefTilevar <- coef[-(1:(length(auxiliaries)+1))]
+  idxAux <- which(coefAux !=0)
   idxTilevar <- which(coefTilevar !=0)
 
   filename <- paste0("glmnet_lasso_", modeltype, ".txt")
   fileConn <- file(filename, "w")
 
-  dfPheno <- data.frame("feature" = phenotypes[idxPheno], "coef" = coefPheno[idxPheno])
+  dfAux <- data.frame("feature" = auxiliaries[idxAux], "coef" = coefAux[idxAux])
   dfTilevar <- data.frame("feature" = paste0(tags[idxTilevar], "-", varvals[idxTilevar], "-", zygosity[idxTilevar]), "coef" = coefTilevar[idxTilevar])
-  dfAll <- rbind(dfPheno, dfTilevar)
+  dfAll <- rbind(dfAux, dfTilevar)
   o <- order(abs(dfAll$coef), decreasing = TRUE)
   dfAll <- dfAll[o,]
 

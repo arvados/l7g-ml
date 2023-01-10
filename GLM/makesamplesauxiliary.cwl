@@ -11,11 +11,12 @@ inputs:
     type: File
     default:
       class: File
-      location: src/makesamplesphenotype.r
+      location: src/makesamplesauxiliary.r
   samplescsv: File
   phenotypedir: Directory
+  pcanpy: File
 outputs:
-  samplesphenotype:
+  samplesauxiliary:
     type: File
     outputBinding:
       glob: "*.tsv"
@@ -24,3 +25,4 @@ arguments:
   - $(inputs.script)
   - $(inputs.samplescsv)
   - $(inputs.phenotypedir)
+  - $(inputs.pcanpy)
