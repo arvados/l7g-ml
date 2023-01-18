@@ -16,7 +16,6 @@ inputs:
   onehotcolumnsnpy: File
   samplescsv: File
   phenotypedir: Directory
-  pcanpy: File
   gamma: float
   weighted: string
   fractionthreshold: float
@@ -55,7 +54,6 @@ steps:
     in:
       samplescsv: samplescsv
       phenotypedir: phenotypedir
-      pcanpy: pcanpy
     out: [samplesauxiliary]
 
   glmnetBoot:

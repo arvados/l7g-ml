@@ -1,0 +1,20 @@
+onehotnpy: 
+  class: File
+  location: keep:3509e219503d38892310f2cbb73447df+27702/onehot.npy
+onehotcolumnsnpy:
+  class: File
+  location: keep:3509e219503d38892310f2cbb73447df+27702/onehot-columns.npy
+samplescsv:
+  class: File
+  location: keep:972048230a4405d536c4ec2580a83b58+89/samples.csv
+phenotypedir:
+  class: Directory
+  location: keep:9b76b33c948bba77f2bf58f915cff9f4+120
+annotationvcf:
+  class: File
+  location: keep:0440c9e68e1c800a067be77b218e4794+430031/GRCh38.86_library_annotation/GRCh38.86_library_snpeff_dbsnp_gnomad.vcf.gz
+gamma: 2
+weighted: "true"
+seedsnumber: 50
+seedslimit: 1000
+fractionthreshold: 0.5
