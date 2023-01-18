@@ -49,14 +49,14 @@ coldata <- np$load(args[2])
 coldata <- as.matrix(coldata)
 
 sampledata <- read.csv(args[3], sep="\t", stringsAsFactors=FALSE)
-training_ind <- sampledata$Index[!is.na(sampledata$TrainingValidation) & sampledata$TrainingValidation == 1] + 1
+training_ind <- sampledata$Index[sampledata$TrainingValidation == 1] + 1
 
-y <- as.numeric(sampledata$CaseControl[!is.na(sampledata$TrainingValidation) & sampledata$TrainingValidation == 1])
+y <- as.numeric(sampledata$CaseControl[sampledata$TrainingValidation == 1])
 y <- as.matrix(y)
 
 # Load auxiliary matrix
 auxiliaries <- names(sampledata)[-(1:4)]
-Xauxiliary = as.matrix(sampledata[!is.na(sampledata$TrainingValidation) & sampledata$TrainingValidation == 1,][auxiliaries])
+Xauxiliary = as.matrix(sampledata[sampledata$TrainingValidation == 1,][auxiliaries])
 
 # Extract training set of the sparse matrix and combine with auxiliary matrix
 Xmat = cbind(Xauxiliary, Xmatfull[training_ind,])
