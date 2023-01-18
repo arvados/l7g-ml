@@ -76,11 +76,11 @@ def train_validate(auxiliaries, column_indices, df, matrix, onehot_columns):
   return (accuracy, roc_auc, log_likelihood, df_output, display)
 
 def main():
-  onehotfile, onehotcolumnfile, samplesphenotypefile, countfile, fractionthreshold = sys.argv[1:]
+  onehotfile, onehotcolumnfile, samplesauxiliaryfile, countfile, fractionthreshold = sys.argv[1:]
   row_column = np.load(onehotfile)
   matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
-  df = pd.read_table(samplesphenotypefile)
+  df = pd.read_table(samplesauxiliaryfile)
   allauxiliaries = df.columns.values.tolist()[4:]
   auxiliaries_dict = {}
   column_indices_dict = {}
