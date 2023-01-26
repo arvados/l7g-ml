@@ -19,6 +19,7 @@ inputs:
   gamma: float
   weighted: string
   fractionthreshold: float
+  apoetile: string
   annotationvcf: File
 
 outputs:
@@ -90,6 +91,7 @@ steps:
       samplesauxiliary: makesamplesauxiliary/samplesauxiliary
       count: bootCollect/csv
       fractionthreshold: fractionthreshold
+      apoetile: apoetile
     out: [stats, tsv]
 
   getanno:

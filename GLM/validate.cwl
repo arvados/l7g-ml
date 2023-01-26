@@ -17,6 +17,7 @@ inputs:
   samplesauxiliary: File
   count: File
   fractionthreshold: float
+  apoetile: string
 outputs:
   stats:
     type: stdout
@@ -32,4 +33,5 @@ arguments:
   - $(inputs.samplesauxiliary)
   - $(inputs.count)
   - $(inputs.fractionthreshold)
+  - $(inputs.apoetile)
 stdout: stats.txt
