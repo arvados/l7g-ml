@@ -76,7 +76,7 @@ def train_validate(auxiliaries, column_indices, df, matrix, onehot_columns):
   return (accuracy, roc_auc, log_likelihood, df_output, display)
 
 def main():
-  onehotfile, onehotcolumnfile, samplesauxiliaryfile, countfile, fractionthreshold = sys.argv[1:]
+  onehotfile, onehotcolumnfile, samplesauxiliaryfile, countfile, fractionthreshold, apoetile = sys.argv[1:]
   row_column = np.load(onehotfile)
   matrix = make_matrix(row_column)
   onehot_columns = np.load(onehotcolumnfile)
@@ -97,7 +97,7 @@ def main():
     df_output_dict["glmnetboot_features"], display_dict["glmnetboot_features"]) = train_validate(
     auxiliaries_dict["glmnetboot_features"], column_indices_dict["glmnetboot_features"], df, matrix, onehot_columns)
   # locate apoe, which is the first feature selectd by glmnetboot
-  apoe_pos, apoe_num = df_output_dict["glmnetboot_features"]["feature"].to_list()[0].split("-")[:2]
+  apoe_pos, apoe_num = apoetile.split("-")[:2]
   apoe_pos, apoe_num = int(apoe_pos), int(apoe_num)
   apoe_column_indices = [i for i in column_indices_dict["glmnetboot_features"]
                          if onehot_columns[0,i] == apoe_pos and onehot_columns[1,i] == apoe_num]
